@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "AppMadeirasExpo",
+    "slug": "AppMadeirasExpo",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
