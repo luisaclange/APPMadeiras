@@ -4,34 +4,48 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../screens/Home';
 import SplashScreen from '../screens/SplashScreen';
 import TabBar from './TabBar.routes';
-import { StatusBar } from 'expo-status-bar';
+import { ThemeProvider } from 'styled-components';
+import globalStyle from '../styles/globalStyle';
+import { StatusBar } from 'react-native';
+import Historic from '../screens/Historic';
+import NewCalc from '../screens/NewCalc';
+import Settings from '../screens/Settings';
 
 export default function App() {
 
     const Stack = createNativeStackNavigator();
 
     return (
-        <NavigationContainer>
+        <ThemeProvider theme={globalStyle}>
 
-            <StatusBar backgroundColor='transparent' translucent={true} style='light' />
+            <NavigationContainer>
 
-            <Stack.Navigator 
-                initialRouteName='TabBar'
-                screenOptions={{
-                    headerShown: false
-                }}
-            >
+                <StatusBar translucent barStyle='light-content' backgroundColor='transparent' />
 
-                <Stack.Screen name='SplashScreen' component={SplashScreen} />
+                <Stack.Navigator
+                    initialRouteName='Historic'
+                    screenOptions={{
+                        headerShown: false,
+                        animation: 'none'
+                    }}
+                >
 
-                <Stack.Screen name='Home' component={Home} />
+                    <Stack.Screen name='SplashScreen' component={SplashScreen} />
 
-                <Stack.Screen name='About' component={SplashScreen} />
+                    <Stack.Screen name='Home' component={Home} />
 
-                <Stack.Screen name='TabBar' component={TabBar} />
+                    <Stack.Screen name='About' component={SplashScreen} />
 
-            </Stack.Navigator>
+                    <Stack.Screen name='Historic' component={Historic} />
 
-        </NavigationContainer>
+                    <Stack.Screen name='NewCalc' component={NewCalc} />
+
+                    <Stack.Screen name='Settings' component={Settings} />
+
+                </Stack.Navigator>
+
+            </NavigationContainer>
+
+        </ThemeProvider>
     );
 }
