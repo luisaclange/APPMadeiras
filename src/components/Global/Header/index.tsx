@@ -1,10 +1,10 @@
 import React from "react";
 import { Container, IconBox } from "./styles";
-import { Gear, ListDashes, Plus } from 'phosphor-react-native'
 import globalStyle from "../../../styles/globalStyle";
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useNavigation } from "@react-navigation/native";
 import Logo from '../../../assets/logo.svg';
+import Icon from 'react-native-vector-icons/Feather';
 
 interface Props {
     screen: string;
@@ -18,7 +18,7 @@ export const Header: React.FC<Props> = ({ screen }) => {
         <Container>
 
             <Logo
-                width={115}
+                width={RFValue(115, 700)}
                 style={{ marginLeft: RFValue(16, 700), marginBottom: RFValue(8, 700) }}
             />
 
@@ -27,9 +27,10 @@ export const Header: React.FC<Props> = ({ screen }) => {
                     focused={screen === 'NewCalc' ? true : false}
                     onPress={() => { navigation.navigate('NewCalc') }}
                 >
-                    <Plus
+                    <Icon
+                        name="plus-circle"
                         color={globalStyle.colors.secondary}
-                        size={RFValue(20, 700)}
+                        size={RFValue(25, 700)}
                         weight='bold'
                     />
                 </IconBox>
@@ -38,9 +39,10 @@ export const Header: React.FC<Props> = ({ screen }) => {
                     focused={screen === 'Historic' ? true : false}
                     onPress={() => { navigation.navigate('Historic') }}
                 >
-                    <ListDashes
+                    <Icon
+                        name="list"
                         color={globalStyle.colors.secondary}
-                        size={RFValue(20, 700)}
+                        size={RFValue(25, 700)}
                         weight='bold'
                     />
                 </IconBox>
@@ -49,9 +51,10 @@ export const Header: React.FC<Props> = ({ screen }) => {
                     focused={screen === 'Settings' ? true : false}
                     onPress={() => { navigation.navigate('Settings') }}
                 >
-                    <Gear
+                    <Icon
+                        name="settings"
                         color={globalStyle.colors.secondary}
-                        size={RFValue(20, 700)}
+                        size={RFValue(25, 700)}
                         weight='bold'
                     />
                 </IconBox>
