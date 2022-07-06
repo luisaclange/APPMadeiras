@@ -2,49 +2,64 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../screens/Home';
-import SplashScreen from '../screens/SplashScreen';
-import TabBar from './TabBar.routes';
 import { ThemeProvider } from 'styled-components';
 import globalStyle from '../styles/globalStyle';
 import { StatusBar } from 'react-native';
 import Historic from '../screens/Historic';
-import NewCalc from '../screens/NewCalc';
 import Settings from '../screens/Settings';
+import About from '../screens/About';
+import { useFonts, Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
+import AppLoading from 'expo-app-loading';
+import { DataProvider } from '../context/context';
+import { NewCalc } from './NewCalc.routes';
 
 export default function App() {
 
-    const Stack = createNativeStackNavigator();
+    const { Navigator, Screen } = createNativeStackNavigator();
+
+    let [fontsLoaded] = useFonts({
+        Montserrat_400Regular,
+        Montserrat_500Medium,
+        Montserrat_600SemiBold,
+        Montserrat_700Bold
+    });
+
+    if (!fontsLoaded) {
+        return <AppLoading />
+    }
 
     return (
         <ThemeProvider theme={globalStyle}>
 
-            <NavigationContainer>
+            <DataProvider>
 
-                <StatusBar translucent barStyle='light-content' backgroundColor='transparent' />
+                <NavigationContainer>
 
-                <Stack.Navigator
-                    initialRouteName='Historic'
-                    screenOptions={{
-                        headerShown: false,
-                        animation: 'none'
-                    }}
-                >
+                    <StatusBar translucent barStyle='light-content' backgroundColor='transparent' />
 
-                    <Stack.Screen name='SplashScreen' component={SplashScreen} />
+                    <Navigator
+                        initialRouteName='Home'
+                        screenOptions={{
+                            headerShown: false,
+                            animation: 'none'
+                        }}
+                    >
 
-                    <Stack.Screen name='Home' component={Home} />
+                        <Screen name='Home' component={Home} />
 
-                    <Stack.Screen name='About' component={SplashScreen} />
+                        <Screen name='About' component={About} />
 
-                    <Stack.Screen name='Historic' component={Historic} />
+                        <Screen name='Historic' component={Historic} />
 
-                    <Stack.Screen name='NewCalc' component={NewCalc} />
+                        <Screen name='Settings' component={Settings} />
 
-                    <Stack.Screen name='Settings' component={Settings} />
+                        <Screen name='NewCalc' component={NewCalc} />
 
-                </Stack.Navigator>
+                    </Navigator>
 
-            </NavigationContainer>
+                </NavigationContainer>
+
+            </DataProvider>
 
         </ThemeProvider>
     );

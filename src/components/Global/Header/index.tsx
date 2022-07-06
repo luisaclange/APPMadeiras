@@ -2,30 +2,37 @@ import React from "react";
 import { Container, IconBox } from "./styles";
 import globalStyle from "../../../styles/globalStyle";
 import { RFValue } from 'react-native-responsive-fontsize';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import Logo from '../../../assets/logo.svg';
 import Icon from 'react-native-vector-icons/Feather';
+import { TouchableWithoutFeedback } from "react-native";
 
-interface Props {
-    screen: string;
-}
+export const Header: React.FC = () => {
 
-export const Header: React.FC<Props> = ({ screen }) => {
+    const route = useRoute();
 
     const navigation = useNavigation();
 
     return (
         <Container>
 
-            <Logo
-                width={RFValue(115, 700)}
-                style={{ marginLeft: RFValue(16, 700), marginBottom: RFValue(8, 700) }}
-            />
+            <TouchableWithoutFeedback onPress={() => {
+                //@ts-ignore
+                navigation.navigate('Home')
+            }}>
+                <Logo
+                    width={RFValue(115, 700)}
+                    style={{ marginLeft: RFValue(16, 700), marginBottom: RFValue(8, 700) }}
+                />
+            </TouchableWithoutFeedback>
 
             <Container>
                 <IconBox
-                    focused={screen === 'NewCalc' ? true : false}
-                    onPress={() => { navigation.navigate('NewCalc') }}
+                    focused={route.name === 'NewCalc1' ? true : false}
+                    onPress={() => {
+                        //@ts-ignore
+                        navigation.navigate('NewCalc')
+                    }}
                 >
                     <Icon
                         name="plus-circle"
@@ -36,8 +43,11 @@ export const Header: React.FC<Props> = ({ screen }) => {
                 </IconBox>
 
                 <IconBox
-                    focused={screen === 'Historic' ? true : false}
-                    onPress={() => { navigation.navigate('Historic') }}
+                    focused={route.name === 'Historic' ? true : false}
+                    onPress={() => {
+                        //@ts-ignore
+                        navigation.navigate('Historic')
+                    }}
                 >
                     <Icon
                         name="list"
@@ -48,8 +58,11 @@ export const Header: React.FC<Props> = ({ screen }) => {
                 </IconBox>
 
                 <IconBox
-                    focused={screen === 'Settings' ? true : false}
-                    onPress={() => { navigation.navigate('Settings') }}
+                    focused={route.name === 'Settings' ? true : false}
+                    onPress={() => {
+                        //@ts-ignore
+                        navigation.navigate('Settings')
+                    }}
                 >
                     <Icon
                         name="settings"
