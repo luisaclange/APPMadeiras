@@ -5,11 +5,6 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ],
-    "splash": {
-        "image": "./src/assets/logoSplashScreen.png",
-        "backgroundColor": "#211610",
-        "statusBarStyle": "#FFFFFF"
-    }
+    ]
   }
 }

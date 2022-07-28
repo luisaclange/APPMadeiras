@@ -4,7 +4,8 @@ import { Background } from "../../components/Global/Background";
 import { Header } from "../../components/Global/Header";
 import { BackgroundFields } from "../../components/NewCalc/BackgroundFields";
 import CalcWoodDimension from "../../project";
-import Desenho from "../../project/desenho/desenho";
+import calcDraw from "../../project/draw/calcsDraw";
+import Draw from "../../project/draw/draw";
 
 export default function Result() {
 
@@ -18,6 +19,18 @@ export default function Result() {
         nNails
     } = CalcWoodDimension();
 
+    const {
+        bfHorizontal,
+        bfVertical,
+        nNailsColumn,
+        spaceNormalColumnNails,
+        nColumns,
+        nNailsSpecialColumn,
+        bfVerticalSpecial,
+        spaceSpecialColumnNails,
+        spaceColumns
+    } = calcDraw(nNails)
+
     return (
         <Background>
             <Header />
@@ -29,7 +42,17 @@ export default function Result() {
                 <Text>Blim: {Blim.toFixed(2)}</Text>
                 <Text>Rvd1: {Rvd1.toFixed(2)}</Text>
                 <Text>Numero de pregos: {nNails}</Text>
-                <Desenho nails={nNails} />
+                <Draw nails={nNails} />
+
+                <Text>Borda horizontal: {bfHorizontal} mm</Text>
+                <Text>Borda vertical: {bfVertical} mm</Text>
+                <Text>numero de pregos por coluna: {nNailsColumn} pregos</Text>
+                <Text>espaço entre pregos - coluna normal: {spaceNormalColumnNails.toFixed(2)} mm</Text>
+                <Text>numero de colunas: {nColumns}</Text>
+                <Text>pregos na ultima coluna: {nNailsSpecialColumn} prego</Text>
+                <Text>Borda vertical ultima coluna: {bfVerticalSpecial} mm</Text>
+                <Text>espaço entre pregos - ultima coluna: {spaceSpecialColumnNails.toFixed(2)} mm</Text>
+                <Text>espaço entre colunas: {spaceColumns} mm</Text>
             </BackgroundFields>
         </Background>
     )
