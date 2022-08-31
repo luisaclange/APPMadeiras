@@ -21,14 +21,15 @@ export default function CustomModal({ children, visible, setVisible, backdrop, d
                     <Backdrop backdrop={backdrop} />
                 </TouchableWithoutFeedback>
 
-                <PopUp style={{
-                    justifyContent: positionVertical ?
-                        positionVertical === "top" ? "flex-start" :
-                            positionVertical === "bottom" ? "flex-end" : 'center' : 'center',
-                    alignItems: positionHorizontal ?
-                        positionHorizontal === "left" ? "flex-start" :
-                            positionHorizontal === "right" ? "flex-end" : 'center' : 'center'
-                }}>
+                <PopUp
+                    style={{
+                        justifyContent: positionVertical ?
+                            positionVertical === "top" ? "flex-start" :
+                                positionVertical === "bottom" ? "flex-end" : 'center' : 'center',
+                        alignItems: positionHorizontal ?
+                            positionHorizontal === "left" ? "flex-start" :
+                                positionHorizontal === "right" ? "flex-end" : 'center' : 'center'
+                    }}>
                     {children}
                 </PopUp>
             </View>

@@ -15,9 +15,13 @@ import { ScrollView, View } from "react-native";
 import { FieldInput } from "../../../components/NewCalc/FieldInput";
 import { RFValue } from "react-native-responsive-fontsize";
 import { TextWood } from "./styles";
-import { WoodResistanceClasses } from "../../../Data/1_ClassesResistencia/ClassesResistencia";
+import { WoodResistanceClasses } from "../../../archive/1_ClassesResistencia/ClassesResistencia";
 
-export default function NewCalc3() {
+interface props {
+    pass: any;
+}
+
+export default function NewCalc3({ pass }: props) {
 
     const schema = yup.object().shape({
         tractiveForce: yup.string().matches(/^\d+(\,\d{1,10})?$/, 'Formato errado')
@@ -51,19 +55,16 @@ export default function NewCalc3() {
             })
         })
 
-    console.log(dataWoodResistanceClass)
-
 
 
     function handleDataRegister(data: Data['stage3']) {
         setStage3(data);
         //@ts-ignore
-        navigation.navigate('NewCalc4');
+        pass(4);
     }
 
     return (
         <Background>
-            <Header />
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={{ flexGrow: 1 }}>
                     <ProgressBar stage={3} />
@@ -100,7 +101,7 @@ export default function NewCalc3() {
                 <ButtonsPrevNext
                     nextAction={handleSubmit(handleDataRegister)}
                     //@ts-ignore
-                    prevAction={() => { navigation.navigate('NewCalc2') }}
+                    prevAction={() => { pass(2) }}
                 />
             </ScrollView>
         </Background>

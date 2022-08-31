@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Background } from "../../../components/Global/Background";
-import { Header } from "../../../components/Global/Header";
 import { BackgroundFields } from "../../../components/NewCalc/BackgroundFields";
 import { ProgressBar } from "../../../components/NewCalc/ProgressBar";
 import { TitleSection } from "../../../components/NewCalc/TitleSection";
@@ -12,15 +11,18 @@ import { FieldSelect } from "../../../components/NewCalc/FieldSelect";
 import { ButtonsPrevNext } from "../../../components/NewCalc/ButtonsPrevNext";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView, View } from "react-native";
-import { Kmod } from "../../../Data/WoodProperties/Kmod";
+import { Kmod } from "../../../archive/WoodProperties/Kmod";
 
+interface props {
+    pass: any;
+}
 
 const schema = yup.object({
     charging: yup.string().required('Campo obrigatório'),
     humidityClass: yup.string().required('Campo obrigatório')
 })
 
-export default function NewCalc1() {
+export default function NewCalc1({ pass }: props) {
 
     const { setStage1 } = useContext(DataContext);
     const navigation = useNavigation();
@@ -46,12 +48,11 @@ export default function NewCalc1() {
     function handleDataRegister(data: Data['stage1']) {
         setStage1(data);
         //@ts-ignore
-        navigation.navigate('NewCalc2');
+        pass(2);
     }
 
     return (
         <Background>
-            <Header />
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={{ flexGrow: 1 }}>
                     <ProgressBar stage={1} />

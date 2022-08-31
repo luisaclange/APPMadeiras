@@ -12,10 +12,13 @@ import { FieldSelect } from "../../../components/NewCalc/FieldSelect";
 import { ButtonsPrevNext } from "../../../components/NewCalc/ButtonsPrevNext";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView, View } from "react-native";
-import { WoodType } from "../../../Data/WoodProperties/WoodType";
-import { Kmod } from "../../../Data/WoodProperties/Kmod";
-import { DicotyledonClass } from "../../../Data/WoodProperties/DicotyledonClass";
+import { WoodType } from "../../../archive/WoodProperties/WoodType";
+import { Kmod } from "../../../archive/WoodProperties/Kmod";
+import { DicotyledonClass } from "../../../archive/WoodProperties/DicotyledonClass";
 
+interface props {
+    pass: any;
+}
 
 let schema = yup.object().shape({
     woodType: yup.string().required('Campo obrigatório'),
@@ -26,7 +29,7 @@ let schema = yup.object().shape({
     })
 })
 
-export default function NewCalc2() {
+export default function NewCalc2({ pass }: props) {
 
     const { setStage2, stage2 } = useContext(DataContext);
     const navigation = useNavigation();
@@ -61,11 +64,10 @@ export default function NewCalc2() {
     function handleDataRegister(data: Data['stage2']) {
         setStage2(data);
         //@ts-ignore
-        navigation.navigate('NewCalc3')
+        pass(3);
     }
 
     useEffect(() => {
-        console.log(watch('woodClass'))
         if (watch('woodClass') === 'Kmod3_Dicotiledonia') {
             setVisible(true)
         } else {
@@ -75,7 +77,6 @@ export default function NewCalc2() {
 
     return (
         <Background>
-            <Header />
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={{ flexGrow: 1 }}>
                     <ProgressBar stage={2} />
@@ -112,7 +113,7 @@ export default function NewCalc2() {
                 <ButtonsPrevNext
                     nextAction={handleSubmit(handleDataRegister)}
                     //@ts-ignore
-                    prevAction={() => { navigation.navigate('NewCalc1') }}
+                    prevAction={() => { pass(1) }}
                 />
             </ScrollView>
         </Background>

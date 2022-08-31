@@ -1,13 +1,22 @@
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useCallback } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
 import Logo from '../../assets/logo.svg';
 import { ButtonLight } from "../../components/Global/ButtonLight";
+import { database } from "../../database";
 import { Background, Container, ContainerButtons, ContainerText, Description } from "./styles";
 
 export default function Home() {
 
     const navigation = useNavigation();
+
+    // async function Clear() {
+    //     await database.write(async () => {
+    //         await database.unsafeResetDatabase()
+    //     })
+    // }
+
+    // Clear()
 
     return (
         //@ts-ignore
@@ -30,7 +39,7 @@ export default function Home() {
                         text="Começar"
                         style={{ width: RFValue(250, 700) }}
                         //@ts-ignore
-                        onPress={() => { navigation.navigate('NewCalc') }}
+                        onPress={() => { navigation.navigate('TabBar', { screen: 'Historic' }) }}
                     />
                 </ContainerButtons>
             </Container>

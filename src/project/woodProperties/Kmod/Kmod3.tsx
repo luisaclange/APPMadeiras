@@ -1,16 +1,13 @@
 import { useContext } from "react";
 import DataContext from "../../../context/context";
-import { Kmod } from "../../../Data/WoodProperties/Kmod";
+import { Kmod } from "../../../archive/WoodProperties/Kmod";
 
-export default function CalcKmod3() {
+export default function CalcKmod3(woodClass: string, dicotyledonClass: string, woodType: string) {
 
-    const { stage2 } = useContext(DataContext);
-
-    if (stage2.woodClass === 'Kmod3_Dicotiledonia' && stage2.woodType === 'madeiraSerrada') {
-        console.log('ENTROU')
+    if (woodClass === 'Kmod3_Dicotiledonia' && woodType === 'madeiraSerrada') {
         return (Kmod.kmod3[1].type[0].value.find((item) => {
             return (
-                stage2.dicotyledonClass === item.id
+                dicotyledonClass === item.id
             )
         }).value)
     } else {
@@ -18,13 +15,13 @@ export default function CalcKmod3() {
         return (Kmod.kmod3
             .find((item) => {
                 return (
-                    stage2.woodClass === item.id
+                    woodClass === item.id
                 )
             })
             //@ts-ignore
             .type.find((item) => {
                 return (
-                    stage2.woodType === item.name
+                    woodType === item.name
                 )
             }).value)
     }

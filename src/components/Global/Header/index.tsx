@@ -7,7 +7,7 @@ import Logo from '../../../assets/logo.svg';
 import Icon from 'react-native-vector-icons/Feather';
 import { TouchableWithoutFeedback } from "react-native";
 
-export const Header: React.FC = () => {
+export const Header: React.FC<{ focused: number }> = ({ focused }) => {
 
     const route = useRoute();
 
@@ -28,22 +28,7 @@ export const Header: React.FC = () => {
 
             <Container>
                 <IconBox
-                    focused={route.name === 'NewCalc1' ? true : false}
-                    onPress={() => {
-                        //@ts-ignore
-                        navigation.navigate('NewCalc')
-                    }}
-                >
-                    <Icon
-                        name="plus-circle"
-                        color={globalStyle.colors.secondary}
-                        size={RFValue(25, 700)}
-                        weight='bold'
-                    />
-                </IconBox>
-
-                <IconBox
-                    focused={route.name === 'Historic' ? true : false}
+                    focused={focused === 0 ? true : false}
                     onPress={() => {
                         //@ts-ignore
                         navigation.navigate('Historic')
@@ -58,7 +43,22 @@ export const Header: React.FC = () => {
                 </IconBox>
 
                 <IconBox
-                    focused={route.name === 'Settings' ? true : false}
+                    focused={focused === 1 ? true : false}
+                    onPress={() => {
+                        //@ts-ignore
+                        navigation.navigate('NewCalc')
+                    }}
+                >
+                    <Icon
+                        name="plus-circle"
+                        color={globalStyle.colors.secondary}
+                        size={RFValue(25, 700)}
+                        weight='bold'
+                    />
+                </IconBox>
+
+                <IconBox
+                    focused={focused === 2 ? true : false}
                     onPress={() => {
                         //@ts-ignore
                         navigation.navigate('Settings')

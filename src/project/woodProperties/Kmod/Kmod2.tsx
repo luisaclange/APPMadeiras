@@ -1,21 +1,17 @@
-import { useContext } from "react";
-import DataContext from "../../../context/context";
-import { Kmod } from "../../../Data/WoodProperties/Kmod";
+import { Kmod } from "../../../archive/WoodProperties/Kmod";
 
-export default function CalcKmod2() {
-
-    const { stage1, stage2 } = useContext(DataContext);
+export default function CalcKmod2(humidityClass: string, woodType: string) {
 
     return (
         Kmod.kmod2
             .find((item) => {
                 return (
-                    stage1.humidityClass === item.id
+                    humidityClass === item.id
                 )
             })
             .type.find((item) => {
                 return (
-                    stage2.woodType === item.name
+                    woodType === item.name
                 )
             }).value)
 }

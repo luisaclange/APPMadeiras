@@ -1,18 +1,14 @@
-import { useContext } from "react";
-import DataContext from "../../../context/context";
-import { WoodResistanceClasses } from "../../../Data/1_ClassesResistencia/ClassesResistencia";
+import { WoodResistanceClasses } from "../../../archive/1_ClassesResistencia/ClassesResistencia";
 
-export default function CalcFt0d(kmod: number) {
-
-    const { stage3, stage2 } = useContext(DataContext);
+export default function CalcFt0d(kmod: number, woodClass: string, woodResistanceClass: string) {
 
     const fc0k = WoodResistanceClasses.find((item) => {
         return (
-            item.name === stage2.woodClass
+            item.name === woodClass
         )
     }).object.find((item) => {
         return (
-            item.id === stage3.woodResistanceClass
+            item.id === woodResistanceClass
         )
     }).fc0k
 

@@ -13,9 +13,15 @@ import { ButtonsPrevNext } from "../../../components/NewCalc/ButtonsPrevNext";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView, View } from "react-native";
 import { FieldInput } from "../../../components/NewCalc/FieldInput";
-import { NailDimensions } from "../../../Data/2_Dimensions/Pregos";
+import { NailDimensions } from "../../../archive/2_Dimensions/Pregos";
+import { database } from "../../../database";
+import { CalcModel } from "../../../database/models/calcModel";
 
-export default function NewCalc4() {
+interface props {
+    pass: any;
+}
+
+export default function NewCalc4({ pass }: props) {
 
     const schema = yup.object().shape({
         widthWood: yup.string().matches(/^\d+(\,\d{1,10})?$/, 'Formato errado')
@@ -27,7 +33,7 @@ export default function NewCalc4() {
         nailDimension: yup.string().required('Campo obrigatório'),
     })
 
-    const { setStage4 } = useContext(DataContext);
+    const { setStage4, stage1, stage2, stage3, stage4 } = useContext(DataContext);
     const navigation = useNavigation();
     const [dataNails, setDataNails] = useState([]);
 
@@ -35,10 +41,33 @@ export default function NewCalc4() {
         { resolver: yupResolver(schema) }
     );
 
-    function handleDataRegister(data: Data['stage4']) {
+    async function handleDataRegister(data: Data['stage4']) {
         setStage4(data);
-        //@ts-ignore
-        navigation.navigate('Result');
+        await database.write(async () => {
+            await database.get<CalcModel>('calcs').create(item => {
+                item.charging = stage1.charging;
+                item.humidityClass = stage1.humidityClass;
+                item.dicotyledonClass = stage2.dicotyledonClass;
+                item.woodClass = stage2.woodClass;
+                item.woodType = stage2.woodType;
+                item.fyk_nail = stage3.fyk_nail;
+                item.tractiveForce = stage3.tractiveForce;
+                item.woodResistanceClass = stage3.woodResistanceClass;
+                item.heightWood_1 = data.heightWood_1;
+                item.heightWood_2 = data.heightWood_2;
+                item.nailDimension = data.nailDimension;
+                item.widthWood = data.widthWood;
+                item.created_at = Number(new Date()) - 10800000;
+                item.visualized_at = 0;
+                item.updated_at = 0;
+            })
+        }).then(res => {
+            // @ts-ignore
+            navigation.navigate('Result');
+            setTimeout(() => { pass(1) }, 1000);
+        }).catch(error => {
+            console.error(error)
+        })
     }
 
     function FilterDataNails(h1: number, h2: number) {
@@ -48,7 +77,6 @@ export default function NewCalc4() {
                 item.LPP > (h1 + 12 * item.JP) && h2 > 12 * item.JP
             )
         })
-        console.log(data)
         setDataNails(data.map((item) => {
             return ({
                 value: item.name,
@@ -58,8 +86,6 @@ export default function NewCalc4() {
     }
 
     useEffect(() => {
-        console.log(watch('heightWood_1'))
-        console.log(watch('heightWood_2'))
         if (watch('heightWood_1') !== undefined && watch('heightWood_2') !== undefined) {
             const h1: number = Number(watch('heightWood_1').replace(',', '.'))
             const h2: number = Number(watch('heightWood_2').replace(',', '.'))
@@ -69,7 +95,6 @@ export default function NewCalc4() {
 
     return (
         <Background>
-            <Header />
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                 <View style={{ flexGrow: 1 }}>
                     <ProgressBar stage={4} />
@@ -116,7 +141,7 @@ export default function NewCalc4() {
                 <ButtonsPrevNext
                     nextAction={handleSubmit(handleDataRegister)}
                     //@ts-ignore
-                    prevAction={() => { navigation.navigate('NewCalc3') }}
+                    prevAction={() => { pass(3) }}
                 />
             </ScrollView>
         </Background>

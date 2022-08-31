@@ -1,18 +1,10 @@
-import { useContext } from "react";
-import DataContext from "../../context/context";
-import { NailDimensions } from "../../Data/2_Dimensions/Pregos";
+import { NailDimensions } from "../../archive/2_Dimensions/Pregos";
 
-export default function calcB() {
+export default function calcB(nailDimension: string, heightWood_1: string) {
 
-    const { stage4 } = useContext(DataContext);
+    const nail = NailDimensions.find(item => item.id === nailDimension)
 
-    const nail = NailDimensions.find((item) => {
-        return (
-            item.id === stage4.nailDimension
-        )
-    })
-
-    const B = Number(stage4.heightWood_1) / nail.JP;
+    const B = Number(heightWood_1) / nail.JP;
 
     return B;
 

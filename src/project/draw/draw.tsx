@@ -1,37 +1,45 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import styled from "styled-components/native";
 import DataContext from "../../context/context";
-import { NailDimensions } from "../../Data/2_Dimensions/Pregos";
+import { NailDimensions } from "../../archive/2_Dimensions/Pregos";
 import calcDraw from "./calcsDraw";
+import { CalcModel } from "../../database/models/calcModel";
+import { database } from "../../database";
+import { Item } from "../../components/NewCalc/ProgressBar/styles";
 
 interface desenhoProps {
-    nails: number
+    data: CalcModel;
+    nails: number;
 }
 
-const Draw: React.FC<desenhoProps> = ({ nails }) => {
+const Draw: React.FC<desenhoProps> = ({ data, nails }) => {
 
-    const {
-        bfHorizontal,
-        bfVertical,
-        nNailsColumn,
-        spaceNormalColumnNails,
-        nColumns,
-        nNailsSpecialColumn,
-        bfVerticalSpecial,
-        spaceSpecialColumnNails,
-        spaceColumns
-    } = calcDraw(nails)
+    const nail = NailDimensions.find(item => item.id === data.nailDimension)
+    const [calc, setCalc] = useState({
+        bfHorizontal: 0,
+        bfVertical: 0,
+        nNailsColumn: 0,
+        spaceNormalColumnNails: 0,
+        nColumns: 0,
+        nNailsSpecialColumn: 0,
+        bfVerticalSpecial: 0,
+        spaceSpecialColumnNails: 0,
+        spaceColumns: 0,
+    });
+    const [itsOk, setItsOk] = useState(false);
 
-    const { stage4 } = useContext(DataContext);
-    const nail = NailDimensions.find((item) => {
-        return (
-            item.id === stage4.nailDimension
-        )
-    })
+    async function GetData() {
+        setCalc(await calcDraw(nails, data.id));
+        setItsOk(true);
+    }
+
+    useEffect(() => {
+        GetData();
+    }, [])
 
     const BackgroundImage = styled.ImageBackground`
-        height: ${Number(stage4.widthWood)}px;
+        height: ${Number(data.widthWood)}px;
         flex-direction: row;
         justify-content: center;
     `;
@@ -45,19 +53,19 @@ const Draw: React.FC<desenhoProps> = ({ nails }) => {
     `;
 
     const SpaceVerticalNormal = styled.View`
-        height: ${spaceNormalColumnNails - nail.JP}px;
+        height: ${calc.spaceNormalColumnNails - nail.JP}px;
     `;
 
     const SpaceVerticalSpecial = styled.View`
-        height: ${spaceSpecialColumnNails - nail.JP}px;
+        height: ${calc.spaceSpecialColumnNails - nail.JP}px;
     `;
 
     const ColumnNormal = styled.View`
-        margin-left: ${spaceColumns - nail.JP}px;
+        margin-left: ${calc.spaceColumns - nail.JP}px;
     `;
 
     const BorderFreeNormal = styled.View`
-        height: ${bfVertical - nail.JP / 2}px;
+        height: ${calc.bfVertical - nail.JP / 2}px;
     `;
 
     const ColumnSpecial = styled.View`
@@ -65,60 +73,63 @@ const Draw: React.FC<desenhoProps> = ({ nails }) => {
     `;
 
     const BorderFreeSpecial = styled.View`
-        height: ${bfVerticalSpecial - nail.JP / 2}px;
+        height: ${calc.bfVerticalSpecial - nail.JP / 2}px;
     `;
 
     const MarginHorizontal = styled.View`
         border-right-width: 1px;
         height: 100%;
-        width: ${bfHorizontal}px;
+        width: ${calc.bfHorizontal}px;
     `;
 
     return (
         <>
-            <BackgroundImage source={require("../../assets/678-978.jpg")}>
-                <ColumnSpecial>
-                    <BorderFreeSpecial />
+            {itsOk ?
+                <BackgroundImage source={require("../../assets/678-978.jpg")}>
+                    <ColumnSpecial>
+                        <BorderFreeSpecial />
+                        {
+                            calc.nNailsSpecialColumn > 0 ?
+                                <>
+                                    <Nail />
+                                    {
+                                        [...Array(calc.nNailsSpecialColumn - 1)].map(() => {
+                                            return (
+                                                <>
+                                                    <SpaceVerticalSpecial />
+                                                    <Nail />
+                                                </>
+                                            )
+                                        })
+                                    }
+                                </>
+                                :
+                                null
+                        }
+                    </ColumnSpecial>
                     {
-                        nNailsSpecialColumn > 0 ?
-                            <>
-                                <Nail />
-                                {
-                                    [...Array(nNailsSpecialColumn - 1)].map(() => {
+                        [...Array(calc.nColumns - (calc.nNailsSpecialColumn > 0 ? 1 : 0))].map(() => {
+                            return (
+                                <ColumnNormal>
+                                    <BorderFreeNormal />
+                                    <Nail />
+                                    {[...Array(calc.nNailsColumn - 1)].map(() => {
                                         return (
                                             <>
-                                                <SpaceVerticalSpecial />
+                                                <SpaceVerticalNormal />
                                                 <Nail />
                                             </>
                                         )
-                                    })
-                                }
-                            </>
-                            :
-                            <></>
+                                    })}
+                                    <BorderFreeNormal />
+                                </ColumnNormal>
+                            )
+                        })
                     }
-                </ColumnSpecial>
-                {
-                    [...Array(nColumns)].map(() => {
-                        return (
-                            <ColumnNormal>
-                                <BorderFreeNormal />
-                                <Nail />
-                                {[...Array(nNailsColumn - 1)].map(() => {
-                                    return (
-                                        <>
-                                            <SpaceVerticalNormal />
-                                            <Nail />
-                                        </>
-                                    )
-                                })}
-                                <BorderFreeNormal />
-                            </ColumnNormal>
-                        )
-                    })
-                }
-                <MarginHorizontal />
-            </BackgroundImage>
+                    <MarginHorizontal />
+                </BackgroundImage>
+                :
+                null}
         </>
     )
 }
