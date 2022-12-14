@@ -12,30 +12,17 @@ export const calcSchema = tableSchema({
             type: 'string'
         },
         {
+            name: 'woodName',
+            type: 'number'
+        },
+        {
             name: 'woodType',
-            type: 'string'
-        },
-        {
-            name: 'woodClass',
-            type: 'string'
-        },
-        {
-            name: 'dicotyledonClass',
             type: 'string'
         },
         {
             name: 'tractiveForce',
             type: 'string'
         },
-        {
-            name: 'fyk_nail',
-            type: 'string'
-        },
-        {
-            name: 'woodResistanceClass',
-            type: 'string'
-        }
-        ,
         {
             name: 'widthWood',
             type: 'string'

@@ -92,11 +92,11 @@ export const Kmod = {
             "type": [
                 {
                     "name": "madeiraSerrada",
-                    "value": 1
+                    "value": 0.9
                 },
                 {
                     "name": "madeiraRecomposta",
-                    "value": 1
+                    "value": 0.95
                 }
             ]
         },
@@ -110,7 +110,7 @@ export const Kmod = {
                 },
                 {
                     "name": "madeiraRecomposta",
-                    "value": 0.9
+                    "value": 0.93
                 }
             ]
         },
@@ -120,53 +120,11 @@ export const Kmod = {
             "type": [
                 {
                     "name": "madeiraSerrada",
-                    "value": 0.8
+                    "value": 0.7
                 },
                 {
                     "name": "madeiraRecomposta",
                     "value": 0.9
-                }
-            ]
-        }
-    ],
-    "kmod3": [
-        {
-            "name": "Conífera",
-            "id": "Kmod3_Conifera",
-            "type": [
-                {
-                    "name": "madeiraSerrada",
-                    "value": 0.8
-                },
-                {
-                    "name": "madeiraRecomposta",
-                    "value": null
-                }
-            ]
-        },
-        {
-            "name": "Dicotiledônia",
-            "id": "Kmod3_Dicotiledonia",
-            "type": [
-                {
-                    "name": "madeiraSerrada",
-                    "value": [
-                        {
-                            "name": "1ª Categoria",
-                            "id": "Dicotiledonia_1Categoria",
-                            "value": 1
-                        },
-                        {
-                            "name": "2ª Categoria",
-                            "id": "Dicotiledonia_2Categoria",
-                            "value": 0.8
-                        }
-                    ]
-                },
-                {
-                    "name": "madeiraRecomposta",
-                    "id": "Dicotiledonia_2Categoria",
-                    "value": null
                 }
             ]
         }

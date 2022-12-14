@@ -15,7 +15,7 @@ export const ModalInfo: React.FC<props> = ({ item, setVisible, visible }) => {
 
     const charging = Kmod.kmod1.find(wood => wood.id === item.charging).name;
     //const charging = Kmod.kmod2.find(wood => wood.id === item.woodClass).name;
-    const woodClass = Kmod.kmod3.find(wood => wood.id === item.woodClass).name;
+    //const woodClass = Kmod.kmod3.find(wood => wood.id === item.woodClass).name;
 
 
     return (
@@ -27,7 +27,7 @@ export const ModalInfo: React.FC<props> = ({ item, setVisible, visible }) => {
         >
             <Container>
                 <TextInfo>Tipo de carregamento: {charging}</TextInfo>
-                <TextInfo>Classificação da madeira: {woodClass}</TextInfo>
+                {/* <TextInfo>Classificação da madeira: {woodClass}</TextInfo> */}
                 <TextInfo>Criado em: {moment(item.created_at).format('L')}</TextInfo>
             </Container>
         </CustomModal>

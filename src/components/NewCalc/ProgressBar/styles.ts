@@ -29,12 +29,7 @@ export const Progress = styled.View<props>`
     }
 
     ${({ status }) => status === 2 && css`
-            width: ${(RFValue(12.5, 700)) + (Dimensions.get('window').width - RFValue(57, 700)) * (1 / 3)}px;
-        `
-    }
-
-    ${({ status }) => status === 3 && css`
-            width: ${(RFValue(12.5, 700)) + (Dimensions.get('window').width - RFValue(57, 700)) * (2 / 3)}px;
+            width: ${(RFValue(12.5, 700)) + (Dimensions.get('window').width - RFValue(57, 700)) * (1 / 2)}px;
         `
     }
 `;

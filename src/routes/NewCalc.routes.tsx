@@ -14,7 +14,6 @@ export function NewCalc() {
             {visible === 1 ? <NewCalc1 pass={setVisible} /> : null}
             {visible === 2 ? <NewCalc2 pass={setVisible} /> : null}
             {visible === 3 ? <NewCalc3 pass={setVisible} /> : null}
-            {visible === 4 ? <NewCalc4 pass={setVisible} /> : null}
         </>
     )
 }

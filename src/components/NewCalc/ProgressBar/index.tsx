@@ -36,12 +36,6 @@ export const ProgressBar: React.FC<props> = ({ stage }) => {
                     </Item>
                 </BorderItem>
 
-                <BorderItem>
-                    <Item>
-                        <TextItem>4</TextItem>
-                    </Item>
-                </BorderItem>
-
             </ItemsContainer>
 
         </Container>

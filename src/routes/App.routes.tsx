@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import globalStyle from '../styles/globalStyle';
 import { StatusBar } from 'react-native';
 import About from '../screens/About';
-import { useFonts, Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold, Montserrat_700Bold } from '@expo-google-fonts/montserrat';
+import { useFonts, Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold, Montserrat_700Bold, Montserrat_500Medium_Italic } from '@expo-google-fonts/montserrat';
 import AppLoading from 'expo-app-loading';
 import { DataProvider } from '../context/context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -20,7 +20,8 @@ export default function App() {
         Montserrat_400Regular,
         Montserrat_500Medium,
         Montserrat_600SemiBold,
-        Montserrat_700Bold
+        Montserrat_700Bold,
+        Montserrat_500Medium_Italic
     });
 
     if (!fontsLoaded) {
@@ -48,7 +49,7 @@ export default function App() {
 
                         <Screen name='TabBar' component={TopTab} />
 
-                        <Screen name='Result' component={Result} />
+                        <Screen name='Result' component={Result} initialParams={{ id_calc: undefined }} />
 
                     </Navigator>
 

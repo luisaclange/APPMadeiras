@@ -10,23 +10,14 @@ export class CalcModel extends Model {
     @field('humidityClass')
     humidityClass!: string;
 
+    @field('woodName')
+    woodName!: number;
+
     @field('woodType')
     woodType!: string;
 
-    @field('woodClass')
-    woodClass!: string;
-
-    @field('dicotyledonClass')
-    dicotyledonClass?: string;
-
     @field('tractiveForce')
     tractiveForce!: string;
-
-    @field('fyk_nail')
-    fyk_nail!: string;
-
-    @field('woodResistanceClass')
-    woodResistanceClass!: string;
 
     @field('widthWood')
     widthWood!: string;

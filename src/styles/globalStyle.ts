@@ -9,6 +9,7 @@ export default {
         regular: 'Montserrat_400Regular',
         medium: 'Montserrat_500Medium',
         semibold: 'Montserrat_600SemiBold',
-        bold: 'Montserrat_700Bold'
+        bold: 'Montserrat_700Bold',
+        italic: 'Montserrat_500Medium_Italic',
     }
 }
