@@ -1,21 +1,26 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useEffect, useState } from "react";
-import { ActivityIndicator, Dimensions, Image, ImageBackground, Text } from "react-native";
-import { RFValue } from "react-native-responsive-fontsize";
-import { Background } from "../../components/Global/Background";
-import { ButtonDark } from "../../components/Global/ButtonDark";
-import { Header } from "../../components/Global/Header";
-import { BackgroundFields } from "../../components/NewCalc/BackgroundFields";
-import { database } from "../../database";
-import { CalcModel } from "../../database/models/calcModel";
-import CalcWoodDimension from "../../project";
-import calcDraw from "../../project/draw/calcsDraw";
-import Draw from "../../project/draw/draw";
-import globalStyle from "../../styles/globalStyle";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+    ActivityIndicator,
+    Dimensions,
+    Image,
+    ImageBackground,
+    Text,
+} from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Background } from '../../components/Global/Background';
+import { ButtonDark } from '../../components/Global/ButtonDark';
+import { Header } from '../../components/Global/Header';
+import { BackgroundFields } from '../../components/NewCalc/BackgroundFields';
+import { database } from '../../database';
+import { CalcModel } from '../../database/models/calcModel';
+import CalcWoodDimension from '../../project';
+import calcDraw from '../../project/draw/calcsDraw';
+import Draw from '../../project/draw/draw';
+import globalStyle from '../../styles/globalStyle';
 
 export default function Result({ route }: any) {
-
     const { id_calc } = route.params.params;
 
     const navigation = useNavigation();
@@ -37,7 +42,7 @@ export default function Result({ route }: any) {
 
     async function GetCalc() {
         const auxCalc = await CalcWoodDimension(id_calc);
-        console.log('Aux calc: ', auxCalc)
+        console.log('Aux calc: ', auxCalc);
         // const auxData = await database.get<CalcModel>('calcs').find(id_calc);
         // setCalc(auxCalc);
         // setData(auxData);
@@ -46,12 +51,14 @@ export default function Result({ route }: any) {
 
     useEffect(() => {
         GetCalc();
-    }, [])
+    }, []);
 
     return (
         <ImageBackground
             source={require('../../assets/Background.png')}
-            imageStyle={{ height: Dimensions.get('screen').height - RFValue(120, 700) }}
+            imageStyle={{
+                height: Dimensions.get('screen').height - RFValue(120, 700),
+            }}
         >
             <ButtonDark
                 text="Voltar"
@@ -60,10 +67,8 @@ export default function Result({ route }: any) {
                 }}
                 style={{ marginTop: 100 }}
             />
-
-
         </ImageBackground>
-    )
+    );
 }
 
 // {

@@ -6,10 +6,10 @@ export default {
         grey: '#ACACAC'
     },
     fonts: {
-        regular: 'Montserrat_400Regular',
-        medium: 'Montserrat_500Medium',
-        semibold: 'Montserrat_600SemiBold',
-        bold: 'Montserrat_700Bold',
-        italic: 'Montserrat_500Medium_Italic',
+        regular: 'Montserrat-Light',
+        medium: 'Montserrat-Medium',
+        semibold: 'Montserrat-SemiBold',
+        bold: 'Montserrat-Bold',
+        italic: 'Montserrat-MediumItalic',
     }
 }

@@ -1,81 +1,100 @@
 {
     "env": {
-        "es2021": true
+      "es2021": true
     },
     "extends": [
-        "plugin:react/recommended",
-        "airbnb",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended"
+      "plugin:react/recommended",
+      "airbnb",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended"
     ],
     "globals": {
-        "DEV": "readonly"
+      "DEV": "readonly"
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": "latest",
-        "sourceType": "module"
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": "latest",
+      "sourceType": "module"
     },
     "plugins": [
         "react",
         "@typescript-eslint",
         "react-hooks",
+        "react-perf",
         "prettier"
-    ],
-    "rules": {
+      ],
+      "rules": {
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "error",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": "error",
+        "semi": 0,
+        "@typescript-eslint/semi": ["error"],
+        "react/jsx-props-no-spreading": "off",
+        "no-useless-escape": "off",
+        "import/prefer-default-export": "off",
+        "no-underscore-dangle": "off",
+        "camelcase": "off",
+        "no-param-reassign": "off",
+        "import/no-cycle": "warn",
+        "react-perf/jsx-no-new-object-as-prop": "warn",
+        "react-perf/jsx-no-new-array-as-prop": "warn",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
+        "react-perf/jsx-no-new-function-as-prop": "off",
         "react/jsx-filename-extension": [
-            1,
-            {
-                "extensions": [
-                    ".tsx"
-                ]
-            }
+          1,
+          {
+            "extensions": [".tsx"]
+          }
         ],
         "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-                "ts": "never",
-                "tsx": "never"
-            }
+          "error",
+          "ignorePackages",
+          {
+            "ts": "never",
+            "tsx": "never"
+          }
         ],
         "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": [
-            "error"
-        ],
+        "@typescript-eslint/no-use-before-define": ["error"],
         "react/react-in-jsx-scope": "off",
-        "prettier/prettier": "error",
+        "prettier/prettier": [
+          "error",
+          {
+            "endOfLine": "auto",
+            "semi": true
+          }
+        ],
         "react/style-prop-object": "off",
-        "no-unused-vars": [
-            "error",
-            {
-                "args": "none"
-            }
-        ],
-        "no-console": [
-            "error",
-            {
-                "allow": [
-                    "warn"
-                ]
-            }
-        ],
-        "no-multiple-empty-lines": [
-            2,
-            {
-                "max": 1
-            }
-        ],
-        "react/no-unused-state": "warn"
-    },
-    "settings": {
-        "import/resolver": {
-            "typescript": {}
-        }
+    "no-console": [
+      "error",
+      {
+        "allow": ["warn"]
+      }
+    ],
+    "no-multiple-empty-lines": [
+      2,
+      {
+        "max": 1
+      }
+    ],
+    "react/no-unused-state": "warn",
+    "padding-line-between-statements": "off",
+    "@typescript-eslint/padding-line-between-statements": [
+      "error",
+      { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*"},
+      { "blankLine": "any",    "prev": ["const", "let", "var"], "next": ["const", "let", "var"]}
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".ts", ".tsx", ".native.js"]
+      }
     }
+  }
 }
