@@ -1,10 +1,10 @@
-import React from "react";
-import { Controller } from "react-hook-form";
-import { TouchableWithoutFeedback, View } from "react-native";
-import { RFValue } from "react-native-responsive-fontsize";
-import { Item, ItemText, MarkButton, Title } from "./styles";
+import React from 'react';
+import { Controller } from 'react-hook-form';
+import { TouchableWithoutFeedback, View } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Item, ItemText, MarkButton, Title } from './styles';
 
-interface props {
+interface IProps {
     title: string;
     list: Array<{
         value: string;
@@ -13,7 +13,7 @@ interface props {
     control: any;
 }
 
-export const Checkbox: React.FC<props> = ({ title, list, name, control }) => {
+export function Checkbox({ title, list, name, control }: IProps) {
     return (
         <Controller
             name={name}
@@ -23,27 +23,28 @@ export const Checkbox: React.FC<props> = ({ title, list, name, control }) => {
                 return (
                     <View style={{ marginBottom: RFValue(16, 700) }}>
                         <Title>{title}</Title>
-                        {
-                            list.map((item, index) => {
-                                return (
-                                    <TouchableWithoutFeedback
-                                        onPress={() => {
-                                            onChange(item.value);
-                                        }}
-                                        key={item.value}
-                                    >
-                                        <Item>
-                                            <MarkButton isMarked={list[index].value === value} />
-                                            <ItemText>{item.value}</ItemText>
-                                        </Item>
-                                    </TouchableWithoutFeedback>
-
-                                )
-                            })
-                        }
+                        {list.map((item, index) => {
+                            return (
+                                <TouchableWithoutFeedback
+                                    onPress={() => {
+                                        onChange(item.value);
+                                    }}
+                                    key={item.value}
+                                >
+                                    <Item>
+                                        <MarkButton
+                                            isMarked={
+                                                list[index].value === value
+                                            }
+                                        />
+                                        <ItemText>{item.value}</ItemText>
+                                    </Item>
+                                </TouchableWithoutFeedback>
+                            );
+                        })}
                     </View>
-                )
+                );
             }}
         />
-    )
+    );
 }

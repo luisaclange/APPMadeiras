@@ -1,10 +1,10 @@
-import { RFValue } from "react-native-responsive-fontsize";
-import styled, { css } from "styled-components/native";
-import globalStyle from "../../../styles/globalStyle";
+import { RFValue } from 'react-native-responsive-fontsize';
+import styled, { css } from 'styled-components/native';
+import globalStyle from '../../../../styles/globalStyle';
 
 type props = {
-    error: boolean
-}
+    error: boolean;
+};
 
 export const Title = styled.Text<props>`
     font-size: ${RFValue(18, 700)}px;
@@ -13,12 +13,12 @@ export const Title = styled.Text<props>`
     line-height: ${RFValue(23, 700)}px;
     margin-bottom: ${RFValue(8, 700)}px;
 
-    ${({ error }) => error && css`
-        color: ${globalStyle.colors.error};
-    `}
+    ${({ error }) =>
+        error &&
+        css`
+            color: ${globalStyle.colors.error};
+        `}
 `;
-
-
 export const InputContainer = styled.View<props>`
     border-bottom-width: ${RFValue(1, 700)}px;
     border-color: ${globalStyle.colors.primary};
@@ -26,9 +26,11 @@ export const InputContainer = styled.View<props>`
     align-items: center;
     padding-horizontal: ${RFValue(8, 700)}px;
 
-    ${({ error }) => error && css`
-        border-color: ${globalStyle.colors.error};
-    `}
+    ${({ error }) =>
+        error &&
+        css`
+            border-color: ${globalStyle.colors.error};
+        `}
 `;
 
 export const Input = styled.TextInput`

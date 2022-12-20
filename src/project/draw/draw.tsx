@@ -6,7 +6,7 @@ import { NailDimensions } from "../../archive/2_Dimensions/Pregos";
 import calcDraw from "./calcsDraw";
 import { CalcModel } from "../../database/models/calcModel";
 import { database } from "../../database";
-import { Item } from "../../components/NewCalc/ProgressBar/styles";
+import { Item } from "../../components/newCalc/progressBar/styles";
 
 interface desenhoProps {
     data: CalcModel;

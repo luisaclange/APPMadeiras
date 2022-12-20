@@ -1,36 +1,34 @@
-import React from "react";
-import { ButtonDark } from "../../Global/ButtonDark";
-import { Container } from "./styles";
+import React from 'react';
+import { ButtonDark } from '../../global/buttons/buttonDark';
+import { Container } from './styles';
 
-interface props {
+interface IProps {
     prevAction?: any;
     nextAction?: any;
 }
 
-export const ButtonsPrevNext: React.FC<props> = ({ nextAction, prevAction }) => {
-
+export function ButtonsPrevNext({ nextAction, prevAction }: IProps) {
     return (
         <Container
-            style={{ justifyContent: prevAction && nextAction ? 'space-between' : prevAction ? 'flex-start' : 'flex-end' }}
+            style={{
+                justifyContent:
+                    prevAction && nextAction
+                        ? 'space-between'
+                        : prevAction
+                            ? 'flex-start'
+                            : 'flex-end',
+            }}
         >
-            {
-                prevAction ?
-                    <ButtonDark
-                        text="Voltar"
-                        onPress={prevAction}
-                    />
-                    :
-                    <></>
-            }
-            {
-                nextAction ?
-                    <ButtonDark
-                        text="Próximo"
-                        onPress={nextAction}
-                    />
-                    :
-                    <></>
-            }
+            {prevAction ? (
+                <ButtonDark text="Voltar" onPress={prevAction} />
+            ) : (
+                <></>
+            )}
+            {nextAction ? (
+                <ButtonDark text="Próximo" onPress={nextAction} />
+            ) : (
+                <></>
+            )}
         </Container>
-    )
+    );
 }

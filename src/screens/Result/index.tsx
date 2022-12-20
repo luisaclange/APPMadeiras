@@ -9,10 +9,10 @@ import {
     Text,
 } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Background } from '../../components/Global/Background';
-import { ButtonDark } from '../../components/Global/ButtonDark';
-import { Header } from '../../components/Global/Header';
-import { BackgroundFields } from '../../components/NewCalc/BackgroundFields';
+import { Background } from '../../components/global/background';
+import { ButtonDark } from '../../components/global/buttons/buttonDark';
+import { Header } from '../../components/historic/header';
+import { BackgroundFields } from '../../components/newCalc/backgroundFields';
 import { database } from '../../database';
 import { CalcModel } from '../../database/models/calcModel';
 import CalcWoodDimension from '../../project';

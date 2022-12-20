@@ -1,18 +1,16 @@
-import React from "react";
-import { Border, Container, FieldsContainer } from "./styles";
+import React from 'react';
+import { Border, Container, FieldsContainer } from './styles';
 
-interface props {
+interface IProps {
     children: React.ReactNode;
 }
 
-export const BackgroundFields: React.FC = ({ children }) => {
+export function BackgroundFields({ children }: IProps) {
     return (
         <Container>
             <Border>
-                <FieldsContainer>
-                    {children}
-                </FieldsContainer>
+                <FieldsContainer>{children}</FieldsContainer>
             </Border>
         </Container>
-    )
+    );
 }

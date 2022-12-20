@@ -4,17 +4,17 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView, View } from 'react-native';
-import { Background } from '../../../components/Global/Background';
-import { BackgroundFields } from '../../../components/NewCalc/BackgroundFields';
-import { ProgressBar } from '../../../components/NewCalc/ProgressBar';
-import { TitleSection } from '../../../components/NewCalc/TitleSection';
 import DataContext, { Data } from '../../../context/context';
-import { FieldSelect } from '../../../components/NewCalc/FieldSelect';
-import { ButtonsPrevNext } from '../../../components/NewCalc/ButtonsPrevNext';
-import { FieldInput } from '../../../components/NewCalc/FieldInput';
 import { NailDimensions } from '../../../archive/2_Dimensions/Pregos';
 import { database } from '../../../database';
 import { CalcModel } from '../../../database/models/calcModel';
+import Background from '../../../components/global/background';
+import { ProgressBar } from '../../../components/newCalc/progressBar';
+import { TitleSection } from '../../../components/newCalc/titleSection';
+import { BackgroundFields } from '../../../components/newCalc/backgroundFields';
+import { FieldInput } from '../../../components/newCalc/fields/fieldInput';
+import { FieldSelect } from '../../../components/newCalc/fields/fieldSelect';
+import { ButtonsPrevNext } from '../../../components/newCalc/buttonsPrevNext';
 
 export default function NewCalc3({ pass }: any) {
     const schema = yup.object().shape({

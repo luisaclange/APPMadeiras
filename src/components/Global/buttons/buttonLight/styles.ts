@@ -1,6 +1,6 @@
 import { RFValue } from 'react-native-responsive-fontsize';
-import styled from 'styled-components/native'
-import globalStyle from '../../../styles/globalStyle';
+import styled from 'styled-components/native';
+import globalStyle from '../../../../styles/globalStyle';
 
 export const Border = styled.View`
     height: ${RFValue(60, 700)}px;

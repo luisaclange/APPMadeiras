@@ -1,11 +1,6 @@
 import { RFValue } from 'react-native-responsive-fontsize';
+import styled from 'styled-components/native';
 import globalStyle from '../../../styles/globalStyle';
-import styled, { css } from 'styled-components/native';
-
-
-type Props = {
-    focused: boolean
-}
 
 export const Container = styled.View`
     background-color: ${globalStyle.colors.primary}
@@ -15,14 +10,9 @@ export const Container = styled.View`
     justify-content: space-between
 `;
 
-export const IconBox = styled.TouchableOpacity<Props>`
+export const IconBox = styled.TouchableOpacity`
     height: ${RFValue(60, 700)}px;
     width: ${RFValue(60, 700)}px;
     justify-content: center;
     align-items: center;
-
-    ${({ focused }) => focused && css`
-        border-bottom-width: 2px;
-        border-color: white;
-    `}
 `;

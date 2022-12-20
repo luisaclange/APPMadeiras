@@ -1,9 +1,9 @@
-import React, { SetStateAction } from "react";
-import { ButtonDark } from "../ButtonDark";
-import CustomModal from "../Modal";
-import { Container, Message, MessageContainer } from "./styles";
+import React, { SetStateAction } from 'react';
+import ButtonDark from '../../buttons/buttonDark';
+import CustomModal from '../../modal';
+import { Container, Message, MessageContainer } from './styles';
 
-interface props {
+interface IProps {
     visible: boolean;
     setVisible: SetStateAction<boolean>;
     message: string;
@@ -11,7 +11,13 @@ interface props {
     textButton: string;
 }
 
-export const PopUpOneButton: React.FC<props> = ({ setVisible, visible, message, actionButton, textButton }) => {
+export default function PopUpOneButton({
+    setVisible,
+    visible,
+    message,
+    actionButton,
+    textButton,
+}: IProps) {
     return (
         <CustomModal
             backdrop
@@ -23,11 +29,8 @@ export const PopUpOneButton: React.FC<props> = ({ setVisible, visible, message, 
                 <MessageContainer>
                     <Message>{message}</Message>
                 </MessageContainer>
-                <ButtonDark
-                    onPress={actionButton}
-                    text={textButton}
-                />
+                <ButtonDark onPress={actionButton} text={textButton} />
             </Container>
         </CustomModal>
-    )
+    );
 }

@@ -1,12 +1,18 @@
-import React from "react";
-import { BorderSection, Container, SectionContainer, SubTitle, Title } from "./styles";
+import React from 'react';
+import {
+    BorderSection,
+    Container,
+    SectionContainer,
+    SubTitle,
+    Title,
+} from './styles';
 
-interface props {
+interface IProps {
     title: string;
     subtitle: string;
 }
 
-export const TitleSection: React.FC<props> = ({ title, subtitle }) => {
+export function TitleSection({ title, subtitle }: IProps) {
     return (
         <Container>
             <BorderSection>
@@ -16,5 +22,5 @@ export const TitleSection: React.FC<props> = ({ title, subtitle }) => {
                 </SectionContainer>
             </BorderSection>
         </Container>
-    )
+    );
 }

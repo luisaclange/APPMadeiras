@@ -1,6 +1,6 @@
-import { RFValue } from "react-native-responsive-fontsize";
-import styled from "styled-components/native";
-import globalStyle from "../../../styles/globalStyle";
+import { RFValue } from 'react-native-responsive-fontsize';
+import styled from 'styled-components/native';
+import globalStyle from '../../../styles/globalStyle';
 
 export const Container = styled.View`
     padding: ${RFValue(16, 700)}px;

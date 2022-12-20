@@ -1,18 +1,20 @@
-import React, { Component } from "react";
-import { Dimensions } from "react-native";
-import { RFValue } from "react-native-responsive-fontsize";
-import { Image } from "./styles";
+import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import globalStyle from "../../../styles/globalStyle";
 
 interface props {
     children: React.ReactNode;
 }
 
-export const Background: React.FC<props> = ({ children }) => {
+export default function Background({ children }: props) {
     return (
         <LinearGradient
-            colors={['#593b2b', 'transparent', 'transparent', 'transparent', '#593b2b']}
+            colors={[
+                '#593b2b',
+                'transparent',
+                'transparent',
+                'transparent',
+                '#593b2b',
+            ]}
             style={{ height: '100%' }}
         >
             {children}
@@ -23,5 +25,5 @@ export const Background: React.FC<props> = ({ children }) => {
         // >
         //     {children}
         // </Image>
-    )
+    );
 }

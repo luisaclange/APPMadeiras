@@ -4,19 +4,19 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView, View } from 'react-native';
-import { Background } from '../../../components/Global/Background';
-import { Header } from '../../../components/Global/Header';
-import { BackgroundFields } from '../../../components/NewCalc/BackgroundFields';
-import { ProgressBar } from '../../../components/NewCalc/ProgressBar';
-import { TitleSection } from '../../../components/NewCalc/TitleSection';
+import { Background } from '../../../components/global/background';
+import { Header } from '../../../components/historic/header';
+import { BackgroundFields } from '../../../components/newCalc/backgroundFields';
+import { ProgressBar } from '../../../components/newCalc/progressBar';
+import { TitleSection } from '../../../components/newCalc/titleSection';
 import DataContext, { Data } from '../../../context/context';
-import { FieldSelect } from '../../../components/NewCalc/FieldSelect';
-import { ButtonsPrevNext } from '../../../components/NewCalc/ButtonsPrevNext';
+import { FieldSelect } from '../../../components/newCalc/fields/fieldSelect';
+import { ButtonsPrevNext } from '../../../components/newCalc/buttonsPrevNext';
 import { WoodType } from '../../../archive/WoodProperties/WoodType';
 import { Kmod } from '../../../archive/WoodProperties/Kmod';
 import { DicotyledonClass } from '../../../archive/WoodProperties/DicotyledonClass';
-import { Checkbox } from '../../../components/NewCalc/Checkbox';
-import { FieldSelectWoods } from '../../../components/NewCalc/FieldSelectWoods';
+import { Checkbox } from '../../../components/newCalc/checkbox';
+import { FieldSelectWoods } from '../../../components/newCalc/fields/fieldSelectWoods';
 
 const schema = yup.object().shape({
     woodType: yup.string(),
