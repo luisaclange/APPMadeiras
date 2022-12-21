@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 import { ScrollView, View } from 'react-native';
-import { Background } from '../../../components/global/background';
+import { Background } from '../../../components/historic/background';
 import { BackgroundFields } from '../../../components/newCalc/backgroundFields';
 import { ProgressBar } from '../../../components/newCalc/progressBar';
 import { TitleSection } from '../../../components/newCalc/titleSection';

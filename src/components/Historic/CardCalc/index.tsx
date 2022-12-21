@@ -1,20 +1,20 @@
 import moment from 'moment';
 import 'moment/locale/pt-br';
-import React, { useState } from 'react';
-import Info from 'react-native-vector-icons/FontAwesome5';
-import Trash from 'react-native-vector-icons/Entypo';
-import Calculator from 'react-native-vector-icons/Ionicons';
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import Info from '../../../assets/svgs/info.svg';
+import Trash from '../../../assets/svgs/trash.svg';
+import Calculator from '../../../assets/svgs/calculator.svg';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import {
-    Container,
-    IconsContainer,
-    InfoContainer,
-    ItemText,
-    SubTitle,
-    TextContainer,
-    Title,
+  Container,
+  IconsContainer,
+  InfoContainer,
+  ItemText,
+  SubTitle,
+  TextContainer,
+  Title,
 } from './styles';
 import { CalcModel } from '../../../database/models/calcModel';
 import { Kmod } from '../../../archive/WoodProperties/Kmod';
@@ -24,149 +24,187 @@ import PopUpTwoButtons from '../../global/popUps/popUpTwoButtons';
 import { database } from '../../../database';
 import { NativeWoods } from '../../../archive/NativeWood/NativeWood';
 import { NailDimensions } from '../../../archive/2_Dimensions/Pregos';
-import New from '../../../assets/new.svg';
-import globalStyle from '../../../styles/globalStyle';
+import New from '../../../assets/svgs/new.svg';
 
-interface props {
-    item: CalcModel;
-    index: number;
-    setRefresh: any;
+interface IProps {
+  item: CalcModel;
+  setRefresh: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function CardCalc({ item, index, setRefresh }: props) {
-    const navigation = useNavigation();
+interface IData {
+  wood_name: string;
+  wood_resistance: string;
+  charging: string;
+  humidityClass: string;
+  nail_name: string;
+}
 
-    const woodName = NativeWoods.find((wood) => wood.id === item.woodName);
+export default function CardCalc({ item, setRefresh }: IProps) {
+  // Navegação
+  const navigation = useNavigation();
+
+  // Variáveis
+  const [visibleModalInfo, setVisibleModalInfo] = useState(false);
+  const [visibleModalDeleteQuest, setVisibleModalDeleteQuest] = useState(false);
+  const [visibleModalDeleteSuccess, setVisibleModalDeleteSuccess] = useState(false);
+  const [visibleModalError, setVisibleModalError] = useState(false)
+  const [data, setData] = useState<IData>();
+
+  // Buscar dados
+  const GetData = useCallback(() => {
+    const wood = NativeWoods.find((wood) => wood.id === item.woodName);
     const charging = Kmod.kmod1.find((wood) => wood.id === item.charging).name;
-    const humidiyClass = Kmod.kmod2.find(
-        (wood) => wood.id === item.humidityClass,
+    const humidityClass = Kmod.kmod2.find(
+      (wood) => wood.id === item.humidityClass,
     ).name;
-    const nailDim = NailDimensions.find(
-        (nail) => nail.id === item.nailDimension,
+    const nail_name = NailDimensions.find(
+      (nail) => nail.id === item.nailDimension,
     ).name;
 
-    const [modalInfo, setModalInfo] = useState(false);
-    const [deleteQuest, setDeleteQuest] = useState(false);
-    const [deleteSuccess, setDeleteSuccess] = useState(false);
+    setData({
+      charging,
+      humidityClass,
+      nail_name,
+      wood_name: wood.name,
+      wood_resistance: wood.class,
+    })
+  }, []);
 
-    async function DeleteCalc() {
-        await database.write(async () => {
-            const aux = await database.get<CalcModel>('calcs').find(item.id);
+  useEffect(GetData, [GetData]);
 
-            await aux.destroyPermanently();
-        });
-        setDeleteSuccess(true);
+  // Deletar cálculo
+  async function DeleteCalc() {
+    try {
+      await database.write(async () => {
+        const aux = await database.get<CalcModel>('calcs').find(item.id);
+
+        await aux.destroyPermanently();
+      });
+      setVisibleModalDeleteSuccess(true);
+    } catch (error) {
+      setVisibleModalError(true);
     }
+  }
 
-    async function OpenInfo() {
-        await database.write(async () => {
-            await item.update(() => {
-                item.visualized_at = Number(new Date()) - 10800000;
-            });
+  // Ir para mais informações
+  async function OpenInfo() {
+    try {
+      await database.write(async () => {
+        await item.update(() => {
+          item.visualized_at = Number(new Date()) - 10800000;
         });
-        setModalInfo(true);
+      });
+      setVisibleModalInfo(true);
+    } catch (error) {
+      setVisibleModalError(true);
     }
+  }
 
-    async function Calc() {
-        await database.write(async () => {
-            await item.update(() => {
-                item.visualized_at = Number(new Date()) - 10800000;
-            });
+  // Ir para resultados
+  async function Calc() {
+    try {
+      await database.write(async () => {
+        await item.update(() => {
+          item.visualized_at = Number(new Date()) - 10800000;
         });
-        navigation.navigate('Result', { params: { id_calc: item.id } });
+      });
+      navigation.dispatch(
+        CommonActions.navigate('Result', { params: { id_calc: item.id } }),
+      );
+    } catch (error) {
+      setVisibleModalError(true);
     }
+  }
 
-    return (
-        <>
-            <Container isNew={item.visualized_at === 0}>
-                <ModalInfo
-                    visible={modalInfo}
-                    setVisible={setModalInfo}
-                    item={item}
-                />
-                <PopUpOneButton
-                    visible={deleteSuccess}
-                    setVisible={setDeleteSuccess}
-                    message="Cálculo deletado com sucesso!"
-                    actionButton={() => {
-                        setRefresh(true);
-                        setDeleteSuccess(false);
-                    }}
-                    textButton="OK"
-                />
-                <PopUpTwoButtons
-                    visible={deleteQuest}
-                    setVisible={setDeleteQuest}
-                    message="Tem certeza de que deseja excluir esse cálculo?"
-                    rActionButton={() => {
-                        setDeleteQuest(false);
-                    }}
-                    rTextButton="Não"
-                    lActionButton={() => {
-                        setDeleteQuest(false);
-                        DeleteCalc();
-                    }}
-                    lTextButton="Sim"
-                />
-                <InfoContainer>
-                    <Title>Calculo #{index}</Title>
-                    <SubTitle>
-                        {moment(new Date(item.created_at)).format('L')} -
-                        {moment(new Date(item.created_at)).format('LT')}
-                    </SubTitle>
-                    <TextContainer>
-                        <ItemText>- Madeira {woodName.name}</ItemText>
-                        <ItemText>
-                            - Classe de resistência {woodName.class}
-                        </ItemText>
-                        <ItemText>- Carregamento {charging}</ItemText>
-                        <ItemText>- Classe de Umidade {humidiyClass}</ItemText>
-                        <ItemText>- Prego {nailDim}</ItemText>
-                    </TextContainer>
-                </InfoContainer>
+  return (
+    <>
+      <Container isNew={item.visualized_at === 0}>
+        <ModalInfo
+          visible={visibleModalInfo}
+          setVisible={setVisibleModalInfo}
+          item={item}
+        />
+        <PopUpOneButton
+          visible={visibleModalDeleteSuccess}
+          setVisible={setVisibleModalDeleteSuccess}
+          message="Cálculo deletado com sucesso!"
+          actionButton={() => {
+            setRefresh(true);
+            setVisibleModalDeleteSuccess(false);
+          }}
+          textButton="OK"
+        />
+        <PopUpOneButton
+          visible={visibleModalError}
+          setVisible={setVisibleModalError}
+          message="Ops, ocorreu um erro. Tente novamente."
+          actionButton={() => {
+            setVisibleModalError(false);
+          }}
+          textButton="OK"
+        />
+        <PopUpTwoButtons
+          visible={visibleModalDeleteQuest}
+          setVisible={setVisibleModalDeleteQuest}
+          message="Tem certeza de que deseja excluir esse cálculo?"
+          rActionButton={() => {
+            setVisibleModalDeleteQuest(false);
+          }}
+          rTextButton="Não"
+          lActionButton={() => {
+            setVisibleModalDeleteQuest(false);
+            DeleteCalc();
+          }}
+          lTextButton="Sim"
+        />
+        <InfoContainer>
+          {
+            data ? <>
+              <Title>{item.description}</Title>
+              <SubTitle>{`${moment(new Date(item.created_at)).format('L')} - ${moment(new Date(item.created_at)).format('LT')}`}
+              </SubTitle>
+              <TextContainer>
+                <ItemText>{`- Madeira ${data.wood_name};\n- Classe de resistência ${data.wood_resistance};\n- Carregamento ${data.charging};\n- Classe de Umidade ${data.humidityClass};\n- Prego ${data.nail_name};`}</ItemText>
+              </TextContainer>
+            </> : null
+          }
+        </InfoContainer>
 
-                <IconsContainer>
-                    <TouchableOpacity
-                        onPress={() => {
-                            OpenInfo();
-                        }}
-                    >
-                        <Info
-                            name="info-circle"
-                            size={RFValue(30, 700)}
-                            color={globalStyle.colors.primary}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => {
-                            setDeleteQuest(true);
-                        }}
-                    >
-                        <Trash
-                            name="trash"
-                            size={RFValue(30, 700)}
-                            color={globalStyle.colors.primary}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={async () => {
-                            Calc();
-                        }}
-                    >
-                        <Calculator
-                            name="calculator"
-                            size={RFValue(30, 700)}
-                            color={globalStyle.colors.primary}
-                        />
-                    </TouchableOpacity>
-                </IconsContainer>
-            </Container>
-            {item.visualized_at === 0 ? (
-                <New
-                    style={{ position: 'absolute', bottom: RFValue(16, 700) }}
-                    scale={1.5}
-                />
-            ) : null}
-        </>
-    );
+        <IconsContainer>
+
+          <TouchableOpacity
+            onPress={() => {
+              OpenInfo();
+            }}
+          >
+            <Info />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              setVisibleModalDeleteQuest(true);
+            }}
+          >
+            <Trash />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={async () => {
+              Calc();
+            }}
+          >
+            <Calculator />
+          </TouchableOpacity>
+
+        </IconsContainer>
+
+      </Container>
+      {item.visualized_at === 0 ? (
+        <New
+          style={{ position: 'absolute', bottom: RFValue(16, 700) }}
+          scale={1.5}
+        />
+      ) : null}
+    </>
+  );
 }

@@ -1,106 +1,86 @@
-import {
-    useFocusEffect,
-    useIsFocused,
-    useNavigation,
-} from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import {
-    ActivityIndicator,
-    FlatList,
-    Text,
-    TouchableOpacity,
-    View,
-} from 'react-native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Background } from '../../components/global/background';
-import { CardCalc } from '../../components/historic/cardCalc';
 import { database } from '../../database';
 import { CalcModel } from '../../database/models/calcModel';
-import globalStyle from '../../styles/globalStyle';
-import { BoxAlert, TextAlert } from './styles';
+import { BoxAlert, Container, FloatingButton, TextAlert } from './styles';
+import CardCalc from '../../components/historic/cardCalc';
+import Header from '../../components/historic/header';
+import Background from '../../components/historic/background/index';
+import LoadingPage from '../../components/global/loadingPage';
+import ButtonDark from '../../components/global/buttons/buttonDark';
 
 export default function Historic() {
-    const navigation = useNavigation();
+  // Navegação
+  const navigation = useNavigation();
 
-    const [data, setData] = useState<CalcModel[]>([]);
-    const [refresh, setRefresh] = useState(false);
-    const [itsOk, setItsOk] = useState(false);
+  // Variáveis
+  const [data, setData] = useState<CalcModel[]>([]);
+  const [refresh, setRefresh] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-    async function GetData() {
-        const aux = await database.get<CalcModel>('calcs').query().fetch();
+  // Buscar dados
+  const GetData = useCallback(async () => {
+    const aux = await database.get<CalcModel>('calcs').query().fetch();
 
-        setData(aux.sort((a, b) => a.created_at < b.created_at));
-        setRefresh(false);
-        setItsOk(true);
-    }
+    setData(aux.sort((a, b) => a.created_at - b.created_at));
+    setRefresh(false);
+    setIsLoading(false);
+  }, []);
 
-    useEffect(() => {
-        GetData();
-    }, [refresh]);
+  // Buscar dados quando atualizar
+  useEffect(() => {
+    GetData();
+  }, [refresh]);
 
-    useFocusEffect(
-        React.useCallback(() => {
-            GetData();
-        }, [useIsFocused()]),
-    );
+  // Buscar dados quando a tela entra em foco
+  useFocusEffect(
+    React.useCallback(() => {
+      GetData();
+    }, [GetData]),
+  );
 
-    return (
-        <Background>
-            {itsOk ? (
-                <FlatList
-                    refreshing={refresh}
-                    onRefresh={() => {
-                        GetData();
-                    }}
-                    ListEmptyComponent={
-                        <BoxAlert>
-                            <TextAlert>Não há cálculos ainda...</TextAlert>
-                            <TextAlert
-                                style={{
-                                    fontSize: RFValue(24, 700),
-                                    marginTop: RFValue(16, 700),
-                                }}
-                            >
-                                Para calcular uma nova ligação,
-                            </TextAlert>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    navigation.navigate('NewCalc');
-                                }}
-                            >
-                                <TextAlert
-                                    style={{
-                                        fontSize: RFValue(24, 700),
-                                        textDecorationLine: 'underline',
-                                    }}
-                                >
-                                    clique aqui
-                                </TextAlert>
-                            </TouchableOpacity>
-                        </BoxAlert>
-                    }
-                    contentContainerStyle={{
-                        flexGrow: 1,
-                        padding: RFValue(16, 700),
-                    }}
-                    data={data}
-                    renderItem={(item) => {
-                        return (
-                            <CardCalc
-                                item={item.item}
-                                index={item.index + 1}
-                                setRefresh={setRefresh}
-                            />
-                        );
-                    }}
+  return (
+    <Container>
+      <Header />
+      <Background>
+        {!isLoading ? (
+          <FlatList
+            refreshing={refresh}
+            onRefresh={() => {
+              GetData();
+            }}
+            ListEmptyComponent={
+              <BoxAlert>
+                <TextAlert>Não há cálculos ainda...</TextAlert>
+              </BoxAlert>
+            }
+            contentContainerStyle={{
+              flexGrow: 1,
+              padding: RFValue(16, 700),
+            }}
+            data={data}
+            renderItem={(item) => {
+              return (
+                <CardCalc
+                  item={item.item}
+                  setRefresh={setRefresh}
                 />
-            ) : (
-                <ActivityIndicator
-                    color={globalStyle.colors.primary}
-                    size="large"
-                    style={{ marginTop: 100 }}
-                />
-            )}
-        </Background>
-    );
+              );
+            }}
+          />
+        ) : (
+          <LoadingPage />
+        )}
+      </Background>
+
+      <FloatingButton>
+        <ButtonDark
+          text='Novo cálculo'
+          style={{ width: RFValue(230, 700) }}
+        />
+      </FloatingButton>
+    </Container>
+  );
 }

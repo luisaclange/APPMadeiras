@@ -8,7 +8,7 @@ import DataContext, { Data } from '../../../context/context';
 import { NailDimensions } from '../../../archive/2_Dimensions/Pregos';
 import { database } from '../../../database';
 import { CalcModel } from '../../../database/models/calcModel';
-import Background from '../../../components/global/background';
+import Background from '../../../components/historic/background';
 import { ProgressBar } from '../../../components/newCalc/progressBar';
 import { TitleSection } from '../../../components/newCalc/titleSection';
 import { BackgroundFields } from '../../../components/newCalc/backgroundFields';

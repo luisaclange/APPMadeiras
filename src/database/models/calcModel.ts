@@ -2,41 +2,44 @@ import { Model } from '@nozbe/watermelondb';
 import { field } from '@nozbe/watermelondb/decorators';
 
 export class CalcModel extends Model {
-    static table = 'calcs'
+  static table = 'calcs'
 
-    @field('charging')
-    charging!: string;
+  @field('description')
+  description!: string;
 
-    @field('humidityClass')
-    humidityClass!: string;
+  @field('charging')
+  charging!: string;
 
-    @field('woodName')
-    woodName!: number;
+  @field('humidityClass')
+  humidityClass!: string;
 
-    @field('woodType')
-    woodType!: string;
+  @field('woodName')
+  woodName!: number;
 
-    @field('tractiveForce')
-    tractiveForce!: string;
+  @field('woodType')
+  woodType!: string;
 
-    @field('widthWood')
-    widthWood!: string;
+  @field('tractiveForce')
+  tractiveForce!: string;
 
-    @field('heightWood_1')
-    heightWood_1!: string;
+  @field('widthWood')
+  widthWood!: string;
 
-    @field('heightWood_2')
-    heightWood_2!: string;
+  @field('heightWood_1')
+  heightWood_1!: string;
 
-    @field('nailDimension')
-    nailDimension!: string;
+  @field('heightWood_2')
+  heightWood_2!: string;
 
-    @field('created_at')
-    created_at!: number;
+  @field('nailDimension')
+  nailDimension!: string;
 
-    @field('visualized_at')
-    visualized_at?: number;
+  @field('created_at')
+  created_at!: number;
 
-    @field('updated_at')
-    updated_at?: number;
+  @field('visualized_at')
+  visualized_at?: number;
+
+  @field('updated_at')
+  updated_at?: number;
 }

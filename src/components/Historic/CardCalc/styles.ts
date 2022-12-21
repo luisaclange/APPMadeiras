@@ -3,7 +3,7 @@ import styled, { css } from "styled-components/native";
 import globalStyle from "../../../styles/globalStyle";
 
 interface props {
-    isNew: boolean;
+  isNew: boolean;
 }
 
 export const Container = styled.View<props>`
@@ -23,14 +23,14 @@ export const Container = styled.View<props>`
 `;
 
 export const Title = styled.Text`
-    font-size: ${RFValue(24, 700)}px;
-    font-family: ${globalStyle.fonts.bold};
+    font-size: ${RFValue(28, 700)}px;
+    font-family: ${globalStyle.fonts.semibold};
     color: ${globalStyle.colors.primary};
 `;
 
 export const SubTitle = styled.Text`
-    font-size: ${RFValue(14, 700)}px;
-    font-family: ${globalStyle.fonts.medium};
+    font-size: ${RFValue(16, 700)}px;
+    font-family: ${globalStyle.fonts.semibold};
     color: ${globalStyle.colors.grey};
 `;
 

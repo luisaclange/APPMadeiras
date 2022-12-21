@@ -1,29 +1,29 @@
-import * as React from "react"
-import { NavigationContainer } from "@react-navigation/native"
-import { ThemeProvider } from "styled-components"
-import { StatusBar } from "react-native"
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { ThemeProvider } from 'styled-components';
+import { StatusBar } from 'react-native';
 import {
 	createNativeStackNavigator,
 	NativeStackNavigationOptions,
-} from "@react-navigation/native-stack"
-import globalStyle from "../styles/globalStyle"
-import Result from "../screens/result"
-import Historic from "../screens/historic"
-import NewCalc1 from "../screens/NewCalc/newCalc1"
-import NewCalc2 from "../screens/NewCalc/newCalc2"
-import NewCalc3 from "../screens/NewCalc/newCalc3"
-import Filter from "../screens/filter"
-import MoreInfo from "../screens/moreInfo"
-import Home from "../screens/home"
-import { DataProvider } from "../context/context"
+} from '@react-navigation/native-stack';
+import globalStyle from '../styles/globalStyle';
+import Result from '../screens/result';
+import Historic from '../screens/historic';
+import NewCalc1 from '../screens/NewCalc/newCalc1';
+import NewCalc2 from '../screens/NewCalc/newCalc2';
+import NewCalc3 from '../screens/NewCalc/newCalc3';
+import Filter from '../screens/filter';
+import MoreInfo from '../screens/moreInfo';
+import Home from '../screens/home';
+import { DataProvider } from '../context/context';
 
 const screenOptions: NativeStackNavigationOptions = {
 	headerShown: false,
-	animation: "none",
-}
+	animation: 'none',
+};
 
 export default function App() {
-	const { Navigator, Screen } = createNativeStackNavigator()
+	const { Navigator, Screen } = createNativeStackNavigator();
 
 	return (
 		<ThemeProvider theme={globalStyle}>
@@ -41,9 +41,9 @@ export default function App() {
 					>
 						<Screen name="Home" component={Home} />
 
-						{/* <Screen name="Historic" component={Historic} />
+						<Screen name="Historic" component={Historic} />
 
-                        <Screen name="Filter" component={Filter} />
+						{/* <Screen name="Filter" component={Filter} />
 
                         <Screen name="MoreInfo" component={MoreInfo} />
 
@@ -62,5 +62,5 @@ export default function App() {
 				</NavigationContainer>
 			</DataProvider>
 		</ThemeProvider>
-	)
+	);
 }

@@ -3,25 +3,25 @@ import styled from 'styled-components/native';
 import globalStyle from '../../../../styles/globalStyle';
 
 export const Border = styled.View`
-    height: ${RFValue(60, 700)}px;
-    border-width: ${RFValue(2, 700)}px;
-    border-color: ${globalStyle.colors.secondary};
-    padding: ${RFValue(2, 700)}px;
-    border-radius: ${RFValue(8, 700)}px;
-    width: 100%;
+	height: ${RFValue(60, 700)}px;
+	border-width: ${RFValue(2, 700)}px;
+	border-color: ${globalStyle.colors.secondary};
+	padding: ${RFValue(2, 700)}px;
+	border-radius: ${RFValue(8, 700)}px;
+	width: 100%;
 `;
 
 export const Container = styled.View`
-    background-color: ${globalStyle.colors.secondary};
-    justify-content: center;
-    align-items: center;
-    margin: 2px;
-    flex-grow: 1;
-    border-radius: ${RFValue(8, 700)}px;
+	background-color: ${globalStyle.colors.secondary};
+	justify-content: center;
+	align-items: center;
+	margin: 2px;
+	flex-grow: 1;
+	border-radius: ${RFValue(4, 700)}px;
 `;
 
 export const TextButton = styled.Text`
-    font-family: ${globalStyle.fonts.medium};
-    color: ${globalStyle.colors.primary};
-    font-size: ${RFValue(18, 700)}px;
+	font-family: ${globalStyle.fonts.semibold};
+	color: ${globalStyle.colors.primary};
+	font-size: ${RFValue(18, 700)}px;
 `;

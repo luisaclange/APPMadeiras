@@ -9,7 +9,7 @@ import {
     Text,
 } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Background } from '../../components/global/background';
+import { Background } from '../../components/historic/background';
 import { ButtonDark } from '../../components/global/buttons/buttonDark';
 import { Header } from '../../components/historic/header';
 import { BackgroundFields } from '../../components/newCalc/backgroundFields';
