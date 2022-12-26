@@ -2,9 +2,10 @@ import { Dimensions } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled, { css } from "styled-components/native";
 import globalStyle from "../../../styles/globalStyle";
+import { ProgressNewCalc } from "../header";
 
-interface props {
-    status: number;
+interface IProps {
+  status: ProgressNewCalc;
 }
 
 export const Container = styled.View`
@@ -18,20 +19,20 @@ export const BorderBar = styled.View`
     border-radius: ${RFValue(8, 700)}px;
 `;
 
-export const Progress = styled.View<props>`
+export const Progress = styled.View<IProps>`
     height: ${RFValue(10, 700)}px;
     background-color: ${globalStyle.colors.secondary};
     border-radius: ${RFValue(8, 700)}px;
 
-    ${({ status }) => status === 1 && css`
+    ${({ status }) => status === ProgressNewCalc.newCalc1 && css`
             width: ${RFValue(8.5, 700)}px;
         `
-    }
+  }
 
-    ${({ status }) => status === 2 && css`
+    ${({ status }) => status === ProgressNewCalc.newCalc2 && css`
             width: ${(RFValue(12.5, 700)) + (Dimensions.get('window').width - RFValue(57, 700)) * (1 / 2)}px;
         `
-    }
+  }
 `;
 
 export const BorderItem = styled.View`

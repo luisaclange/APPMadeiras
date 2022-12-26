@@ -1,9 +1,10 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled, { css } from 'styled-components/native';
 import globalStyle from '../../../../styles/globalStyle';
+import { Dimensions } from 'react-native';
 
 type props = {
-    error: boolean;
+  error: boolean;
 };
 
 export const Title = styled.Text<props>`
@@ -14,12 +15,12 @@ export const Title = styled.Text<props>`
     margin-bottom: ${RFValue(8, 700)}px;
 
     ${({ error }) =>
-        error &&
-        css`
+    error &&
+    css`
             color: ${globalStyle.colors.error};
         `}
 `;
-export const InputContainer = styled.View<props>`
+export const InputContainer = styled.Pressable<props>`
     border-bottom-width: ${RFValue(1, 700)}px;
     border-color: ${globalStyle.colors.primary};
     flex-direction: row;
@@ -27,8 +28,8 @@ export const InputContainer = styled.View<props>`
     padding-horizontal: ${RFValue(8, 700)}px;
 
     ${({ error }) =>
-        error &&
-        css`
+    error &&
+    css`
             border-color: ${globalStyle.colors.error};
         `}
 `;
@@ -56,9 +57,9 @@ export const Modal = styled.View`
     background-color: ${globalStyle.colors.secondary};
     border-radius: ${RFValue(8, 700)}px;
     padding: ${RFValue(16, 700)}px;
-    height: ${RFValue(450, 700)}px;
+    height: ${RFValue(350, 700)}px;
     margin-horizontal: ${RFValue(32, 700)}px;
-    width: ${RFValue(350, 700)}px;
+    width: ${Dimensions.get('screen').width}px;
 `;
 
 export const SelectText = styled.Text`
@@ -72,14 +73,6 @@ export const ItemText = styled.Text`
     font-size: ${RFValue(17, 700)}px;
     font-family: ${globalStyle.fonts.medium};
     color: ${globalStyle.colors.primary};
-    flex: 10;
-    padding-left: ${RFValue(32, 700)}px;
-`;
-
-export const ItemSubText = styled.Text`
-    font-size: ${RFValue(14, 700)}px;
-    font-family: ${globalStyle.fonts.italic};
-    color: ${globalStyle.colors.grey};
     flex: 10;
     padding-left: ${RFValue(32, 700)}px;
 `;
@@ -104,22 +97,4 @@ export const Error = styled.Text`
 
 export const Space = styled.View`
     height: ${RFValue(16, 700)}px;
-`;
-
-export const Find = styled.View`
-    height: ${RFValue(50, 700)}px;
-    border-bottom-width: ${RFValue(1, 700)}px;
-    border-color: ${globalStyle.colors.grey};
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: ${RFValue(16, 700)}px;
-    align-items: center;
-`;
-
-export const FindInput = styled.TextInput`
-    font-size: ${RFValue(18, 700)}px;
-    font-family: ${globalStyle.fonts.semibold};
-    color: ${globalStyle.colors.grey};
-    flex: 1;
-    padding: ${RFValue(8, 700)}px;
 `;

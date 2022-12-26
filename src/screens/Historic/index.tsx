@@ -1,4 +1,4 @@
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -79,6 +79,9 @@ export default function Historic() {
         <ButtonDark
           text='Novo cálculo'
           style={{ width: RFValue(230, 700) }}
+          onPress={() => {
+            navigation.dispatch(CommonActions.navigate('NewCalc1'))
+          }}
         />
       </FloatingButton>
     </Container>

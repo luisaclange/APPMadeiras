@@ -2,11 +2,11 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import styled, { css } from 'styled-components/native';
 import globalStyle from '../../../../styles/globalStyle';
 
-type props = {
-    error: boolean;
+type IProps = {
+  error: boolean;
 };
 
-export const Title = styled.Text<props>`
+export const Title = styled.Text <IProps>`
     font-size: ${RFValue(18, 700)}px;
     font-family: ${globalStyle.fonts.bold};
     color: ${globalStyle.colors.primary};
@@ -14,12 +14,12 @@ export const Title = styled.Text<props>`
     margin-bottom: ${RFValue(8, 700)}px;
 
     ${({ error }) =>
-        error &&
-        css`
+    error &&
+    css`
             color: ${globalStyle.colors.error};
         `}
 `;
-export const InputContainer = styled.View<props>`
+export const InputContainer = styled.View<IProps>`
     border-bottom-width: ${RFValue(1, 700)}px;
     border-color: ${globalStyle.colors.primary};
     flex-direction: row;
@@ -27,8 +27,8 @@ export const InputContainer = styled.View<props>`
     padding-horizontal: ${RFValue(8, 700)}px;
 
     ${({ error }) =>
-        error &&
-        css`
+    error &&
+    css`
             border-color: ${globalStyle.colors.error};
         `}
 `;
@@ -43,7 +43,7 @@ export const Input = styled.TextInput`
     flex: 8;
 `;
 
-export const Dimension = styled.Text<props>`
+export const Dimension = styled.Text<IProps>`
     font-size: ${RFValue(17, 700)}px;
     font-family: ${globalStyle.fonts.medium};
     color: ${globalStyle.colors.primary};
@@ -51,8 +51,8 @@ export const Dimension = styled.Text<props>`
     text-align: right;
 
     ${({ error }) =>
-        error &&
-        css`
+    error &&
+    css`
             color: ${globalStyle.colors.error};
         `}
 `;
