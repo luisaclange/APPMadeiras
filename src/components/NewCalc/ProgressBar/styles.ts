@@ -2,7 +2,12 @@ import { Dimensions } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled, { css } from "styled-components/native";
 import globalStyle from "../../../styles/globalStyle";
-import { ProgressNewCalc } from "../header";
+
+enum ProgressNewCalc {
+  newCalc1,
+  newCalc2,
+  newCalc3,
+}
 
 interface IProps {
   status: ProgressNewCalc;

@@ -5,7 +5,7 @@ export interface Data {
     description: string;
     charging: string;
     humidityClass: string;
-    woodName: string;
+    woodName: number;
     woodType: string;
   };
   stage2: {
@@ -19,6 +19,7 @@ export interface Data {
     espWood_1: string;
     espWood_2: string;
     nailDimension: string;
+    numberNails: string;
   };
   setStage1(data: Data['stage1']): void;
   setStage2(data: Data['stage2']): void;
@@ -43,11 +44,12 @@ export function DataProvider({ children }: any) {
   });
 
   const [stage3, setStage3] = useState<Data['stage3']>({
-    heightWood_1: undefined,
-    heightWood_2: undefined,
+    espWood_1: undefined,
+    espWood_2: undefined,
     nailDimension: undefined,
     tractiveForce: undefined,
     widthWood: undefined,
+    numberNails: undefined,
   });
 
   return (

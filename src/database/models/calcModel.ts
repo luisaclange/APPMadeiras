@@ -19,20 +19,32 @@ export class CalcModel extends Model {
   @field('woodType')
   woodType!: string;
 
-  @field('tractiveForce')
-  tractiveForce!: string;
+  @field('ligationType')
+  ligationType!: string;
 
-  @field('widthWood')
-  widthWood!: string;
+  @field('nailType')
+  nailType!: string;
 
-  @field('heightWood_1')
-  heightWood_1!: string;
+  @field('calc')
+  calc!: string;
 
-  @field('heightWood_2')
-  heightWood_2!: string;
+  @field('espWood_1')
+  espWood_1!: number;
+
+  @field('espWood_2')
+  espWood_2!: number;
 
   @field('nailDimension')
   nailDimension!: string;
+
+  @field('widthWood')
+  widthWood!: number;
+
+  @field('tractiveForce')
+  tractiveForce?: number;
+
+  @field('numberNails')
+  numberNails?: number;
 
   @field('created_at')
   created_at!: number;

@@ -52,21 +52,22 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 
   // Buscar dados
   const GetData = useCallback(() => {
+    console.log(item)
     const wood = NativeWoods.find((wood) => wood.id === item.woodName);
-    const charging = Kmod.kmod1.find((wood) => wood.id === item.charging).name;
+    const charging = Kmod.kmod1.find((wood) => wood.id === item.charging)?.name;
     const humidityClass = Kmod.kmod2.find(
       (wood) => wood.id === item.humidityClass,
-    ).name;
+    )?.name;
     const nail_name = NailDimensions.find(
       (nail) => nail.id === item.nailDimension,
-    ).name;
+    )?.name;
 
     setData({
       charging,
       humidityClass,
       nail_name,
-      wood_name: wood.name,
-      wood_resistance: wood.class,
+      wood_name: wood?.name,
+      wood_resistance: wood?.class,
     })
   }, []);
 

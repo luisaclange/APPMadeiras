@@ -39,6 +39,7 @@ export default function App() {
             initialRouteName="Home"
             screenOptions={screenOptions}
           >
+
             <Screen name="Home" component={Home} />
 
             <Screen name="Historic" component={Historic} />
@@ -53,11 +54,12 @@ export default function App() {
 
             <Screen name="NewCalc3" component={NewCalc3} />
 
-            {/* <Screen
-                            name="Result"
-                            component={Result}
-                            initialParams={{ id_calc: undefined }}
-                        /> */}
+            <Screen
+              name="Result"
+              component={Result}
+              initialParams={{ id_calc: undefined }}
+            />
+
           </Navigator>
         </NavigationContainer>
       </DataProvider>

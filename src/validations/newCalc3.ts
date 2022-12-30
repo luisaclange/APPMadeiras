@@ -5,17 +5,19 @@ export const schemaNewCalc3 = yup.object().shape({
     .string()
     .matches(/^\d+(\,\d{1,10})?$/, 'Formato errado')
     .required('Campo obrigatório'),
-  heightWood_1: yup
+  espWood_1: yup
     .string()
     .matches(/^\d+(\,\d{1,10})?$/, 'Formato errado')
     .required('Campo obrigatório'),
-  heightWood_2: yup
+  espWood_2: yup
     .string()
     .matches(/^\d+(\,\d{1,10})?$/, 'Formato errado')
     .required('Campo obrigatório'),
-  nailDimension: yup.string().required('Campo obrigatório'),
+  nailDimension: yup.string(),
   tractiveForce: yup
     .string()
-    .matches(/^\d+(\,\d{1,10})?$/, 'Formato errado')
-    .required('Campo obrigatório'),
+    .matches(/^\d+(\,\d{1,10})?$/, 'Formato errado'),
+  numberNails: yup
+    .string()
+    .matches(/^\d+(\,\d{1,10})?$/, 'Formato errado'),
 });

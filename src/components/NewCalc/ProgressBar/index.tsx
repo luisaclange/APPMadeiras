@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
 import {
   BorderBar,
   BorderItem,
@@ -9,7 +8,12 @@ import {
   Progress,
   TextItem,
 } from './styles';
-import { ProgressNewCalc } from '../header';
+
+enum ProgressNewCalc {
+  newCalc1,
+  newCalc2,
+  newCalc3,
+}
 
 interface IProps {
   stage: ProgressNewCalc;
