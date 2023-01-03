@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CommonActions, useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 import { TitleSection } from '../../../components/newCalc/titleSection';
 import DataContext, { Data } from '../../../context/context';
 import { Kmod } from '../../../archive/4_WoodProperties/Kmod';
@@ -13,14 +13,23 @@ import { ButtonsPrevNext } from '../../../components/newCalc/buttonsPrevNext';
 import { schemaNewCalc1 } from '../../../validations/newCalc1';
 import FieldInput from '../../../components/global/fields/fieldInput';
 import FieldSelectWoods from '../../../components/newCalc/fieldSelectWoods';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { TRootStackParamList } from '../../../routes/App.routes';
+import { CalcModel } from '../../../database/models/calcModel';
+import { database } from '../../../database';
+import LoadingPage from '../../../components/global/loadingPage';
 
-export default function NewCalc1() {
+export default function NewCalc1({ route }: NativeStackScreenProps<TRootStackParamList, 'NewCalc1'>) {
+  //Navegação e parametros
+  const navigation = useNavigation();
+  const { id_calc } = route?.params?.params || {};
 
   // Contexto
   const { setStage1 } = useContext(DataContext);
 
-  //Navegação
-  const navigation = useNavigation();
+  // Variáveis
+  const [dataStage, setDataStage] = useState<CalcModel | Record<string, never>>({});
+  const [loadingPage, setLoadingPage] = useState(true);
 
   // Dados para o select
   const dataCharging = Kmod.kmod1.map((item) => {
@@ -44,13 +53,49 @@ export default function NewCalc1() {
     formState: { errors },
   } = useForm<Data['stage1']>({ resolver: yupResolver(schemaNewCalc1) });
 
+  // Buscar dados
+  async function GetData() {
+    try {
+      if (id_calc) {
+        const calc = await database.get<CalcModel>('calcs').find(id_calc);
+        setDataStage(calc);
+      }
+    } catch (error) {
+      Alert.alert('Ops, ocorreu um erro!', error.message)
+    } finally {
+      setLoadingPage(false);
+    }
+  }
+
+  useEffect(() => {
+    GetData();
+  }, [])
+
   // Guardar as informações
-  function handleDataRegister(data: Data['stage1']) {
-    setStage1({
-      ...data,
-      woodType: data.woodType === "madeiraSerrada" ? "madeiraSerrada" : 'madeiraRecomposta',
-    });
-    navigation.dispatch(CommonActions.navigate('NewCalc2'))
+  async function handleDataRegister(data: Data['stage1']) {
+    try {
+      if (id_calc) {
+        await database.write(async () => {
+          await dataStage.update(item => {
+            item.description = data.description;
+            item.charging = data.charging;
+            item.humidityClass = data.humidityClass;
+            item.woodName = data.woodName;
+            item.woodType = data.woodType === "madeiraSerrada" ? "madeiraSerrada" : 'madeiraRecomposta';
+            item.updated_at = Number(new Date());
+          })
+        })
+      } else {
+        setStage1({
+          ...data,
+          woodType: data.woodType === "madeiraSerrada" ? "madeiraSerrada" : 'madeiraRecomposta',
+        });
+      }
+
+      navigation.dispatch(CommonActions.navigate('NewCalc2', { params: { id_calc } }))
+    } catch (error) {
+      Alert.alert('Ops, ocorreu um erro!', error.message);
+    }
   }
 
   return (
@@ -62,64 +107,74 @@ export default function NewCalc1() {
             title="Etapa 1"
             subtitle="Características do ambiente e da madeira"
           />
-          <FieldInput
-            control={control}
-            name='description'
-            title='Descrição'
-            error={errors.description}
-          />
-          <FieldSelect
-            data={dataCharging}
-            name="charging"
-            control={control}
-            title="Carregamento"
-            error={errors.charging}
-          />
-          <FieldSelect
-            data={dataHumidityClass}
-            name="humidityClass"
-            control={control}
-            title="Classe de umidade"
-            error={errors.humidityClass}
-          />
-          <FieldSelectWoods
-            control={control}
-            name="woodName"
-            title="Madeira utilizada"
-            error={errors.woodName}
-          />
-          <FieldSelect
-            data={[
-              {
-                id: 'madeiraSerrada',
-                value: 'Madeira Serrada',
-              },
-              {
-                id: 'madeiraRolica',
-                value: 'Madeira Roliça',
-              },
-              {
-                id: 'madeiraMLC',
-                value: 'Madeira Lamelada Colada (MLC)',
-              },
-              {
-                id: 'madeiraMLCC',
-                value: 'Madeira Lamelada Colada Cruzada (MLCC)',
-              },
-              {
-                id: 'madeiraLVL',
-                value: 'Madeira Laminada Colada (LVL)',
-              },
-              {
-                id: 'madeiraRecomposta',
-                value: 'Madeira Recomposta',
-              },
-            ]}
-            control={control}
-            name="woodType"
-            title="Tipo de madeira"
-            error={errors.woodType}
-          />
+          {
+            !loadingPage ? <>
+              <FieldInput
+                control={control}
+                name='description'
+                title='Descrição'
+                error={errors.description}
+                defaultValue={dataStage?.description}
+              />
+              <FieldSelect
+                data={dataCharging}
+                name="charging"
+                control={control}
+                title="Carregamento"
+                error={errors.charging}
+                defaultValue={dataStage?.charging}
+              />
+              <FieldSelect
+                data={dataHumidityClass}
+                name="humidityClass"
+                control={control}
+                title="Classe de umidade"
+                error={errors.humidityClass}
+                defaultValue={dataStage?.humidityClass}
+              />
+              <FieldSelectWoods
+                control={control}
+                name="woodName"
+                title="Madeira utilizada"
+                error={errors.woodName}
+                defaultValue={dataStage?.woodName}
+              />
+              <FieldSelect
+                data={[
+                  {
+                    id: 'madeiraSerrada',
+                    value: 'Madeira Serrada',
+                  },
+                  {
+                    id: 'madeiraRolica',
+                    value: 'Madeira Roliça',
+                  },
+                  {
+                    id: 'madeiraMLC',
+                    value: 'Madeira Lamelada Colada (MLC)',
+                  },
+                  {
+                    id: 'madeiraMLCC',
+                    value: 'Madeira Lamelada Colada Cruzada (MLCC)',
+                  },
+                  {
+                    id: 'madeiraLVL',
+                    value: 'Madeira Laminada Colada (LVL)',
+                  },
+                  {
+                    id: 'madeiraRecomposta',
+                    value: 'Madeira Recomposta',
+                  },
+                ]}
+                control={control}
+                name="woodType"
+                title="Tipo de madeira"
+                error={errors.woodType}
+                defaultValue={dataStage?.woodType}
+              />
+            </>
+              : <LoadingPage />
+          }
         </ContainerFields>
       </ScrollView>
       <ButtonsPrevNext

@@ -12,35 +12,15 @@ export const filterSchema = tableSchema({
       type: 'string'
     },
     {
-      name: 'humidityClass',
-      type: 'string'
-    },
-    {
       name: 'woodName',
       type: 'number'
     },
     {
-      name: 'woodType',
+      name: 'nailType',
       type: 'string'
     },
     {
-      name: 'tractiveForce',
-      type: 'string'
-    },
-    {
-      name: 'widthWood',
-      type: 'string'
-    },
-    {
-      name: 'heightWood_1',
-      type: 'string'
-    },
-    {
-      name: 'heightWood_2',
-      type: 'string'
-    },
-    {
-      name: 'nailDimension',
+      name: 'calc',
       type: 'string'
     },
     {

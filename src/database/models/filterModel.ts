@@ -5,34 +5,19 @@ export class FilterModel extends Model {
   static table = 'filter'
 
   @field('description')
-  description!: string;
+  description?: string;
 
   @field('charging')
-  charging!: string;
-
-  @field('humidityClass')
-  humidityClass!: string;
+  charging?: string;
 
   @field('woodName')
-  woodName!: number;
+  woodName?: number;
 
-  @field('woodType')
-  woodType!: string;
+  @field('nailType')
+  nailType?: string;
 
-  @field('tractiveForce')
-  tractiveForce!: string;
-
-  @field('widthWood')
-  widthWood!: string;
-
-  @field('heightWood_1')
-  heightWood_1!: string;
-
-  @field('heightWood_2')
-  heightWood_2!: string;
-
-  @field('nailDimension')
-  nailDimension!: string;
+  @field('calc')
+  calc?: string;
 
   @field('created_at')
   created_at!: number;

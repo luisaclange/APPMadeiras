@@ -6,7 +6,7 @@ interface props {
   isNew: boolean;
 }
 
-export const Container = styled.View<props>`
+export const Container = styled.Pressable<props>`
     background-color: ${globalStyle.colors.secondary};
     padding: ${RFValue(16, 700)}px;
     border-radius: ${RFValue(8, 700)}px;

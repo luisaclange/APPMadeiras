@@ -18,12 +18,11 @@ import {
 } from './styles';
 import { CalcModel } from '../../../database/models/calcModel';
 import { Kmod } from '../../../archive/4_WoodProperties/Kmod';
-import ModalInfo from '../modalInfo';
 import PopUpOneButton from '../../global/popUps/popUpOneButton';
 import PopUpTwoButtons from '../../global/popUps/popUpTwoButtons';
 import { database } from '../../../database';
 import { NativeWoods } from '../../../archive/3_NativeWood/NativeWood';
-import { NailDimensions } from '../../../archive/2_Dimensions/Pregos';
+import { PregoDimensions } from '../../../archive/2_Dimensions/Pregos';
 import New from '../../../assets/svgs/new.svg';
 
 interface IProps {
@@ -44,7 +43,6 @@ export default function CardCalc({ item, setRefresh }: IProps) {
   const navigation = useNavigation();
 
   // Variáveis
-  const [visibleModalInfo, setVisibleModalInfo] = useState(false);
   const [visibleModalDeleteQuest, setVisibleModalDeleteQuest] = useState(false);
   const [visibleModalDeleteSuccess, setVisibleModalDeleteSuccess] = useState(false);
   const [visibleModalError, setVisibleModalError] = useState(false)
@@ -52,13 +50,12 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 
   // Buscar dados
   const GetData = useCallback(() => {
-    console.log(item)
     const wood = NativeWoods.find((wood) => wood.id === item.woodName);
     const charging = Kmod.kmod1.find((wood) => wood.id === item.charging)?.name;
     const humidityClass = Kmod.kmod2.find(
       (wood) => wood.id === item.humidityClass,
     )?.name;
-    const nail_name = NailDimensions.find(
+    const nail_name = PregoDimensions.find(
       (nail) => nail.id === item.nailDimension,
     )?.name;
 
@@ -95,23 +92,9 @@ export default function CardCalc({ item, setRefresh }: IProps) {
           item.visualized_at = Number(new Date()) - 10800000;
         });
       });
-      setVisibleModalInfo(true);
-    } catch (error) {
-      setVisibleModalError(true);
-    }
-  }
-
-  // Ir para resultados
-  async function Calc() {
-    try {
-      await database.write(async () => {
-        await item.update(() => {
-          item.visualized_at = Number(new Date()) - 10800000;
-        });
-      });
-      navigation.dispatch(
-        CommonActions.navigate('Result', { params: { id_calc: item.id } }),
-      );
+      navigation.dispatch(CommonActions.navigate('Results', {
+        params: { id_calc: item.id }
+      }))
     } catch (error) {
       setVisibleModalError(true);
     }
@@ -119,12 +102,7 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 
   return (
     <>
-      <Container isNew={item.visualized_at === 0}>
-        <ModalInfo
-          visible={visibleModalInfo}
-          setVisible={setVisibleModalInfo}
-          item={item}
-        />
+      <Container isNew={item.visualized_at === 0} onPress={OpenInfo}>
         <PopUpOneButton
           visible={visibleModalDeleteSuccess}
           setVisible={setVisibleModalDeleteSuccess}
@@ -175,26 +153,10 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 
           <TouchableOpacity
             onPress={() => {
-              OpenInfo();
-            }}
-          >
-            <Info />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
               setVisibleModalDeleteQuest(true);
             }}
           >
             <Trash />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={async () => {
-              Calc();
-            }}
-          >
-            <Calculator />
           </TouchableOpacity>
 
         </IconsContainer>

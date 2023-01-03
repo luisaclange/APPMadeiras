@@ -21,6 +21,7 @@ interface IProps<
   name: TFieldArrayName;
   error?: FieldError;
   space?: boolean;
+  defaultValue?: PathValue<TFieldValues, TFieldArrayName>;
 }
 
 export default function FieldInput<
@@ -33,12 +34,14 @@ export default function FieldInput<
   control,
   error,
   space,
+  defaultValue,
   ...rest
 }: IProps<TFieldValues, TFieldArrayName>) {
   return (
     <Controller
       name={name}
       control={control}
+      defaultValue={defaultValue}
       render={({ field: { value, onChange } }) => {
         return (
           <View>

@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CommonActions, useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 import DataContext, { Data } from '../../../context/context';
 import FieldSelect from '../../../components/global/fields/fieldSelect';
 import Header, { ProgressNewCalc } from '../../../components/newCalc/header';
@@ -10,14 +10,23 @@ import { ButtonsPrevNext } from '../../../components/newCalc/buttonsPrevNext';
 import { Container, ContainerFields, ImageCorte } from './styles';
 import { schemaNewCalc2 } from '../../../validations/newCalc2';
 import { TitleSection } from '../../../components/newCalc/titleSection';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { TRootStackParamList } from '../../../routes/App.routes';
+import { CalcModel } from '../../../database/models/calcModel';
+import { database } from '../../../database';
+import LoadingPage from '../../../components/global/loadingPage';
 
-export default function NewCalc2() {
+export default function NewCalc2({ route }: NativeStackScreenProps<TRootStackParamList, 'NewCalc2'>) {
+  //Navegação e parametros
+  const navigation = useNavigation();
+  const { id_calc } = route?.params?.params || {};
 
   // Contexto
   const { setStage2 } = useContext(DataContext);
 
-  //Navegação
-  const navigation = useNavigation();
+  // Variáveis
+  const [dataStage, setDataStage] = useState<CalcModel | Record<string, never>>({});
+  const [loadingPage, setLoadingPage] = useState(true);
 
   // Controle de formulário
   const {
@@ -27,10 +36,43 @@ export default function NewCalc2() {
     watch,
   } = useForm<Data['stage2']>({ resolver: yupResolver(schemaNewCalc2) });
 
+  // Buscar dados
+  async function GetData() {
+    try {
+      if (id_calc) {
+        const calc = await database.get<CalcModel>('calcs').find(id_calc);
+        setDataStage(calc);
+      }
+    } catch (error) {
+      Alert.alert('Ops, ocorreu um erro!', error.message)
+    } finally {
+      setLoadingPage(false);
+    }
+  }
+
+  useEffect(() => {
+    GetData();
+  }, [])
+
   // Guardar as informações
-  function handleDataRegister(data: Data['stage2']) {
-    setStage2(data);
-    navigation.dispatch(CommonActions.navigate('NewCalc3'))
+  async function handleDataRegister(data: Data['stage2']) {
+    try {
+      if (id_calc) {
+        await database.write(async () => {
+          await dataStage.update(item => {
+            item.ligationType = data.ligationType;
+            item.nailType = data.nailType;
+            item.calc = data.calc;
+            item.updated_at = Number(new Date());
+          })
+        })
+      } else {
+        setStage2(data);
+      }
+      navigation.dispatch(CommonActions.navigate('NewCalc3', { params: { id_calc } }))
+    } catch (error) {
+      Alert.alert('Ops, ocorreu um erro!', error.message);
+    }
   }
 
   return (
@@ -42,63 +84,70 @@ export default function NewCalc2() {
             title="Etapa 2"
             subtitle="Tipo de ligação"
           />
-          <FieldSelect
-            control={control}
-            data={[
-              {
-                id: "corteSimples",
-                value: "Corte Simples",
-              },
-              {
-                id: "corteDuplo",
-                value: "Corte Duplo",
-              }
-            ]}
-            name="ligationType"
-            title='Tipo de ligação'
-            error={errors.ligationType}
-          />
-          <FieldSelect
-            control={control}
-            data={[
-              {
-                id: "prego",
-                value: "Prego",
-              },
-              {
-                id: "parafusoSoberba",
-                value: "Parafuso de rosca soberba",
-              },
-              {
-                id: "parafusoPassante",
-                value: "Parafuso passante",
-              }
-            ]}
-            name="nailType"
-            title='Tipo de pino metálico'
-            error={errors.nailType}
-          />
-          <FieldSelect
-            control={control}
-            data={[
-              {
-                id: "nailQtde",
-                value: "Número de pinos",
-              },
-              {
-                id: "maxForce",
-                value: "Força máxima aplicada",
-              }
-            ]}
-            name="calc"
-            title='Cálculo'
-            error={errors.calc}
-          />
           {
-            watch('ligationType') ? <ImageCorte
-              source={watch('ligationType') === 'corteSimples' ? require('../../../assets/images/cortes/cortesimples.png') : require('../../../assets/images/cortes/corteduplo.png')}
-              resizeMode={'center'}
-            /> : null
+            !loadingPage ? <>
+              <FieldSelect
+                control={control}
+                data={[
+                  {
+                    id: "corteSimples",
+                    value: "Corte Simples",
+                  },
+                  {
+                    id: "corteDuplo",
+                    value: "Corte Duplo",
+                  }
+                ]}
+                name="ligationType"
+                title='Tipo de ligação'
+                error={errors.ligationType}
+                defaultValue={dataStage.ligationType}
+              />
+              <FieldSelect
+                control={control}
+                data={[
+                  {
+                    id: "prego",
+                    value: "Prego",
+                  },
+                  {
+                    id: "parafusoSoberba",
+                    value: "Parafuso de rosca soberba",
+                  },
+                  {
+                    id: "parafusoPassante",
+                    value: "Parafuso passante",
+                  }
+                ]}
+                name="nailType"
+                title='Tipo de pino metálico'
+                error={errors.nailType}
+                defaultValue={dataStage.nailType}
+              />
+              <FieldSelect
+                control={control}
+                data={[
+                  {
+                    id: "nailQtde",
+                    value: "Número de pinos",
+                  },
+                  {
+                    id: "maxForce",
+                    value: "Força máxima aplicada",
+                  }
+                ]}
+                name="calc"
+                title='Cálculo'
+                error={errors.calc}
+                defaultValue={dataStage.calc}
+              />
+              {
+                watch('ligationType') ? <ImageCorte
+                  source={watch('ligationType') === 'corteSimples' ? require('../../../assets/images/cortes/cortesimples.png') : require('../../../assets/images/cortes/corteduplo.png')}
+                  resizeMode={'center'}
+                /> : null
+              }
+            </> : <LoadingPage />
           }
         </ContainerFields>
       </ScrollView>

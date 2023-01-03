@@ -1,6 +1,6 @@
 import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import { FlatList } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { database } from '../../database';
 import { CalcModel } from '../../database/models/calcModel';
@@ -10,6 +10,7 @@ import Header from '../../components/historic/header';
 import Background from '../../components/historic/background/index';
 import LoadingPage from '../../components/global/loadingPage';
 import ButtonDark from '../../components/global/buttons/buttonDark';
+import { FilterModel } from '../../database/models/filterModel';
 
 export default function Historic() {
   // Navegação
@@ -22,7 +23,14 @@ export default function Historic() {
 
   // Buscar dados
   const GetData = useCallback(async () => {
-    const aux = await database.get<CalcModel>('calcs').query().fetch();
+    let aux = await database.get<CalcModel>('calcs').query().fetch();
+    const filter = (await database.get<FilterModel>('filter').query().fetch())[0];
+
+    if (filter?.calc) aux = aux.filter(item => item.calc === filter?.calc);
+    if (filter?.charging) aux = aux.filter(item => item.charging === filter?.charging);
+    if (filter?.description) aux = aux.filter(item => item.description.toLowerCase().includes(filter?.description.toLowerCase()));
+    if (filter?.nailType) aux = aux.filter(item => item.nailType === filter?.nailType);
+    if (filter?.woodName) aux = aux.filter(item => item.woodName === filter?.woodName);
 
     setData(aux.sort((a, b) => a.created_at - b.created_at));
     setRefresh(false);

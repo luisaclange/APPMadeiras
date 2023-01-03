@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Control, Controller, FieldError, FieldValues, Path } from 'react-hook-form';
+import { Control, Controller, FieldError, FieldValues, Path, PathValue } from 'react-hook-form';
 import {
   FlatList,
   TextInputProps,
@@ -38,6 +38,7 @@ interface IProps<
   error?: FieldError;
   data: ISelect[];
   space?: boolean;
+  defaultValue?: PathValue<TFieldValues, TFieldArrayName>,
 }
 
 export default function FieldSelect<
@@ -50,6 +51,7 @@ export default function FieldSelect<
   name,
   control,
   data,
+  defaultValue,
   ...rest
 }: IProps<TFieldValues, TFieldArrayName>) {
   const [visible, setVisible] = useState(false);
@@ -58,6 +60,7 @@ export default function FieldSelect<
     <Controller
       name={name}
       control={control}
+      defaultValue={defaultValue}
       render={({ field: { value, onChange } }) => {
         return (
           <View>

@@ -12,6 +12,8 @@ import {
   Description,
 } from './styles';
 import PopUpOneButton from '../../components/global/popUps/popUpOneButton';
+import { database } from '../../database';
+import { FilterModel } from '../../database/models/filterModel';
 
 const styles = StyleSheet.create({
   buttonLight: {
@@ -26,6 +28,20 @@ export default function Home() {
 
   // Variáveis
   const [visibleAboutModal, setVisibleAboutModal] = useState(false);
+
+  // Começar
+  async function Begin() {
+    const filter = (await database.get<FilterModel>('filter').query().fetch())[0];
+    if (!filter)
+      await database.write(async () => {
+        await database.get<FilterModel>('filter').create(item => {
+          item.created_at = Number(new Date());
+        })
+      })
+    navigation.dispatch(
+      CommonActions.navigate('Historic'),
+    );
+  }
 
   return (
     <>
@@ -58,9 +74,7 @@ export default function Home() {
               text="Começar"
               style={{ width: RFValue(250, 700) }}
               onPress={() => {
-                navigation.dispatch(
-                  CommonActions.navigate('Historic'),
-                );
+                Begin()
               }}
             />
           </ContainerButtons>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Control, Controller, FieldError, FieldValues, Path } from 'react-hook-form';
+import { Control, Controller, FieldError, FieldValues, Path, PathValue } from 'react-hook-form';
 import {
   FlatList,
-  TextInput,
   TextInputProps,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -27,7 +26,6 @@ import {
 import { NativeWoods } from '../../../archive/3_NativeWood/NativeWood';
 import globalStyle from '../../../styles/globalStyle';
 import CustomModal from '../../global/modal';
-import { ISelect } from '../../global/fields/fieldSelect';
 
 interface IProps<
   TFieldValues extends FieldValues,
@@ -38,6 +36,7 @@ interface IProps<
   control: Control<TFieldValues>;
   error?: FieldError;
   space?: boolean;
+  defaultValue?: PathValue<TFieldValues, TFieldArrayName>;
 }
 
 export default function FieldSelectWoods<
@@ -49,6 +48,7 @@ export default function FieldSelectWoods<
   error,
   name,
   control,
+  defaultValue,
   ...rest
 }: IProps<TFieldValues, TFieldArrayName>) {
   const [visible, setVisible] = useState(false);
@@ -73,6 +73,7 @@ export default function FieldSelectWoods<
     <Controller
       name={name}
       control={control}
+      defaultValue={defaultValue}
       render={({ field: { value, onChange } }) => {
         return (
           <View>
