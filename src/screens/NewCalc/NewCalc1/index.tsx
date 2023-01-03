@@ -5,7 +5,7 @@ import { CommonActions, useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native';
 import { TitleSection } from '../../../components/newCalc/titleSection';
 import DataContext, { Data } from '../../../context/context';
-import { Kmod } from '../../../archive/WoodProperties/Kmod';
+import { Kmod } from '../../../archive/4_WoodProperties/Kmod';
 import FieldSelect from '../../../components/global/fields/fieldSelect';
 import Header, { ProgressNewCalc } from '../../../components/newCalc/header';
 import { Container, ContainerFields } from './styles';

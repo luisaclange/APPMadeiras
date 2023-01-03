@@ -1,6 +1,6 @@
 import { WoodResistanceClasses } from "../../archive/1_ClassesResistencia/ClassesResistencia";
 import { NailDimensions } from "../../archive/2_Dimensions/Pregos";
-import { NativeWoods } from "../../archive/NativeWood/NativeWood";
+import { NativeWoods } from "../../archive/3_NativeWood/NativeWood";
 
 export default function CalcFek(woodName: number, nailDimension: string) {
     const nail = NailDimensions.find(item => item.id === nailDimension).JP;

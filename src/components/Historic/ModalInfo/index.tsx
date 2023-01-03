@@ -3,7 +3,7 @@ import moment from 'moment';
 import { CalcModel } from '../../../database/models/calcModel';
 import CustomModal from '../../global/modal';
 import { Container, TextInfo } from './styles';
-import { Kmod } from '../../../archive/WoodProperties/Kmod';
+import { Kmod } from '../../../archive/4_WoodProperties/Kmod';
 
 interface IProps {
     visible: boolean;

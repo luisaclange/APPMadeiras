@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import DataContext from "../../../context/context";
-import { Kmod } from "../../../archive/WoodProperties/Kmod";
+import { Kmod } from "../../../archive/4_WoodProperties/Kmod";
 
 export default function CalcKmod3(woodClass: string, dicotyledonClass: string, woodType: string) {
 

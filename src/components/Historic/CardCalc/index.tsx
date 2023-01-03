@@ -17,12 +17,12 @@ import {
   Title,
 } from './styles';
 import { CalcModel } from '../../../database/models/calcModel';
-import { Kmod } from '../../../archive/WoodProperties/Kmod';
+import { Kmod } from '../../../archive/4_WoodProperties/Kmod';
 import ModalInfo from '../modalInfo';
 import PopUpOneButton from '../../global/popUps/popUpOneButton';
 import PopUpTwoButtons from '../../global/popUps/popUpTwoButtons';
 import { database } from '../../../database';
-import { NativeWoods } from '../../../archive/NativeWood/NativeWood';
+import { NativeWoods } from '../../../archive/3_NativeWood/NativeWood';
 import { NailDimensions } from '../../../archive/2_Dimensions/Pregos';
 import New from '../../../assets/svgs/new.svg';
 
