@@ -1,4 +1,4 @@
-export const PregoDimensions = [
+export const ParafusoSoberbaDimensions = [
   {
     "id": "parSob_01",
     "name": "Inox 304 - Parafuso sextavado - Rosca soberba - 3/8'' x 2''",

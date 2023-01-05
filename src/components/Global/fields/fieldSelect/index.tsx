@@ -39,6 +39,7 @@ interface IProps<
   data: ISelect[];
   space?: boolean;
   defaultValue?: PathValue<TFieldValues, TFieldArrayName>,
+  onPressAction?: () => void;
 }
 
 export default function FieldSelect<
@@ -52,6 +53,7 @@ export default function FieldSelect<
   control,
   data,
   defaultValue,
+  onPressAction,
   ...rest
 }: IProps<TFieldValues, TFieldArrayName>) {
   const [visible, setVisible] = useState(false);
@@ -110,6 +112,7 @@ export default function FieldSelect<
 
             <Title error={!!error}>{title}</Title>
             <InputContainer error={!!error} onPress={() => {
+              if (onPressAction) onPressAction();
               setVisible(true);
             }}>
               <Input
@@ -118,8 +121,7 @@ export default function FieldSelect<
                 multiline
                 {...rest}
               />
-              <TouchableWithoutFeedback
-              >
+              <TouchableWithoutFeedback>
                 <Icon
                   name="keyboard-arrow-down"
                   size={RFValue(30, 700)}

@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import { Alert, ScrollView } from 'react-native';
 import DataContext, { Data } from '../../../context/context';
-import FieldSelect from '../../../components/global/fields/fieldSelect';
+import FieldSelect, { ISelect } from '../../../components/global/fields/fieldSelect';
 import Header, { ProgressNewCalc } from '../../../components/newCalc/header';
 import { ButtonsPrevNext } from '../../../components/newCalc/buttonsPrevNext';
 import { Container, ContainerFields, ImageCorte } from './styles';
@@ -17,6 +17,9 @@ import PopUpOneButton from '../../../components/global/popUps/popUpOneButton';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { TRootStackParamList } from '../../../routes/App.routes';
 import LoadingPage from '../../../components/global/loadingPage';
+import { SelectionPrego } from '../../../project/selectionNails/selectionPrego';
+import { SelectionParPassante } from '../../../project/selectionNails/selectionParPassante';
+import { SelectionParSoberba } from '../../../project/selectionNails/selectionParSoberba';
 
 export default function NewCalc3({ route }: NativeStackScreenProps<TRootStackParamList, 'NewCalc3'>) {
   //Navegação e parametros
@@ -32,13 +35,47 @@ export default function NewCalc3({ route }: NativeStackScreenProps<TRootStackPar
   const [id, setId] = useState<string>();
   const [dataStage, setDataStage] = useState<CalcModel | Record<string, never>>({});
   const [loadingPage, setLoadingPage] = useState(true);
+  const [dataNails, setDataNails] = useState<ISelect[]>([]);
 
   // Controle de formulário
   const {
     control,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<Data['stage3']>({ resolver: yupResolver(schemaNewCalc3) });
+
+  // Buscar dimensões de pinos
+  function GetNails() {
+    switch (dataStage.nailType) {
+      case "prego":
+        SelectionPrego({
+          setData: setDataNails,
+          esp1: Number(watch('espWood_1')?.replace(',', '.')),
+          esp2: Number(watch('espWood_2')?.replace(',', '.')),
+          ligationType: dataStage.ligationType,
+        });
+        break;
+      case "parafusoPassante":
+        SelectionParPassante({
+          setData: setDataNails,
+          esp1: Number(watch('espWood_1')?.replace(',', '.')),
+          esp2: Number(watch('espWood_2')?.replace(',', '.')),
+          ligationType: dataStage.ligationType,
+        });
+        break;
+      case "parafusoSoberba":
+        SelectionParSoberba({
+          setData: setDataNails,
+          esp1: Number(watch('espWood_1')?.replace(',', '.')),
+          esp2: Number(watch('espWood_2')?.replace(',', '.')),
+        });
+        break;
+      default:
+        setDataNails([]);
+        break;
+    }
+  }
 
   // Buscar dados
   async function GetData() {
@@ -104,7 +141,7 @@ export default function NewCalc3({ route }: NativeStackScreenProps<TRootStackPar
             newCalc.visualized_at = 0;
           })
 
-          setId(calc.id);
+          setId(calc?.id);
         }
       })
 
@@ -176,11 +213,15 @@ export default function NewCalc3({ route }: NativeStackScreenProps<TRootStackPar
                 defaultValue={dataStage?.widthWood ? String(dataStage.widthWood) : null}
               />
               <FieldSelect
-                data={[]}
+                data={dataNails}
                 control={control}
                 name="nailDimension"
                 title="Pino utilizado"
                 defaultValue={dataStage.nailDimension}
+                onPressAction={() => {
+                  if (watch('espWood_1'), watch('espWood_2'), dataStage) GetNails();
+                  else setDataNails([]);
+                }}
               />
               {
                 stage2.calc === "nailQtde" || dataStage.calc == "nailQtde" ? <FieldInput

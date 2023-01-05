@@ -24,6 +24,8 @@ import { database } from '../../../database';
 import { NativeWoods } from '../../../archive/3_NativeWood/NativeWood';
 import { PregoDimensions } from '../../../archive/2_Dimensions/Pregos';
 import New from '../../../assets/svgs/new.svg';
+import { ParafusoPassanteDimensions } from '../../../archive/2_Dimensions/ParafusoPassante';
+import { ParafusoSoberbaDimensions } from '../../../archive/2_Dimensions/ParafusoSoberba';
 
 interface IProps {
   item: CalcModel;
@@ -55,9 +57,21 @@ export default function CardCalc({ item, setRefresh }: IProps) {
     const humidityClass = Kmod.kmod2.find(
       (wood) => wood.id === item.humidityClass,
     )?.name;
-    const nail_name = PregoDimensions.find(
-      (nail) => nail.id === item.nailDimension,
-    )?.name;
+    let nail_name = '';
+    switch (item.nailType) {
+      case "prego":
+        nail_name = PregoDimensions.find(nail => nail.id === item.nailDimension)?.name;
+        break;
+      case "parafusoPassante":
+        nail_name = ParafusoPassanteDimensions.find(nail => nail.id === item.nailDimension)?.name;
+        break;
+      case "parafusoSoberba":
+        nail_name = ParafusoSoberbaDimensions.find(nail => nail.id === item.nailDimension)?.name;
+        break;
+      default:
+        nail_name = null;
+        break;
+    }
 
     setData({
       charging,
@@ -143,7 +157,7 @@ export default function CardCalc({ item, setRefresh }: IProps) {
               <SubTitle>{`${moment(new Date(item.created_at)).format('L')} - ${moment(new Date(item.created_at)).format('LT')}`}
               </SubTitle>
               <TextContainer>
-                <ItemText>{`- Madeira ${data.wood_name};\n- Classe de resistência ${data.wood_resistance};\n- Carregamento ${data.charging};\n- Classe de Umidade ${data.humidityClass};\n- Prego ${data.nail_name};`}</ItemText>
+                <ItemText>{`- Madeira ${data.wood_name};\n- Classe de resistência ${data.wood_resistance};\n- Carregamento ${data.charging};\n- Classe de Umidade ${data.humidityClass};\n- ${data.nail_name};`}</ItemText>
               </TextContainer>
             </> : null
           }
