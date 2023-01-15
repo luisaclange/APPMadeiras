@@ -18,6 +18,7 @@ import { TRootStackParamList } from '../../../routes/App.routes';
 import { CalcModel } from '../../../database/models/calcModel';
 import { database } from '../../../database';
 import LoadingPage from '../../../components/global/loadingPage';
+import { WoodTypeData } from '../../../interfaces/WoodType';
 
 export default function NewCalc1({ route }: NativeStackScreenProps<TRootStackParamList, 'NewCalc1'>) {
   //Navegação e parametros
@@ -74,23 +75,7 @@ export default function NewCalc1({ route }: NativeStackScreenProps<TRootStackPar
   // Guardar as informações
   async function handleDataRegister(data: Data['stage1']) {
     try {
-      if (id_calc) {
-        await database.write(async () => {
-          await dataStage.update(item => {
-            item.description = data.description;
-            item.charging = data.charging;
-            item.humidityClass = data.humidityClass;
-            item.woodName = data.woodName;
-            item.woodType = data.woodType === "madeiraSerrada" ? "madeiraSerrada" : 'madeiraRecomposta';
-            item.updated_at = Number(new Date());
-          })
-        })
-      } else {
-        setStage1({
-          ...data,
-          woodType: data.woodType === "madeiraSerrada" ? "madeiraSerrada" : 'madeiraRecomposta',
-        });
-      }
+      setStage1(data);
 
       navigation.dispatch(CommonActions.navigate('NewCalc2', { params: { id_calc } }))
     } catch (error) {
@@ -140,32 +125,7 @@ export default function NewCalc1({ route }: NativeStackScreenProps<TRootStackPar
                 defaultValue={dataStage?.woodName}
               />
               <FieldSelect
-                data={[
-                  {
-                    id: 'madeiraSerrada',
-                    value: 'Madeira Serrada',
-                  },
-                  {
-                    id: 'madeiraRolica',
-                    value: 'Madeira Roliça',
-                  },
-                  {
-                    id: 'madeiraMLC',
-                    value: 'Madeira Lamelada Colada (MLC)',
-                  },
-                  {
-                    id: 'madeiraMLCC',
-                    value: 'Madeira Lamelada Colada Cruzada (MLCC)',
-                  },
-                  {
-                    id: 'madeiraLVL',
-                    value: 'Madeira Laminada Colada (LVL)',
-                  },
-                  {
-                    id: 'madeiraRecomposta',
-                    value: 'Madeira Recomposta',
-                  },
-                ]}
+                data={WoodTypeData}
                 control={control}
                 name="woodType"
                 title="Tipo de madeira"

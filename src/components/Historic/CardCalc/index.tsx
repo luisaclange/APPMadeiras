@@ -106,7 +106,7 @@ export default function CardCalc({ item, setRefresh }: IProps) {
           item.visualized_at = Number(new Date()) - 10800000;
         });
       });
-      navigation.dispatch(CommonActions.navigate('Results', {
+      navigation.dispatch(CommonActions.navigate('MoreInfo', {
         params: { id_calc: item.id }
       }))
     } catch (error) {

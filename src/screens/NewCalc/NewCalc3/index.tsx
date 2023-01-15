@@ -103,12 +103,27 @@ export default function NewCalc3({ route }: NativeStackScreenProps<TRootStackPar
       await database.write(async () => {
         if (id_calc) {
           await dataStage.update(item => {
+            // Parte 1
+            item.charging = stage1.charging;
+            item.description = stage1.description;
+            item.humidityClass = stage1.humidityClass;
+            item.woodType = stage1.woodType;
+            item.woodName = stage1.woodName;
+
+            // Parte 2
+            item.calc = stage2.calc;
+            item.ligationType = stage2.ligationType;
+            item.nailType = stage2.nailType;
+
+            // Parte 3
             item.espWood_1 = Number(data.espWood_1);
             item.espWood_2 = Number(data.espWood_2);
-            item.nailDimension = data.nailDimension || 'jdjfkb';
+            item.nailDimension = data.nailDimension;
             item.numberNails = Number(data.numberNails) || 0;
             item.tractiveForce = Number(data.tractiveForce) || 0;
             item.widthWood = Number(data.widthWood);
+
+            // Outros
             item.updated_at = date;
           })
           setId(id_calc);
@@ -130,7 +145,7 @@ export default function NewCalc3({ route }: NativeStackScreenProps<TRootStackPar
             // Parte 3
             newCalc.espWood_1 = Number(data.espWood_1);
             newCalc.espWood_2 = Number(data.espWood_2);
-            newCalc.nailDimension = data.nailDimension || 'jdjfkb';
+            newCalc.nailDimension = data.nailDimension;
             newCalc.numberNails = Number(data.numberNails) || 0;
             newCalc.tractiveForce = Number(data.tractiveForce) || 0;
             newCalc.widthWood = Number(data.widthWood);

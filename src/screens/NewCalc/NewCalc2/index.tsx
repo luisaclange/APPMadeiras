@@ -15,6 +15,9 @@ import { TRootStackParamList } from '../../../routes/App.routes';
 import { CalcModel } from '../../../database/models/calcModel';
 import { database } from '../../../database';
 import LoadingPage from '../../../components/global/loadingPage';
+import { LigationTypeData } from '../../../interfaces/LigationType';
+import { NailTypeData } from '../../../interfaces/NailType';
+import { CalcData } from '../../../interfaces/Calc';
 
 export default function NewCalc2({ route }: NativeStackScreenProps<TRootStackParamList, 'NewCalc2'>) {
   //Navegação e parametros
@@ -57,18 +60,7 @@ export default function NewCalc2({ route }: NativeStackScreenProps<TRootStackPar
   // Guardar as informações
   async function handleDataRegister(data: Data['stage2']) {
     try {
-      if (id_calc) {
-        await database.write(async () => {
-          await dataStage.update(item => {
-            item.ligationType = data.ligationType;
-            item.nailType = data.nailType;
-            item.calc = data.calc;
-            item.updated_at = Number(new Date());
-          })
-        })
-      } else {
-        setStage2(data);
-      }
+      setStage2(data);
       navigation.dispatch(CommonActions.navigate('NewCalc3', { params: { id_calc } }))
     } catch (error) {
       Alert.alert('Ops, ocorreu um erro!', error.message);
@@ -88,16 +80,7 @@ export default function NewCalc2({ route }: NativeStackScreenProps<TRootStackPar
             !loadingPage ? <>
               <FieldSelect
                 control={control}
-                data={[
-                  {
-                    id: "corteSimples",
-                    value: "Corte Simples",
-                  },
-                  {
-                    id: "corteDuplo",
-                    value: "Corte Duplo",
-                  }
-                ]}
+                data={LigationTypeData}
                 name="ligationType"
                 title='Tipo de ligação'
                 error={errors.ligationType}
@@ -105,20 +88,7 @@ export default function NewCalc2({ route }: NativeStackScreenProps<TRootStackPar
               />
               <FieldSelect
                 control={control}
-                data={[
-                  {
-                    id: "prego",
-                    value: "Prego",
-                  },
-                  {
-                    id: "parafusoSoberba",
-                    value: "Parafuso de rosca soberba",
-                  },
-                  {
-                    id: "parafusoPassante",
-                    value: "Parafuso passante",
-                  }
-                ]}
+                data={NailTypeData}
                 name="nailType"
                 title='Tipo de pino metálico'
                 error={errors.nailType}
@@ -126,16 +96,7 @@ export default function NewCalc2({ route }: NativeStackScreenProps<TRootStackPar
               />
               <FieldSelect
                 control={control}
-                data={[
-                  {
-                    id: "nailQtde",
-                    value: "Número de pinos",
-                  },
-                  {
-                    id: "maxForce",
-                    value: "Força máxima aplicada",
-                  }
-                ]}
+                data={CalcData}
                 name="calc"
                 title='Cálculo'
                 error={errors.calc}

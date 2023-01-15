@@ -15,6 +15,7 @@ import Filter from '../screens/filter';
 import Home from '../screens/home';
 import { DataProvider } from '../context/context';
 import Results from '../screens/results';
+import MoreInfo from '../screens/moreInfo';
 
 const screenOptions: NativeStackNavigationOptions = {
   headerShown: false,
@@ -23,6 +24,7 @@ const screenOptions: NativeStackNavigationOptions = {
 
 export type TRootStackParamList = {
   Results: { id_calc?: string },
+  MoreInfo: { id_calc?: string },
   NewCalc1: { id_calc?: string },
   NewCalc2: { id_calc?: string },
   NewCalc3: { id_calc?: string }
@@ -57,6 +59,8 @@ export default function App() {
             <Screen name="NewCalc2" component={NewCalc2} />
 
             <Screen name="NewCalc3" component={NewCalc3} />
+
+            <Screen name="MoreInfo" component={MoreInfo} />
 
             <Screen name="Results" component={Results} />
 

@@ -2,7 +2,7 @@ import globalStyle from "./globalStyle"
 import "styled-components"
 
 declare module "styled-components" {
-	type ThemeType = typeof globalStyle
+  type ThemeType = typeof globalStyle
 
-	export type DefaultTheme = ThemeType
+  export type DefaultTheme = ThemeType
 }

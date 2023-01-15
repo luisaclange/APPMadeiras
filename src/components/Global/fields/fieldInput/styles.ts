@@ -40,14 +40,13 @@ export const Input = styled.TextInput`
     height: ${RFValue(32, 700)}px;
     margin: 0;
     padding: 0;
-    flex: 8;
+    flex: 1;
 `;
 
 export const Dimension = styled.Text<IProps>`
     font-size: ${RFValue(17, 700)}px;
     font-family: ${globalStyle.fonts.medium};
     color: ${globalStyle.colors.primary};
-    flex: 1;
     text-align: right;
 
     ${({ error }) =>
