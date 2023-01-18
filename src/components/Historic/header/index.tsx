@@ -8,42 +8,41 @@ import Filter from '../../../assets/svgs/filter.svg';
 import Find from '../../../assets/svgs/find.svg';
 
 export default function Header() {
-  const navigation = useNavigation();
+	const navigation = useNavigation();
 
-  return (
-    <Container>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          navigation.dispatch(CommonActions.navigate('Home'));
-        }}
-      >
-        <Logo
-          width={RFValue(115, 700)}
-          style={{
-            marginLeft: RFValue(16, 700),
-            marginBottom: RFValue(8, 700),
-          }}
-        />
-      </TouchableWithoutFeedback>
+	return (
+		<Container>
+			<TouchableWithoutFeedback
+				onPress={() => {
+					navigation.dispatch(CommonActions.navigate('Home'));
+				}}
+			>
+				<Logo
+					width={RFValue(115, 700)}
+					style={{
+						marginLeft: RFValue(16, 700),
+						marginBottom: RFValue(8, 700),
+					}}
+				/>
+			</TouchableWithoutFeedback>
 
-      <Container>
-        <IconBox
-          onPress={() => {
-            navigation.dispatch(CommonActions.navigate('Historic'));
-          }}
-        >
-          <Find />
-        </IconBox>
+			<Container>
+				<IconBox
+					onPress={() => {
+						navigation.dispatch(CommonActions.navigate('Historic'));
+					}}
+				>
+					<Find />
+				</IconBox>
 
-        <IconBox
-          onPress={() => {
-            navigation.dispatch(CommonActions.navigate('Filter'));
-          }}
-        >
-          <Filter />
-        </IconBox>
-
-      </Container>
-    </Container>
-  );
+				<IconBox
+					onPress={() => {
+						navigation.dispatch(CommonActions.navigate('Filter'));
+					}}
+				>
+					<Filter />
+				</IconBox>
+			</Container>
+		</Container>
+	);
 }

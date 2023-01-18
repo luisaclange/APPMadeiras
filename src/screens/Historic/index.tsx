@@ -1,4 +1,8 @@
-import { CommonActions, useFocusEffect, useNavigation } from '@react-navigation/native';
+import {
+	CommonActions,
+	useFocusEffect,
+	useNavigation,
+} from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -13,85 +17,95 @@ import ButtonDark from '../../components/global/buttons/buttonDark';
 import { FilterModel } from '../../database/models/filterModel';
 
 export default function Historic() {
-  // Navegação
-  const navigation = useNavigation();
+	// Navegação
+	const navigation = useNavigation();
 
-  // Variáveis
-  const [data, setData] = useState<CalcModel[]>([]);
-  const [refresh, setRefresh] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+	// Variáveis
+	const [data, setData] = useState<CalcModel[]>([]);
+	const [refresh, setRefresh] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 
-  // Buscar dados
-  const GetData = useCallback(async () => {
-    let aux = await database.get<CalcModel>('calcs').query().fetch();
-    const filter = (await database.get<FilterModel>('filter').query().fetch())[0];
+	// Buscar dados
+	const GetData = useCallback(async () => {
+		let aux = await database.get<CalcModel>('calcs').query().fetch();
+		const filter = (
+			await database.get<FilterModel>('filter').query().fetch()
+		)[0];
 
-    if (filter?.calc) aux = aux.filter(item => item.calc === filter?.calc);
-    if (filter?.charging) aux = aux.filter(item => item.charging === filter?.charging);
-    if (filter?.description) aux = aux.filter(item => item.description.toLowerCase().includes(filter?.description.toLowerCase()));
-    if (filter?.nailType) aux = aux.filter(item => item.nailType === filter?.nailType);
-    if (filter?.woodName) aux = aux.filter(item => item.woodName === filter?.woodName);
+		if (filter?.calc) aux = aux.filter(item => item.calc === filter?.calc);
+		if (filter?.charging)
+			aux = aux.filter(item => item.charging === filter?.charging);
+		if (filter?.description)
+			aux = aux.filter(item =>
+				item.description
+					.toLowerCase()
+					.includes(filter?.description.toLowerCase()),
+			);
+		if (filter?.nailType)
+			aux = aux.filter(item => item.nailType === filter?.nailType);
+		if (filter?.woodName)
+			aux = aux.filter(item => item.woodName === filter?.woodName);
 
-    setData(aux.sort((a, b) => a.created_at - b.created_at));
-    setRefresh(false);
-    setIsLoading(false);
-  }, []);
+		setData(aux.sort((a, b) => a.created_at - b.created_at));
+		setRefresh(false);
+		setIsLoading(false);
+	}, []);
 
-  // Buscar dados quando atualizar
-  useEffect(() => {
-    GetData();
-  }, [refresh]);
+	// Buscar dados quando atualizar
+	useEffect(() => {
+		GetData();
+	}, [GetData, refresh]);
 
-  // Buscar dados quando a tela entra em foco
-  useFocusEffect(
-    React.useCallback(() => {
-      GetData();
-    }, [GetData]),
-  );
+	// Buscar dados quando a tela entra em foco
+	useFocusEffect(
+		React.useCallback(() => {
+			GetData();
+		}, [GetData]),
+	);
 
-  return (
-    <Container>
-      <Header />
-      <Background>
-        {!isLoading ? (
-          <FlatList
-            refreshing={refresh}
-            onRefresh={() => {
-              GetData();
-            }}
-            ListEmptyComponent={
-              <BoxAlert>
-                <TextAlert>Não há cálculos ainda...</TextAlert>
-              </BoxAlert>
-            }
-            contentContainerStyle={{
-              flexGrow: 1,
-              padding: RFValue(16, 700),
-            }}
-            data={data}
-            renderItem={(item) => {
-              return (
-                <CardCalc
-                  item={item.item}
-                  setRefresh={setRefresh}
-                />
-              );
-            }}
-          />
-        ) : (
-          <LoadingPage />
-        )}
-      </Background>
+	return (
+		<Container>
+			<Header />
+			<Background>
+				{!isLoading ? (
+					<FlatList
+						refreshing={refresh}
+						onRefresh={() => {
+							GetData();
+						}}
+						ListEmptyComponent={
+							<BoxAlert>
+								<TextAlert>Não há cálculos ainda...</TextAlert>
+							</BoxAlert>
+						}
+						contentContainerStyle={{
+							flexGrow: 1,
+							padding: RFValue(16, 700),
+						}}
+						data={data}
+						renderItem={item => {
+							return (
+								<CardCalc
+									item={item.item}
+									setRefresh={setRefresh}
+								/>
+							);
+						}}
+					/>
+				) : (
+					<LoadingPage />
+				)}
+			</Background>
 
-      <FloatingButton>
-        <ButtonDark
-          text='Novo cálculo'
-          style={{ width: RFValue(230, 700) }}
-          onPress={() => {
-            navigation.dispatch(CommonActions.navigate('NewCalc1'))
-          }}
-        />
-      </FloatingButton>
-    </Container>
-  );
+			<FloatingButton>
+				<ButtonDark
+					text="Novo cálculo"
+					style={{ width: RFValue(230, 700) }}
+					onPress={() => {
+						navigation.dispatch(CommonActions.navigate('NewCalc1'));
+					}}
+				/>
+			</FloatingButton>
+		</Container>
+	);
 }

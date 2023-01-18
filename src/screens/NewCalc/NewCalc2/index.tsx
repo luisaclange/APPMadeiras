@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CommonActions, useNavigation } from '@react-navigation/native';
@@ -19,103 +19,114 @@ import { LigationTypeData } from '../../../interfaces/LigationType';
 import { NailTypeData } from '../../../interfaces/NailType';
 import { CalcData } from '../../../interfaces/Calc';
 
-export default function NewCalc2({ route }: NativeStackScreenProps<TRootStackParamList, 'NewCalc2'>) {
-  //Navegação e parametros
-  const navigation = useNavigation();
-  const { id_calc } = route?.params?.params || {};
+export default function NewCalc2({
+	route,
+}: NativeStackScreenProps<TRootStackParamList, 'NewCalc2'>) {
+	//Navegação e parametros
+	const navigation = useNavigation();
+	const { id_calc } = route?.params?.params || {};
 
-  // Contexto
-  const { setStage2 } = useContext(DataContext);
+	// Contexto
+	const { setStage2 } = useContext(DataContext);
 
-  // Variáveis
-  const [dataStage, setDataStage] = useState<CalcModel | Record<string, never>>({});
-  const [loadingPage, setLoadingPage] = useState(true);
+	// Variáveis
+	const [dataStage, setDataStage] = useState<
+		CalcModel | Record<string, never>
+	>({});
+	const [loadingPage, setLoadingPage] = useState(true);
 
-  // Controle de formulário
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<Data['stage2']>({ resolver: yupResolver(schemaNewCalc2) });
+	// Controle de formulário
+	const {
+		control,
+		handleSubmit,
+		formState: { errors },
+		watch,
+	} = useForm<Data['stage2']>({ resolver: yupResolver(schemaNewCalc2) });
 
-  // Buscar dados
-  async function GetData() {
-    try {
-      if (id_calc) {
-        const calc = await database.get<CalcModel>('calcs').find(id_calc);
-        setDataStage(calc);
-      }
-    } catch (error) {
-      Alert.alert('Ops, ocorreu um erro!', error.message)
-    } finally {
-      setLoadingPage(false);
-    }
-  }
+	// Buscar dados
+	const GetData = useCallback(async () => {
+		try {
+			if (id_calc) {
+				const calc = await database
+					.get<CalcModel>('calcs')
+					.find(id_calc);
+				setDataStage(calc);
+			}
+		} catch (error) {
+			Alert.alert('Ops, ocorreu um erro!', error.message);
+		} finally {
+			setLoadingPage(false);
+		}
+	}, [id_calc]);
 
-  useEffect(() => {
-    GetData();
-  }, [])
+	useEffect(() => {
+		GetData();
+	}, [GetData]);
 
-  // Guardar as informações
-  async function handleDataRegister(data: Data['stage2']) {
-    try {
-      setStage2(data);
-      navigation.dispatch(CommonActions.navigate('NewCalc3', { params: { id_calc } }))
-    } catch (error) {
-      Alert.alert('Ops, ocorreu um erro!', error.message);
-    }
-  }
+	// Guardar as informações
+	async function handleDataRegister(data: Data['stage2']) {
+		try {
+			setStage2(data);
+			navigation.dispatch(
+				CommonActions.navigate('NewCalc3', { params: { id_calc } }),
+			);
+		} catch (error) {
+			Alert.alert('Ops, ocorreu um erro!', error.message);
+		}
+	}
 
-  return (
-    <Container>
-      <Header title='Novo cálculo' progress={ProgressNewCalc.newCalc2} />
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <ContainerFields>
-          <TitleSection
-            title="Etapa 2"
-            subtitle="Tipo de ligação"
-          />
-          {
-            !loadingPage ? <>
-              <FieldSelect
-                control={control}
-                data={LigationTypeData}
-                name="ligationType"
-                title='Tipo de ligação'
-                error={errors.ligationType}
-                defaultValue={dataStage.ligationType}
-              />
-              <FieldSelect
-                control={control}
-                data={NailTypeData}
-                name="nailType"
-                title='Tipo de pino metálico'
-                error={errors.nailType}
-                defaultValue={dataStage.nailType}
-              />
-              <FieldSelect
-                control={control}
-                data={CalcData}
-                name="calc"
-                title='Cálculo'
-                error={errors.calc}
-                defaultValue={dataStage.calc}
-              />
-              {
-                watch('ligationType') ? <ImageCorte
-                  source={watch('ligationType') === 'corteSimples' ? require('../../../assets/images/cortes/cortesimples.png') : require('../../../assets/images/cortes/corteduplo.png')}
-                  resizeMode={'center'}
-                /> : null
-              }
-            </> : <LoadingPage />
-          }
-        </ContainerFields>
-      </ScrollView>
-      <ButtonsPrevNext
-        prevAction={() => (navigation.goBack())}
-        nextAction={handleSubmit(handleDataRegister)}
-      />
-    </Container>
-  );
+	return (
+		<Container>
+			<Header title="Novo cálculo" progress={ProgressNewCalc.newCalc2} />
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+				<ContainerFields>
+					<TitleSection title="Etapa 2" subtitle="Tipo de ligação" />
+					{!loadingPage ? (
+						<>
+							<FieldSelect
+								control={control}
+								data={LigationTypeData}
+								name="ligationType"
+								title="Tipo de ligação"
+								error={errors.ligationType}
+								defaultValue={dataStage.ligationType}
+							/>
+							<FieldSelect
+								control={control}
+								data={NailTypeData}
+								name="nailType"
+								title="Tipo de pino metálico"
+								error={errors.nailType}
+								defaultValue={dataStage.nailType}
+							/>
+							<FieldSelect
+								control={control}
+								data={CalcData}
+								name="calc"
+								title="Cálculo"
+								error={errors.calc}
+								defaultValue={dataStage.calc}
+							/>
+							{watch('ligationType') ? (
+								<ImageCorte
+									source={
+										watch('ligationType') === 'corteSimples'
+											? require('../../../assets/images/cortes/cortesimples.png')
+											: require('../../../assets/images/cortes/corteduplo.png')
+									}
+									resizeMode={'center'}
+								/>
+							) : null}
+						</>
+					) : (
+						<LoadingPage />
+					)}
+				</ContainerFields>
+			</ScrollView>
+			<ButtonsPrevNext
+				prevAction={() => navigation.goBack()}
+				nextAction={handleSubmit(handleDataRegister)}
+			/>
+		</Container>
+	);
 }

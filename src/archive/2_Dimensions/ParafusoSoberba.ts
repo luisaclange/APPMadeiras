@@ -1,160 +1,159 @@
 export const ParafusoSoberbaDimensions = [
-  {
-    "id": "parSob_01",
-    "name": "Inox 304 - Parafuso sextavado - Rosca soberba - 3/8'' x 2''",
-    "diametro": 9.525,
-    "comprimento": 50.8
-  },
-  {
-    "id": "parSob_02",
-    "name": "Inox 304 - Parafuso sextavado - Rosca soberba - 3/8'' x 2.3/8''",
-    "diametro": 9.525,
-    "comprimento": 60.325
-  },
-  {
-    "id": "parSob_03",
-    "name": "Inox 304 - Parafuso sextavado - Rosca soberba - 3/8'' x 2.3/4''",
-    "diametro": 9.525,
-    "comprimento": 69.85
-  },
-  {
-    "id": "parSob_04",
-    "name": "Inox 304 - Parafuso sextavado - Rosca soberba - 3/8'' x 3.1/2''",
-    "diametro": 9.525,
-    "comprimento": 88.9
-  },
-  {
-    "id": "parSob_05",
-    "name": "Inox 304 - Parafuso sextavado - Rosca soberba - 3/8'' x 4''",
-    "diametro": 9.525,
-    "comprimento": 101.6
-  },
-  {
-    "id": "parSob_06",
-    "name": "Inox 304 - Parafuso sextavado - Rosca soberba - 1/2'' x 4''",
-    "diametro": 12.7,
-    "comprimento": 101.6
-  },
+	{
+		'id': 'parSob_01',
+		'name': "Inox 304 - Parafuso sextavado - Rosca soberba - 3/8'' x 2''",
+		'diametro': 9.525,
+		'comprimento': 50.8,
+	},
+	{
+		'id': 'parSob_02',
+		'name': "Inox 304 - Parafuso sextavado - Rosca soberba - 3/8'' x 2.3/8''",
+		'diametro': 9.525,
+		'comprimento': 60.325,
+	},
+	{
+		'id': 'parSob_03',
+		'name': "Inox 304 - Parafuso sextavado - Rosca soberba - 3/8'' x 2.3/4''",
+		'diametro': 9.525,
+		'comprimento': 69.85,
+	},
+	{
+		'id': 'parSob_04',
+		'name': "Inox 304 - Parafuso sextavado - Rosca soberba - 3/8'' x 3.1/2''",
+		'diametro': 9.525,
+		'comprimento': 88.9,
+	},
+	{
+		'id': 'parSob_05',
+		'name': "Inox 304 - Parafuso sextavado - Rosca soberba - 3/8'' x 4''",
+		'diametro': 9.525,
+		'comprimento': 101.6,
+	},
+	{
+		'id': 'parSob_06',
+		'name': "Inox 304 - Parafuso sextavado - Rosca soberba - 1/2'' x 4''",
+		'diametro': 12.7,
+		'comprimento': 101.6,
+	},
 
-  {
-    "id": "parSob_07",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 1.1/2''",
-    "diametro": 9.525,
-    "comprimento": 38.1
-  },
-  {
-    "id": "parSob_08",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 2''",
-    "diametro": 9.525,
-    "comprimento": 50.8
-  },
-  {
-    "id": "parSob_09",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 2.1/4''",
-    "diametro": 9.525,
-    "comprimento": 57.15
-  },
-  {
-    "id": "parSob_10",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 2.3/8''",
-    "diametro": 9.525,
-    "comprimento": 60.325
-  },
-  {
-    "id": "parSob_11",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 2.1/2''",
-    "diametro": 9.525,
-    "comprimento": 63.5
-  },
-  {
-    "id": "parSob_12",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 2.3/4''",
-    "diametro": 9.525,
-    "comprimento": 69.85
-  },
-  {
-    "id": "parSob_13",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 3''",
-    "diametro": 9.525,
-    "comprimento": 76.2
-  },
-  {
-    "id": "parSob_14",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 3.1/8''",
-    "diametro": 9.525,
-    "comprimento": 79.375
-  },
-  {
-    "id": "parSob_15",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 3.1/2''",
-    "diametro": 9.525,
-    "comprimento": 88.9
-  },
-  {
-    "id": "parSob_16",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 4''",
-    "diametro": 9.525,
-    "comprimento": 101.6
-  },
-  {
-    "id": "parSob_17",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 4.1/2''",
-    "diametro": 9.525,
-    "comprimento": 114.3
-  },
-  {
-    "id": "parSob_18",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 5''",
-    "diametro": 9.525,
-    "comprimento": 127
-  },
-  {
-    "id": "parSob_19",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 5.1/2''",
-    "diametro": 9.525,
-    "comprimento": 139.7
-  },
-  {
-    "id": "parSob_20",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 6''",
-    "diametro": 9.525,
-    "comprimento": 152.4
-  },
-  {
-    "id": "parSob_21",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 1/2'' x 2.1/2''",
-    "diametro": 12.7,
-    "comprimento": 63.7
-  },
-  {
-    "id": "parSob_22",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 1/2'' x 2.3/4''",
-    "diametro": 12.7,
-    "comprimento": 69.85
-  },
-  {
-    "id": "parSob_23",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 1/2'' x 3.1/8''",
-    "diametro": 12.7,
-    "comprimento": 79.375
-  },
-  {
-    "id": "parSob_24",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 1/2'' x 3.1/2''",
-    "diametro": 12.7,
-    "comprimento": 88.9
-  },
-  {
-    "id": "parSob_25",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 1/2'' x 4''",
-    "diametro": 12.7,
-    "comprimento": 101.6
-  },
-  {
-    "id": "parSob_26",
-    "name": "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 1/2'' x 4.1/2''",
-    "diametro": 12.7,
-    "comprimento": 114.3
-  },
-]
-
+	{
+		'id': 'parSob_07',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 1.1/2''",
+		'diametro': 9.525,
+		'comprimento': 38.1,
+	},
+	{
+		'id': 'parSob_08',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 2''",
+		'diametro': 9.525,
+		'comprimento': 50.8,
+	},
+	{
+		'id': 'parSob_09',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 2.1/4''",
+		'diametro': 9.525,
+		'comprimento': 57.15,
+	},
+	{
+		'id': 'parSob_10',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 2.3/8''",
+		'diametro': 9.525,
+		'comprimento': 60.325,
+	},
+	{
+		'id': 'parSob_11',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 2.1/2''",
+		'diametro': 9.525,
+		'comprimento': 63.5,
+	},
+	{
+		'id': 'parSob_12',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 2.3/4''",
+		'diametro': 9.525,
+		'comprimento': 69.85,
+	},
+	{
+		'id': 'parSob_13',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 3''",
+		'diametro': 9.525,
+		'comprimento': 76.2,
+	},
+	{
+		'id': 'parSob_14',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 3.1/8''",
+		'diametro': 9.525,
+		'comprimento': 79.375,
+	},
+	{
+		'id': 'parSob_15',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 3.1/2''",
+		'diametro': 9.525,
+		'comprimento': 88.9,
+	},
+	{
+		'id': 'parSob_16',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 4''",
+		'diametro': 9.525,
+		'comprimento': 101.6,
+	},
+	{
+		'id': 'parSob_17',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 4.1/2''",
+		'diametro': 9.525,
+		'comprimento': 114.3,
+	},
+	{
+		'id': 'parSob_18',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 5''",
+		'diametro': 9.525,
+		'comprimento': 127,
+	},
+	{
+		'id': 'parSob_19',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 5.1/2''",
+		'diametro': 9.525,
+		'comprimento': 139.7,
+	},
+	{
+		'id': 'parSob_20',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 3/8'' x 6''",
+		'diametro': 9.525,
+		'comprimento': 152.4,
+	},
+	{
+		'id': 'parSob_21',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 1/2'' x 2.1/2''",
+		'diametro': 12.7,
+		'comprimento': 63.7,
+	},
+	{
+		'id': 'parSob_22',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 1/2'' x 2.3/4''",
+		'diametro': 12.7,
+		'comprimento': 69.85,
+	},
+	{
+		'id': 'parSob_23',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 1/2'' x 3.1/8''",
+		'diametro': 12.7,
+		'comprimento': 79.375,
+	},
+	{
+		'id': 'parSob_24',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 1/2'' x 3.1/2''",
+		'diametro': 12.7,
+		'comprimento': 88.9,
+	},
+	{
+		'id': 'parSob_25',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 1/2'' x 4''",
+		'diametro': 12.7,
+		'comprimento': 101.6,
+	},
+	{
+		'id': 'parSob_26',
+		'name': "Parafuso sextavado rosca soberba - Aço Baixo Carbono - 1/2'' x 4.1/2''",
+		'diametro': 12.7,
+		'comprimento': 114.3,
+	},
+];

@@ -5,10 +5,10 @@ import { CalcModel } from './models/calcModel';
 import { FilterModel } from './models/filterModel';
 
 const adapter = new SQLiteAdapter({
-  schema: schemas
+	schema: schemas,
 });
 
 export const database = new Database({
-  adapter,
-  modelClasses: [CalcModel, FilterModel]
+	adapter,
+	modelClasses: [CalcModel, FilterModel],
 });

@@ -11,8 +11,8 @@ export const Container = styled.View`
 `;
 
 export const IconBox = styled.TouchableOpacity`
-    height: ${RFValue(60, 700)}px;
-    width: ${RFValue(60, 700)}px;
-    justify-content: center;
-    align-items: center;
+	height: ${RFValue(60, 700)}px;
+	width: ${RFValue(60, 700)}px;
+	justify-content: center;
+	align-items: center;
 `;

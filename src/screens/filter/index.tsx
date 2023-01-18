@@ -1,7 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, ScrollView, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import Header from '../../components/global/header';
-import { ButtonCleanFilter, ButtonCleanText, ButtonsContainer, Container, ContainerScroll } from './styles';
+import {
+	ButtonCleanFilter,
+	ButtonCleanText,
+	ButtonsContainer,
+	Container,
+	ContainerScroll,
+} from './styles';
 import FieldInput from '../../components/global/fields/fieldInput';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,147 +23,162 @@ import { useNavigation } from '@react-navigation/native';
 import LoadingPage from '../../components/global/loadingPage';
 
 export default function Filter() {
-  // Navegação
-  const navigation = useNavigation();
+	// Navegação
+	const navigation = useNavigation();
 
-  // Variáveis
-  const [dataFilter, setDataFilter] = useState<FilterModel | Record<string, never>>({});
-  const [loadingPage, setLoadingPage] = useState(true);
+	// Variáveis
+	const [dataFilter, setDataFilter] = useState<
+		FilterModel | Record<string, never>
+	>({});
+	const [loadingPage, setLoadingPage] = useState(true);
 
-  // Controle de formulário
-  const {
-    control,
-    handleSubmit,
-    setValue
-  } = useForm<IFilter>({ resolver: yupResolver(schemaFilter) });
+	// Controle de formulário
+	const { control, handleSubmit, setValue } = useForm<IFilter>({
+		resolver: yupResolver(schemaFilter),
+	});
 
-  // Dados para o select
-  const dataCharging = Kmod.kmod1.map((item) => {
-    return {
-      value: item.name,
-      id: item.id,
-    };
-  });
+	// Dados para o select
+	const dataCharging = Kmod.kmod1.map(item => {
+		return {
+			value: item.name,
+			id: item.id,
+		};
+	});
 
-  // Limpar filtro
-  function CleanFilter() {
-    setValue('description', '')
-    setValue('charging', '')
-    setValue('woodName', 0)
-    setValue('nailType', '')
-    setValue('calc', '')
-  }
+	// Limpar filtro
+	function CleanFilter() {
+		setValue('description', '');
+		setValue('charging', '');
+		setValue('woodName', 0);
+		setValue('nailType', '');
+		setValue('calc', '');
+	}
 
-  // Pegar dados
-  const GetData = useCallback(async () => {
-    try {
-      const aux = await database.get<FilterModel>('filter').query().fetch();
-      setDataFilter(aux[0]);
-    } catch (error) {
-      Alert.alert('Ops, ocorreu um erro!', error.message);
-    } finally {
-      setLoadingPage(false);
-    }
-  }, []);
+	// Pegar dados
+	const GetData = useCallback(async () => {
+		try {
+			const aux = await database
+				.get<FilterModel>('filter')
+				.query()
+				.fetch();
+			setDataFilter(aux[0]);
+		} catch (error) {
+			Alert.alert('Ops, ocorreu um erro!', error.message);
+		} finally {
+			setLoadingPage(false);
+		}
+	}, []);
 
-  useEffect(() => {
-    GetData();
-  }, []);
+	useEffect(() => {
+		GetData();
+	}, [GetData]);
 
-  // Salvar filtro
-  async function HandleSaveFilter(data: IFilter) {
-    try {
-      await database.write(async () => {
-        await dataFilter.update(item => {
-          item.charging = data.charging;
-          item.description = data.description;
-          item.nailType = data.nailType;
-          item.woodName = data.woodName;
-          item.calc = data.calc;
-          item.updated_at = Number(new Date());
-        })
-      })
+	// Salvar filtro
+	async function HandleSaveFilter(data: IFilter) {
+		try {
+			await database.write(async () => {
+				await dataFilter.update(item => {
+					item.charging = data.charging;
+					item.description = data.description;
+					item.nailType = data.nailType;
+					item.woodName = data.woodName;
+					item.calc = data.calc;
+					item.updated_at = Number(new Date());
+				});
+			});
 
-      navigation.goBack()
-    } catch (error) {
-      Alert.alert('Ops, ocorreu um erro!', error.message)
-    }
-  }
+			navigation.goBack();
+		} catch (error) {
+			Alert.alert('Ops, ocorreu um erro!', error.message);
+		}
+	}
 
-  return (
-    <View>
-      <Header title='Filtro' />
-      <ContainerScroll>
-        <Container>
-          <ButtonCleanFilter onPress={CleanFilter}>
-            <ButtonCleanText>Limpar filtro</ButtonCleanText>
-          </ButtonCleanFilter>
+	return (
+		<View>
+			<Header title="Filtro" />
+			<ContainerScroll>
+				<Container>
+					<ButtonCleanFilter onPress={CleanFilter}>
+						<ButtonCleanText>Limpar filtro</ButtonCleanText>
+					</ButtonCleanFilter>
 
-          {
-            !loadingPage ? <>
-              <FieldInput
-                control={control}
-                name="description"
-                title='Identificação'
-                defaultValue={dataFilter?.description}
-              />
-              <FieldSelect
-                data={dataCharging}
-                name="charging"
-                control={control}
-                title="Carregamento"
-                defaultValue={dataFilter?.charging}
-              />
-              <FieldSelectWoods
-                control={control}
-                name="woodName"
-                title="Madeira utilizada"
-                defaultValue={dataFilter?.woodName}
-              />
-              <FieldSelect
-                control={control}
-                data={[
-                  {
-                    id: "prego",
-                    value: "Prego",
-                  },
-                  {
-                    id: "parafusoSoberba",
-                    value: "Parafuso de rosca soberba",
-                  },
-                  {
-                    id: "parafusoPassante",
-                    value: "Parafuso passante",
-                  }
-                ]}
-                name="nailType"
-                title='Tipo de pino metálico'
-                defaultValue={dataFilter?.nailType}
-              />
-              <FieldSelect
-                control={control}
-                data={[
-                  {
-                    id: "nailQtde",
-                    value: "Número de pinos",
-                  },
-                  {
-                    id: "maxForce",
-                    value: "Força máxima aplicada",
-                  }
-                ]}
-                name="calc"
-                title='Cálculo'
-                defaultValue={dataFilter?.calc}
-              />
-            </> : <LoadingPage />
-          }
-        </Container>
-      </ContainerScroll>
-      <ButtonsContainer>
-        <ButtonDark text="Cancelar" onPress={() => { navigation.goBack() }} style={{ width: RFValue(150, 700) }} />
-        <ButtonDark text="Aplicar" onPress={handleSubmit(HandleSaveFilter)} style={{ width: RFValue(150, 700) }} />
-      </ButtonsContainer>
-    </View>
-  );
+					{!loadingPage ? (
+						<>
+							<FieldInput
+								control={control}
+								name="description"
+								title="Identificação"
+								defaultValue={dataFilter?.description}
+							/>
+							<FieldSelect
+								data={dataCharging}
+								name="charging"
+								control={control}
+								title="Carregamento"
+								defaultValue={dataFilter?.charging}
+							/>
+							<FieldSelectWoods
+								control={control}
+								name="woodName"
+								title="Madeira utilizada"
+								defaultValue={dataFilter?.woodName}
+							/>
+							<FieldSelect
+								control={control}
+								data={[
+									{
+										id: 'prego',
+										value: 'Prego',
+									},
+									{
+										id: 'parafusoSoberba',
+										value: 'Parafuso de rosca soberba',
+									},
+									{
+										id: 'parafusoPassante',
+										value: 'Parafuso passante',
+									},
+								]}
+								name="nailType"
+								title="Tipo de pino metálico"
+								defaultValue={dataFilter?.nailType}
+							/>
+							<FieldSelect
+								control={control}
+								data={[
+									{
+										id: 'nailQtde',
+										value: 'Número de pinos',
+									},
+									{
+										id: 'maxForce',
+										value: 'Força máxima aplicada',
+									},
+								]}
+								name="calc"
+								title="Cálculo"
+								defaultValue={dataFilter?.calc}
+							/>
+						</>
+					) : (
+						<LoadingPage />
+					)}
+				</Container>
+			</ContainerScroll>
+			<ButtonsContainer>
+				<ButtonDark
+					text="Cancelar"
+					onPress={() => {
+						navigation.goBack();
+					}}
+					style={{ width: RFValue(150, 700) }}
+				/>
+				<ButtonDark
+					text="Aplicar"
+					onPress={handleSubmit(HandleSaveFilter)}
+					style={{ width: RFValue(150, 700) }}
+				/>
+			</ButtonsContainer>
+		</View>
+	);
 }

@@ -1,8 +1,8 @@
 {
-  "compilerOptions": {
-      "jsx": "react",
-      "experimentalDecorators": true
-},
-  "extends": "expo/tsconfig.base",
-  "types": ["jest", "styled-components-react-native"],
+	"compilerOptions": {
+		"jsx": "react",
+		"experimentalDecorators": true
+	},
+	"extends": "expo/tsconfig.base",
+	"types": ["jest", "styled-components-react-native"]
 }

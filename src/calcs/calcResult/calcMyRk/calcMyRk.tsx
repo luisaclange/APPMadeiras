@@ -1,49 +1,54 @@
-import { ParafusoPassanteDimensions } from "../../../archive/2_Dimensions/ParafusoPassante";
-import { ParafusoSoberbaDimensions } from "../../../archive/2_Dimensions/ParafusoSoberba";
-import { PregoDimensions } from "../../../archive/2_Dimensions/Pregos";
-
+import { ParafusoPassanteDimensions } from '../../../archive/2_Dimensions/ParafusoPassante';
+import { ParafusoSoberbaDimensions } from '../../../archive/2_Dimensions/ParafusoSoberba';
+import { PregoDimensions } from '../../../archive/2_Dimensions/Pregos';
 
 export function CalcMyRk(nailType: string, id_nail: string) {
-  let diameter: number;
-  let fuk: number;
+	let diameter: number;
+	let fuk: number;
 
-  switch (nailType) {
-    case 'prego':
-      diameter = PregoDimensions.find(item => item.id === id_nail).JP;
+	switch (nailType) {
+		case 'prego':
+			diameter = PregoDimensions.find(item => item.id === id_nail).JP;
 
-      if (diameter >= 3 && diameter < 3.55) {
-        fuk = 635;
-      } else if (diameter >= 3.55 && diameter < 5) {
-        fuk = 600;
-      } else {
-        fuk = 490;
-      }
+			if (diameter >= 3 && diameter < 3.55) {
+				fuk = 635;
+			} else if (diameter >= 3.55 && diameter < 5) {
+				fuk = 600;
+			} else {
+				fuk = 490;
+			}
 
-      break;
-    case 'parafusoSoberba':
-      diameter = ParafusoSoberbaDimensions.find(item => item.id === id_nail).diametro;
+			break;
+		case 'parafusoSoberba':
+			diameter = ParafusoSoberbaDimensions.find(
+				item => item.id === id_nail,
+			).diametro;
 
-      fuk = 415;
+			fuk = 415;
 
-      break;
-    case 'parafusoPassante':
-      diameter = ParafusoPassanteDimensions.find(item => item.id === id_nail).diametro;
-      const name = ParafusoPassanteDimensions.find(item => item.id === id_nail).name;
+			break;
+		case 'parafusoPassante':
+			diameter = ParafusoPassanteDimensions.find(
+				item => item.id === id_nail,
+			).diametro;
+			const name = ParafusoPassanteDimensions.find(
+				item => item.id === id_nail,
+			).name;
 
-      if (name.includes('A307')) {
-        fuk = 415;
-      } else if (name.includes('A325')) {
-        fuk = 825;
-      } else if (name.includes('A490')) {
-        fuk = 1035;
-      } else {
-        fuk = 0;
-      }
+			if (name.includes('A307')) {
+				fuk = 415;
+			} else if (name.includes('A325')) {
+				fuk = 825;
+			} else if (name.includes('A490')) {
+				fuk = 1035;
+			} else {
+				fuk = 0;
+			}
 
-      break;
-  }
+			break;
+	}
 
-  const MyRk = 0.3 * fuk * Math.pow(diameter, 2.6);
+	const MyRk = 0.3 * fuk * Math.pow(diameter, 2.6);
 
-  return MyRk;
+	return MyRk;
 }

@@ -1,25 +1,27 @@
-import styled, { css } from "styled-components/native";
+import styled, { css } from 'styled-components/native';
 
 interface Props {
-    backdrop: boolean;
+	backdrop: boolean;
 }
 
 export const Modal = styled.Modal`
-    position: relative;
+	position: relative;
 `;
 
 export const Backdrop = styled.View<Props>`
-    width: 100%;
-    height: 100%;
-    opacity: 0.5;
+	width: 100%;
+	height: 100%;
+	opacity: 0.5;
 
-    ${({ backdrop }) => (backdrop === true) && css`
-        background-color: black;
-    `}
+	${({ backdrop }) =>
+		backdrop === true &&
+		css`
+			background-color: black;
+		`}
 `;
 
 export const PopUp = styled.View`
-    position: absolute;
-    width: 100%;
-    height: 100%;
+	position: absolute;
+	width: 100%;
+	height: 100%;
 `;

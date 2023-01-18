@@ -1,10 +1,10 @@
 module.exports = {
-    singleQuote: true,
+	singleQuote: true,
 	trailingComma: 'all',
 	arrowParens: 'avoid',
 	quoteProps: 'preserve',
 	jsxSingleQuote: false,
-	useTabs: false,
+	useTabs: true,
 	endOfLine: 'auto',
 	semi: true,
 };

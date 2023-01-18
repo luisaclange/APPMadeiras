@@ -1,69 +1,32 @@
 {
-    "env": {
-        "es2021": true,
-        "node": true
-    },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended",
-		"plugin:prettier/recommended"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": "latest",
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react",
-        "@typescript-eslint",
-		"react-hooks",
-		"react-perf",
-		"prettier"
-    ],
-    "rules": {
-		"no-unused-vars": "off",
-    	"@typescript-eslint/no-unused-vars": "error",
-		"no-shadow": "off",
-		"@typescript-eslint/no-shadow": "error",
-		"@typescript-eslint/semi": ["error"],
-		"react/jsx-props-no-spreading": "off",
-		"no-useless-escape": "off",
-		"import/prefer-default-export": "off",
-		"no-underscore-dangle": "off",
-		"camelcase": "off",
-		"no-param-reassign": "off",
-		"react-perf/jsx-no-new-object-as-prop": "warn",
-		"react-perf/jsx-no-new-array-as-prop": "warn",
+	"env": {
+		"es2021": true,
+		"node": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:react-hooks/recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	},
+	"plugins": ["react", "@typescript-eslint"],
+	"rules": {
+		"no-unused-vars": "error",
+		"@typescript-eslint/no-unused-vars": "error",
+		"no-underscore-dangle": "error",
 		"react-hooks/rules-of-hooks": "error",
 		"react-hooks/exhaustive-deps": "warn",
-		"react-perf/jsx-no-new-function-as-prop": "off",
-		"react/jsx-filename-extension": [
-		1,
-		{
-			"extensions": [".tsx"]
-		}
-		],
-        "indent": [
-            "error",
-            "space"
-        ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": 0
-    },
-	"settings": {
-		"import/resolver": {
-		  "typescript": {}
-		}
-	  }
+		"indent": ["error", "tab"],
+		"linebreak-style": ["error", "windows"],
+		"quotes": ["error", "single"],
+		"semi": ["error", "always"]
+	}
 }

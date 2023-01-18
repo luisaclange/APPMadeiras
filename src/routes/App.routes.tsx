@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components';
 import { StatusBar } from 'react-native';
 import {
-  createNativeStackNavigator,
-  NativeStackNavigationOptions,
+	createNativeStackNavigator,
+	NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import globalStyle from '../styles/globalStyle';
 import Historic from '../screens/historic';
@@ -18,55 +18,53 @@ import Results from '../screens/results';
 import MoreInfo from '../screens/moreInfo';
 
 const screenOptions: NativeStackNavigationOptions = {
-  headerShown: false,
-  animation: 'none',
+	headerShown: false,
+	animation: 'none',
 };
 
 export type TRootStackParamList = {
-  Results: { id_calc?: string },
-  MoreInfo: { id_calc?: string },
-  NewCalc1: { id_calc?: string },
-  NewCalc2: { id_calc?: string },
-  NewCalc3: { id_calc?: string }
-}
+	Results: { id_calc?: string };
+	MoreInfo: { id_calc?: string };
+	NewCalc1: { id_calc?: string };
+	NewCalc2: { id_calc?: string };
+	NewCalc3: { id_calc?: string };
+};
 
 export default function App() {
-  const { Navigator, Screen } = createNativeStackNavigator();
+	const { Navigator, Screen } = createNativeStackNavigator();
 
-  return (
-    <ThemeProvider theme={globalStyle}>
-      <DataProvider>
-        <NavigationContainer>
-          <StatusBar
-            translucent
-            barStyle="light-content"
-            backgroundColor="transparent"
-          />
+	return (
+		<ThemeProvider theme={globalStyle}>
+			<DataProvider>
+				<NavigationContainer>
+					<StatusBar
+						translucent
+						barStyle="light-content"
+						backgroundColor="transparent"
+					/>
 
-          <Navigator
-            initialRouteName="Home"
-            screenOptions={screenOptions}
-          >
+					<Navigator
+						initialRouteName="Home"
+						screenOptions={screenOptions}
+					>
+						<Screen name="Home" component={Home} />
 
-            <Screen name="Home" component={Home} />
+						<Screen name="Historic" component={Historic} />
 
-            <Screen name="Historic" component={Historic} />
+						<Screen name="Filter" component={Filter} />
 
-            <Screen name="Filter" component={Filter} />
+						<Screen name="NewCalc1" component={NewCalc1} />
 
-            <Screen name="NewCalc1" component={NewCalc1} />
+						<Screen name="NewCalc2" component={NewCalc2} />
 
-            <Screen name="NewCalc2" component={NewCalc2} />
+						<Screen name="NewCalc3" component={NewCalc3} />
 
-            <Screen name="NewCalc3" component={NewCalc3} />
+						<Screen name="MoreInfo" component={MoreInfo} />
 
-            <Screen name="MoreInfo" component={MoreInfo} />
-
-            <Screen name="Results" component={Results} />
-
-          </Navigator>
-        </NavigationContainer>
-      </DataProvider>
-    </ThemeProvider>
-  );
+						<Screen name="Results" component={Results} />
+					</Navigator>
+				</NavigationContainer>
+			</DataProvider>
+		</ThemeProvider>
+	);
 }
