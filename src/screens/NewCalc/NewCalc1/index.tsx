@@ -75,6 +75,7 @@ export default function NewCalc1({ route }: NativeStackScreenProps<TRootStackPar
   // Guardar as informações
   async function handleDataRegister(data: Data['stage1']) {
     try {
+      console.log(data)
       setStage1(data);
 
       navigation.dispatch(CommonActions.navigate('NewCalc2', { params: { id_calc } }))

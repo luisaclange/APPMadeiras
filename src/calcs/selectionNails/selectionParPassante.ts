@@ -14,16 +14,13 @@ export function SelectionParPassante({ setData, esp1, esp2, ligationType }: IPro
     let verification = true;
 
     if (nail.diametro > Math.min(esp1, esp2) * 0.5) {
-      console.log(`Falha 1: ${nail.id} => ${nail.diametro} > ${Math.min(esp1, esp2) * 0.5}`)
       verification = false
     }
     if (ligationType === "corteSimples") {
       if (nail.comp < esp1 + esp2 + nail.altura) {
-        console.log(`Falha 2: ${nail.id} => ${nail.comp} < ${esp1 + esp2 + nail.altura}`)
         verification = false
       }
       if (nail.comp > (esp1 + esp2 + nail.altura) - nail.roscaComp) {
-        console.log(`Falha 3: ${nail.id} => ${nail.comp} > ${(esp1 + esp2 + nail.altura) - nail.roscaComp}`)
         verification = false
       }
     } else {

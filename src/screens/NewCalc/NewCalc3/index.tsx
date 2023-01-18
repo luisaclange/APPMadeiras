@@ -17,9 +17,9 @@ import PopUpOneButton from '../../../components/global/popUps/popUpOneButton';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { TRootStackParamList } from '../../../routes/App.routes';
 import LoadingPage from '../../../components/global/loadingPage';
-import { SelectionPrego } from '../../../project/selectionNails/selectionPrego';
-import { SelectionParPassante } from '../../../project/selectionNails/selectionParPassante';
-import { SelectionParSoberba } from '../../../project/selectionNails/selectionParSoberba';
+import { SelectionPrego } from '../../../calcs/selectionNails/selectionPrego';
+import { SelectionParPassante } from '../../../calcs/selectionNails/selectionParPassante';
+import { SelectionParSoberba } from '../../../calcs/selectionNails/selectionParSoberba';
 
 export default function NewCalc3({ route }: NativeStackScreenProps<TRootStackParamList, 'NewCalc3'>) {
   //Navegação e parametros
@@ -108,7 +108,7 @@ export default function NewCalc3({ route }: NativeStackScreenProps<TRootStackPar
             item.description = stage1.description;
             item.humidityClass = stage1.humidityClass;
             item.woodType = stage1.woodType;
-            item.woodName = stage1.woodName;
+            item.woodName = Number(stage1.woodName);
 
             // Parte 2
             item.calc = stage2.calc;
@@ -135,7 +135,7 @@ export default function NewCalc3({ route }: NativeStackScreenProps<TRootStackPar
             newCalc.description = stage1.description;
             newCalc.humidityClass = stage1.humidityClass;
             newCalc.woodType = stage1.woodType;
-            newCalc.woodName = stage1.woodName;
+            newCalc.woodName = Number(stage1.woodName);
 
             // Parte 2
             newCalc.calc = stage2.calc;
@@ -234,26 +234,29 @@ export default function NewCalc3({ route }: NativeStackScreenProps<TRootStackPar
                 title="Pino utilizado"
                 defaultValue={dataStage.nailDimension}
                 onPressAction={() => {
-                  if (watch('espWood_1'), watch('espWood_2'), dataStage) GetNails();
+                  if (watch('espWood_1'), watch('espWood_2')) GetNails();
                   else setDataNails([]);
                 }}
               />
               {
-                stage2.calc === "nailQtde" || dataStage.calc == "nailQtde" ? <FieldInput
-                  control={control}
-                  name="numberNails"
-                  title="Quantidade de pinos"
-                  error={errors.numberNails}
-                  dimension="un"
-                  defaultValue={dataStage?.numberNails ? String(dataStage.numberNails) : null}
-                /> : <FieldInput
-                  control={control}
-                  name="tractiveForce"
-                  title="Força solicitante (Sd)"
-                  error={errors.tractiveForce}
-                  dimension="KN"
-                  defaultValue={dataStage?.tractiveForce ? String(dataStage.tractiveForce) : null}
-                />
+                stage2.calc === "nailQtde" || dataStage.calc == "nailQtde" ?
+                  <FieldInput
+                    control={control}
+                    name="tractiveForce"
+                    title="Força solicitante (Sd)"
+                    error={errors.tractiveForce}
+                    dimension="KN"
+                    defaultValue={dataStage?.tractiveForce ? String(dataStage.tractiveForce) : null}
+                  />
+                  :
+                  <FieldInput
+                    control={control}
+                    name="numberNails"
+                    title="Quantidade de pinos"
+                    error={errors.numberNails}
+                    dimension="un"
+                    defaultValue={dataStage?.numberNails ? String(dataStage.numberNails) : null}
+                  />
               }
             </> : <LoadingPage />
           }

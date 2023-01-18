@@ -63,9 +63,9 @@ export default function FieldSelectWoods<
         item.name.toUpperCase().includes(text.toUpperCase()),
       );
 
-      setData(aux.sort((a, b) => a.name - b.name));
+      setData(aux.sort((a, b) => Number(a.name) - Number(b.name)));
     } else {
-      setData(NativeWoods.sort((a, b) => a.name - b.name));
+      setData(NativeWoods.sort((a, b) => Number(a.name) - Number(b.name)));
     }
   }, [text]);
 

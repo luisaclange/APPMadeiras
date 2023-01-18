@@ -144,7 +144,7 @@ export default function MoreInfo({ route }: NativeStackScreenProps<TRootStackPar
               <ValueInfo>{dataInfo.calc}</ValueInfo>
 
               <ImageCorte
-                source={dataInfo.ligationType === "corteSimples" ? require('../../assets/images/dimensoes/cortesimples.png') : require('../../assets/images/dimensoes/corteduplo.png')}
+                source={dataInfo.ligationType === "Corte Simples" ? require('../../assets/images/dimensoes/cortesimples.png') : require('../../assets/images/dimensoes/corteduplo.png')}
                 resizeMode={'center'}
               />
 

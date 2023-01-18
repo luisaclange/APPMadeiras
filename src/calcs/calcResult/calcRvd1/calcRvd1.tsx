@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import DataContext from "../../context/context";
-import { NailDimensions } from "../../archive/2_Dimensions/Pregos";
+import DataContext from "../../../context/context";
+import { NailDimensions } from "../../../archive/2_Dimensions/Pregos";
 
 export default function calcRvd1(B: number, Blim: number, fc0d: number, heightWood_1: string, nailDimension: string, fyk_nail: string) {
 
