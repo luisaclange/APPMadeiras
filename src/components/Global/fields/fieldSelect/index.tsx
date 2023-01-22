@@ -46,7 +46,7 @@ interface IProps<
 	data: ISelect[];
 	space?: boolean;
 	defaultValue?: PathValue<TFieldValues, TFieldArrayName>;
-	onPressAction?: () => void;
+	onPress?: () => void;
 }
 
 export default function FieldSelect<
@@ -60,7 +60,7 @@ export default function FieldSelect<
 	control,
 	data,
 	defaultValue,
-	onPressAction,
+	onPress,
 	...rest
 }: IProps<TFieldValues, TFieldArrayName>) {
 	const [visible, setVisible] = useState(false);
@@ -121,7 +121,7 @@ export default function FieldSelect<
 						<InputContainer
 							error={!!error}
 							onPress={() => {
-								if (onPressAction) onPressAction();
+								if (onPress) onPress();
 								setVisible(true);
 							}}
 						>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container } from './styles';
 import ButtonDark from '../../global/buttons/buttonDark';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { Keyboard } from 'react-native';
 
 interface IProps {
 	prevAction?: () => void;
@@ -9,6 +10,16 @@ interface IProps {
 }
 
 export function ButtonsPrevNext({ nextAction, prevAction }: IProps) {
+	const [show, setShow] = useState(true);
+
+	Keyboard.addListener('keyboardDidShow', () => {
+		setShow(false);
+	});
+
+	Keyboard.addListener('keyboardDidHide', () => {
+		setShow(true);
+	});
+
 	return (
 		<Container
 			style={{
@@ -16,8 +27,9 @@ export function ButtonsPrevNext({ nextAction, prevAction }: IProps) {
 					prevAction && nextAction
 						? 'space-between'
 						: prevAction
-						? 'flex-start'
-						: 'flex-end',
+							? 'flex-start'
+							: 'flex-end',
+				display: show ? 'flex' : 'none'
 			}}
 		>
 			{prevAction ? (

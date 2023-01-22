@@ -234,13 +234,13 @@ export default function MoreInfo({
 
 							<ItemUnity>
 								<TextUnity style={{ flex: 4 }}>
-									{dataInfo.calc === 'nailQtde'
+									{dataInfo.calc === 'Número de pinos'
 										? 'Força aplicada'
 										: 'Quantidade de pinos'}
 								</TextUnity>
 								<ValueUnity>
 									<TextValueUnity>
-										{dataInfo.calc === 'nailQtde'
+										{dataInfo.calc === 'Número de pinos'
 											? dataInfo.force
 											: dataInfo.qtde}
 									</TextValueUnity>
@@ -248,7 +248,7 @@ export default function MoreInfo({
 								<TextUnity
 									style={{ flex: 1, textAlign: 'right' }}
 								>
-									{dataInfo.calc === 'nailQtde' ? 'KN' : 'un'}
+									{dataInfo.calc === 'Número de pinos' ? 'KN' : 'un'}
 								</TextUnity>
 							</ItemUnity>
 						</ContainerUnity>

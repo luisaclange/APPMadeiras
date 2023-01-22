@@ -52,14 +52,14 @@ export default function NewCalc3({
 	} = useForm<Data['stage3']>({ resolver: yupResolver(schemaNewCalc3) });
 
 	// Buscar dimensões de pinos
-	function GetNails() {
-		switch (dataStage.nailType) {
+	const GetNails = useCallback(() => {
+		switch (stage2.nailType) {
 			case 'prego':
 				SelectionPrego({
 					setData: setDataNails,
 					esp1: Number(watch('espWood_1')?.replace(',', '.')),
 					esp2: Number(watch('espWood_2')?.replace(',', '.')),
-					ligationType: dataStage.ligationType,
+					ligationType: stage2.ligationType,
 				});
 				break;
 			case 'parafusoPassante':
@@ -67,7 +67,7 @@ export default function NewCalc3({
 					setData: setDataNails,
 					esp1: Number(watch('espWood_1')?.replace(',', '.')),
 					esp2: Number(watch('espWood_2')?.replace(',', '.')),
-					ligationType: dataStage.ligationType,
+					ligationType: stage2.ligationType,
 				});
 				break;
 			case 'parafusoSoberba':
@@ -81,7 +81,7 @@ export default function NewCalc3({
 				setDataNails([]);
 				break;
 		}
-	}
+	}, [stage2.ligationType, stage2.nailType, watch]);
 
 	// Buscar dados
 	const GetData = useCallback(async () => {
@@ -259,11 +259,8 @@ export default function NewCalc3({
 								name="nailDimension"
 								title="Pino utilizado"
 								defaultValue={dataStage.nailDimension}
-								onPressAction={() => {
-									if (
-										(watch('espWood_1'), watch('espWood_2'))
-									)
-										GetNails();
+								onPress={() => {
+									if (watch('espWood_1') && watch('espWood_2')) GetNails();
 									else setDataNails([]);
 								}}
 							/>

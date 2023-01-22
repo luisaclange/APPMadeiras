@@ -18,8 +18,6 @@ export default function CalcFinal({
 	let Rd: number;
 	let nNails: number;
 
-	console.log({ FvRk, ligationType, numberNails, tractiveForce, calc, kmod });
-
 	if (calc === 'nailQtde') {
 		const Rk = (1.4 * tractiveForce) / kmod;
 		nNails = Math.ceil(

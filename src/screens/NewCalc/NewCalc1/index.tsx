@@ -81,7 +81,6 @@ export default function NewCalc1({
 	// Guardar as informações
 	async function handleDataRegister(data: Data['stage1']) {
 		try {
-			console.log(data);
 			setStage1(data);
 
 			navigation.dispatch(

@@ -24,7 +24,7 @@
 		"no-underscore-dangle": "error",
 		"react-hooks/rules-of-hooks": "error",
 		"react-hooks/exhaustive-deps": "warn",
-		"indent": ["error", "tab"],
+		"indent": ["off", "tab"],
 		"linebreak-style": ["error", "windows"],
 		"quotes": ["error", "single"],
 		"semi": ["error", "always"]

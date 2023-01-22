@@ -11,42 +11,23 @@ interface IProps {
 
 export function SelectionPrego({ setData, esp1, esp2, ligationType }: IProps) {
 	const aux = PregoDimensions.filter(nail => {
-		const tp = Math.max(12 * nail.JP, Math.min(esp1, esp2));
+		const tm = Math.min(esp1, esp2);
+		const tp = Math.max(12 * nail.JP, tm);
+		let verification = true;
 
-		if (nail.JP > Math.min(esp1, esp2) * 0.2) {
-			console.error(
-				`Erro 1 ${nail.name}: `,
-				nail.JP,
-				'>',
-				Math.min(esp1, esp2) * 0.2,
-			);
-			return false;
-		}
+		console.log(esp1, esp2, tm);
+		if (nail.JP > tm * 0.2) verification = false;
 		if (ligationType === 'corteSimples') {
-			if (nail.LPP < esp1 + tp) {
-				console.error(
-					`Erro 2 ${nail.name}: `,
-					nail.LPP,
-					'<',
-					esp1 + tp,
-				);
-				return false;
-			}
-			if (nail.LPP > esp1 + esp2) {
-				console.error(
-					`Erro 3 ${nail.name}: `,
-					nail.LPP,
-					'>',
-					esp1 + esp2,
-				);
-				return false;
-			}
+			if (nail.LPP < esp1 + tp) verification = false;
+			if (nail.LPP > esp1 + esp2) verification = false;
 		} else {
-			if (nail.LPP < esp1 + esp2 + tp) return false;
-			if (nail.LPP > esp1 * 2 + esp2) return false;
+			if (nail.LPP < esp1 + esp2 + tp) verification = false;
+			if (nail.LPP > esp1 * 2 + esp2) verification = false;
 		}
 
-		return true;
+		console.log('Chegou ao final: ', verification);
+
+		return verification;
 	});
 
 	setData(
