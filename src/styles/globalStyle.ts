@@ -4,6 +4,7 @@ export default {
 		secondary: '#FFFFFF',
 		error: '#f53131',
 		grey: '#ACACAC',
+		yellow: '#ffe600'
 	},
 	fonts: {
 		regular: 'Montserrat-Light',

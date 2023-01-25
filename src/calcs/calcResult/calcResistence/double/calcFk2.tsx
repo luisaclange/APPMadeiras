@@ -5,5 +5,5 @@ export default function CalcFk2_Double(
 	B: number,
 ) {
 	const Fk2 = 0.5 * fe1k * t2 * d * B;
-	return Fk2;
+	return Fk2 / 100;
 }

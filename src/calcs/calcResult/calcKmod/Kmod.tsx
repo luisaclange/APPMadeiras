@@ -18,5 +18,5 @@ export default function CalcKmod(
 
 	const kmod = kmod1 * kmod2;
 
-	return kmod;
+	return { kmod, kmod1, kmod2 };
 }

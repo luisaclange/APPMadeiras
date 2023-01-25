@@ -5,5 +5,5 @@ export default function CalcFk2_Simple(
 	B: number,
 ) {
 	const Fk2 = fe1k * t2 * d * B;
-	return Fk2;
+	return Fk2 / 100;
 }

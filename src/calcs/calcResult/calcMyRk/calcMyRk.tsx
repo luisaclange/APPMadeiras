@@ -5,6 +5,7 @@ import { PregoDimensions } from '../../../archive/2_Dimensions/Pregos';
 export function CalcMyRk(nailType: string, id_nail: string) {
 	let diameter: number;
 	let fuk: number;
+	let name: string;
 
 	switch (nailType) {
 		case 'prego':
@@ -31,7 +32,7 @@ export function CalcMyRk(nailType: string, id_nail: string) {
 			diameter = ParafusoPassanteDimensions.find(
 				item => item.id === id_nail,
 			).diametro;
-			const name = ParafusoPassanteDimensions.find(
+			name = ParafusoPassanteDimensions.find(
 				item => item.id === id_nail,
 			).name;
 
@@ -50,5 +51,5 @@ export function CalcMyRk(nailType: string, id_nail: string) {
 
 	const MyRk = 0.3 * fuk * Math.pow(diameter, 2.6);
 
-	return MyRk;
+	return { MyRk, fuk };
 }

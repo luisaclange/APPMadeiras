@@ -48,5 +48,5 @@ export default function CalcFek(
 		fek = 0.082 * (1 - 0.01 * diameter) * pk;
 	else fek = (0.082 * (1 - 0.01 * diameter) * pk) / (0.9 + 0.015 * diameter);
 
-	return fek;
+	return { fek, density, pk };
 }

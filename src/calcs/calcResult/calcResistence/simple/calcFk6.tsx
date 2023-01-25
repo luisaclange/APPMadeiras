@@ -7,5 +7,5 @@ export default function CalcFk6_Simple(
 	const aux1 = 1.15 * Math.sqrt((2 * B) / (1 + B));
 	const aux2 = 2 * MyRk * fek * d;
 	const Fk6 = aux1 * Math.sqrt(aux2);
-	return Fk6;
+	return Fk6 / 100;
 }

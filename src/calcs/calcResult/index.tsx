@@ -8,8 +8,13 @@ import CalcFinal from './calcFinal';
 
 export interface IResult {
 	kmod: number;
+	kmod1: number;
+	kmod2: number;
 	MyRk: number;
+	fuk: number;
 	fek: number;
+	density: number;
+	pk: number;
 	FvRk: number;
 	FvRk1: number;
 	FvRk2: number;
@@ -19,12 +24,6 @@ export interface IResult {
 	FvRk6: number;
 	Rd: number;
 	nNails: number;
-	// fc0d: number,
-	// ft0d: number,
-	// B: number,
-	// Blim: number,
-	// Rvd1: number,
-	// nNails: number
 }
 
 export default async function CalcResult(id: string): Promise<IResult> {
@@ -40,19 +39,19 @@ export default async function CalcResult(id: string): Promise<IResult> {
 		espWood_2,
 		ligationType,
 		nailType,
-		widthWood,
 		numberNails,
 		calc,
+		widthWood
 	} = dados;
 
 	//Calculo do Kmod
-	const kmod = CalcKmod(charging, humidityClass, woodType);
+	const { kmod, kmod1, kmod2 } = CalcKmod(charging, humidityClass, woodType);
 
 	//Calculo do momento resistente do pino metálico
-	const MyRk = CalcMyRk(nailType, nailDimension);
+	const { MyRk, fuk } = CalcMyRk(nailType, nailDimension);
 
 	//Calculo da resistencia ao embutimento da madeira
-	const fek = CalcFek(nailType, woodName, nailDimension);
+	const { density, fek, pk } = CalcFek(nailType, woodName, nailDimension);
 
 	//Calculo B
 	const B = 1;
@@ -77,12 +76,20 @@ export default async function CalcResult(id: string): Promise<IResult> {
 		tractiveForce,
 		calc,
 		kmod,
+		widthWood,
+		nailType,
+		nailDimension
 	});
 
 	return {
 		kmod,
+		kmod1,
+		kmod2,
 		MyRk,
+		fuk,
 		fek,
+		density,
+		pk,
 		FvRk,
 		FvRk1,
 		FvRk2,

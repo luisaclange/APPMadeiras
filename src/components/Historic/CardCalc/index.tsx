@@ -7,9 +7,7 @@ import React, {
 	useEffect,
 	useState,
 } from 'react';
-import Info from '../../../assets/svgs/info.svg';
 import Trash from '../../../assets/svgs/trash.svg';
-import Calculator from '../../../assets/svgs/calculator.svg';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { TouchableOpacity } from 'react-native';
 import { CommonActions, useNavigation } from '@react-navigation/native';

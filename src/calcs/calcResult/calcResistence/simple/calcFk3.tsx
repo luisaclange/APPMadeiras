@@ -12,5 +12,5 @@ export default function CalcFk3_Simple(
 		Math.pow(B, 3) * Math.pow(t2 / t1, 2);
 	const aux3 = B * (1 + t2 / t1);
 	const Fk3 = aux1 * (Math.sqrt(aux2) - aux3);
-	return Fk3;
+	return Fk3 / 100;
 }

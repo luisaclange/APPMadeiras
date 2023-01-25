@@ -21,6 +21,8 @@ import { database } from '../../database';
 import { FilterModel } from '../../database/models/filterModel';
 import { useNavigation } from '@react-navigation/native';
 import LoadingPage from '../../components/global/loadingPage';
+import { CalcData } from '../../interfaces/Calc';
+import { NailTypeData } from '../../interfaces/NailType';
 
 export default function Filter() {
 	// Navegação
@@ -125,36 +127,14 @@ export default function Filter() {
 							/>
 							<FieldSelect
 								control={control}
-								data={[
-									{
-										id: 'prego',
-										value: 'Prego',
-									},
-									{
-										id: 'parafusoSoberba',
-										value: 'Parafuso de rosca soberba',
-									},
-									{
-										id: 'parafusoPassante',
-										value: 'Parafuso passante',
-									},
-								]}
+								data={NailTypeData}
 								name="nailType"
 								title="Tipo de pino metálico"
 								defaultValue={dataFilter?.nailType}
 							/>
 							<FieldSelect
 								control={control}
-								data={[
-									{
-										id: 'nailQtde',
-										value: 'Número de pinos',
-									},
-									{
-										id: 'maxForce',
-										value: 'Força máxima aplicada',
-									},
-								]}
+								data={CalcData}
 								name="calc"
 								title="Cálculo"
 								defaultValue={dataFilter?.calc}

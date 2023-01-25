@@ -19,7 +19,7 @@ export const Container = styled.Pressable<props>`
 		isNew &&
 		css`
 			border-width: ${RFValue(5, 700)}px;
-			border-color: #ffe600;
+			border-color: ${globalStyle.colors.yellow};
 			padding: ${RFValue(11, 700)}px;
 		`}
 `;

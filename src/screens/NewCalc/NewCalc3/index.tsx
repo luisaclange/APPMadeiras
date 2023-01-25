@@ -49,6 +49,7 @@ export default function NewCalc3({
 		handleSubmit,
 		formState: { errors },
 		watch,
+		setValue
 	} = useForm<Data['stage3']>({ resolver: yupResolver(schemaNewCalc3) });
 
 	// Buscar dimensões de pinos
@@ -91,6 +92,9 @@ export default function NewCalc3({
 					.get<CalcModel>('calcs')
 					.find(id_calc);
 				setDataStage(calc);
+				setValue('espWood_1', String(calc.espWood_1).replace('.', ','));
+				setValue('espWood_1', String(calc.espWood_2).replace('.', ','));
+				GetNails();
 			}
 		} catch (error) {
 			Alert.alert('Ops, ocorreu um erro!', error.message);
@@ -181,7 +185,7 @@ export default function NewCalc3({
 					setVisibleSuccess(false);
 					navigation.dispatch(
 						CommonActions.navigate('Results', {
-							params: { id },
+							params: { id_calc: id },
 						}),
 					);
 				}}
@@ -263,6 +267,7 @@ export default function NewCalc3({
 									if (watch('espWood_1') && watch('espWood_2')) GetNails();
 									else setDataNails([]);
 								}}
+								error={errors.nailDimension}
 							/>
 							{stage2.calc === 'nailQtde' ||
 								dataStage.calc == 'nailQtde' ? (
