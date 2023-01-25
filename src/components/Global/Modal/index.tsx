@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { Backdrop, Modal, PopUp } from './styles';
 
 interface Props {
 	children: any;
 	visible: boolean;
-	setVisible: any;
+	setVisible: Dispatch<SetStateAction<boolean>>;
 	backdrop: boolean;
 	dismissOnPress: boolean;
 	positionVertical?: string;
@@ -28,9 +28,9 @@ export default function CustomModal({
 					onPress={
 						dismissOnPress
 							? () => {
-									setVisible(false);
-							  }
-							: () => {}
+								setVisible(false);
+							}
+							: null
 					}
 				>
 					<Backdrop backdrop={backdrop} />
@@ -42,15 +42,15 @@ export default function CustomModal({
 							? positionVertical === 'top'
 								? 'flex-start'
 								: positionVertical === 'bottom'
-								? 'flex-end'
-								: 'center'
+									? 'flex-end'
+									: 'center'
 							: 'center',
 						alignItems: positionHorizontal
 							? positionHorizontal === 'left'
 								? 'flex-start'
 								: positionHorizontal === 'right'
-								? 'flex-end'
-								: 'center'
+									? 'flex-end'
+									: 'center'
 							: 'center',
 					}}
 				>

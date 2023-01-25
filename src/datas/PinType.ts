@@ -1,4 +1,4 @@
-export const NailTypeData = [
+export const PinTypeData = [
 	{
 		id: 'prego',
 		value: 'Prego',

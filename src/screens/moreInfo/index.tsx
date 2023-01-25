@@ -28,13 +28,16 @@ import { database } from '../../database';
 import PopUpOneButton from '../../components/global/popUps/popUpOneButton';
 import { Kmod } from '../../archive/NBRTables/WoodProperties/Kmod';
 import { NativeWoods } from '../../archive/NBRTables/NativeWood/NativeWood';
-import { PregoDimensions } from '../../archive/PinsDimensions/Nails';
-import { ParafusoSoberbaDimensions } from '../../archive/PinsDimensions/SuperbScrews';
-import { ParafusoPassanteDimensions } from '../../archive/PinsDimensions/ThroughScrews';
-import { WoodTypeData } from '../../interfaces/WoodType';
-import { LigationTypeData } from '../../interfaces/LigationType';
-import { NailTypeData } from '../../interfaces/NailType';
-import { CalcData } from '../../interfaces/Calc';
+import PregoDimensions from '../../archive/PinsDimensions/Nails.json';
+import ParafusoSoberbaDimensions from '../../archive/PinsDimensions/SuperbScrews.json';
+import ParafusoPassanteDimensions from '../../archive/PinsDimensions/ThroughScrews.json';
+import { WoodTypeData } from '../../datas/WoodType';
+import { LigationTypeData } from '../../datas/LigationType';
+import { PinTypeData } from '../../datas/PinType';
+import { CalcData } from '../../datas/Calc';
+import { INail } from '../../interfaces/Nail';
+import { ISuperbScrew } from '../../interfaces/SuperbScrew';
+import { IThroughScrew } from '../../interfaces/ThroughScrew';
 
 interface IInfo {
 	description: string;
@@ -43,8 +46,8 @@ interface IInfo {
 	woodName: string;
 	woodType: string;
 	ligationType: string;
-	nailDimension: string;
-	nailType: string;
+	pinSelected: string;
+	pinType: string;
 	calc: string;
 	esp1: number;
 	esp2: number;
@@ -72,25 +75,25 @@ export default function MoreInfo({
 		try {
 			const aux = await database.get<CalcModel>('calcs').find(id_calc);
 
-			let nailDimension = '';
-			switch (aux.nailType) {
+			let pinSelected = '';
+			switch (aux.pinType) {
 				case 'prego':
-					nailDimension = PregoDimensions.find(
-						item => item.id === aux.nailDimension,
+					pinSelected = PregoDimensions.find(
+						(item: INail) => item.id === aux.pinSelected,
 					)?.name;
 					break;
 				case 'parafusoSoberba':
-					nailDimension = ParafusoSoberbaDimensions.find(
-						item => item.id === aux.nailDimension,
+					pinSelected = ParafusoSoberbaDimensions.find(
+						(item: ISuperbScrew) => item.id === aux.pinSelected,
 					)?.name;
 					break;
 				case 'parafusoPassante':
-					nailDimension = ParafusoPassanteDimensions.find(
-						item => item.id === aux.nailDimension,
+					pinSelected = ParafusoPassanteDimensions.find(
+						(item: IThroughScrew) => item.id === aux.pinSelected,
 					)?.name;
 					break;
 				default:
-					nailDimension = '';
+					pinSelected = '';
 					break;
 			}
 
@@ -108,14 +111,14 @@ export default function MoreInfo({
 				ligationType: LigationTypeData.find(
 					item => item.id === aux.ligationType,
 				)?.value,
-				nailDimension,
-				nailType: NailTypeData.find(item => item.id === aux.nailType)
+				pinSelected,
+				pinType: PinTypeData.find(item => item.id === aux.pinType)
 					?.value,
 				calc: CalcData.find(item => item.id === aux.calc)?.value,
 				esp1: aux.espWood_1,
 				esp2: aux.espWood_2,
 				lar: aux.widthWood,
-				qtde: aux.numberNails,
+				qtde: aux.numberPins,
 				force: aux.tractiveForce,
 			});
 			setLoading(false);
@@ -166,10 +169,10 @@ export default function MoreInfo({
 						<ValueInfo>{dataInfo.ligationType}</ValueInfo>
 
 						<Label>Tipo de pino metálico</Label>
-						<ValueInfo>{dataInfo.nailType}</ValueInfo>
+						<ValueInfo>{dataInfo.pinType}</ValueInfo>
 
 						<Label>Pino utilizado</Label>
-						<ValueInfo>{dataInfo.nailDimension}</ValueInfo>
+						<ValueInfo>{dataInfo.pinSelected}</ValueInfo>
 
 						<Label>Cálculo</Label>
 						<ValueInfo>{dataInfo.calc}</ValueInfo>

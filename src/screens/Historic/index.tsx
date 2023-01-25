@@ -41,8 +41,8 @@ export default function Historic() {
 					.toLowerCase()
 					.includes(filter?.description.toLowerCase()),
 			);
-		if (filter?.nailType)
-			aux = aux.filter(item => item.nailType === filter?.nailType);
+		if (filter?.pinType)
+			aux = aux.filter(item => item.pinType === filter?.pinType);
 		if (filter?.woodName)
 			aux = aux.filter(item => item.woodName === filter?.woodName);
 

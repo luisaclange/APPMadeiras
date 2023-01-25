@@ -40,8 +40,7 @@ export default function FieldInput<
 	control,
 	error,
 	space,
-	defaultValue,
-	...rest
+	defaultValue
 }: IProps<TFieldValues, TFieldArrayName>) {
 	return (
 		<Controller
@@ -58,7 +57,6 @@ export default function FieldInput<
 								onChangeText={text => {
 									onChange(text);
 								}}
-								{...rest}
 							/>
 							{dimension ? (
 								<Dimension error={!!error}>

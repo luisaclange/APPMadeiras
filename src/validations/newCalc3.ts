@@ -13,7 +13,7 @@ export const schemaNewCalc3 = yup.object().shape({
 		.string()
 		.matches(/^\d+(\,\d{1,10})?$/, 'Formato errado')
 		.required('Campo obrigatório'),
-	nailDimension: yup.string().required('Campo obrigatório'),
+	pinSelected: yup.string().required('Campo obrigatório'),
 	tractiveForce: yup.string().matches(/^\d+(\,\d{1,10})?$/, 'Formato errado'),
-	numberNails: yup.string().matches(/^\d+(\,\d{1,10})?$/, 'Formato errado'),
+	numberPins: yup.string().matches(/^\d+(\,\d{1,10})?$/, 'Formato errado'),
 });

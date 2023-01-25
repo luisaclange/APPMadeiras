@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import calcDraw from './calcsDraw';
 import { CalcModel } from '../../database/models/calcModel';
-import { PregoDimensions } from '../../archive/PinsDimensions/Nails';
-import { ParafusoSoberbaDimensions } from '../../archive/PinsDimensions/SuperbScrews';
-import { ParafusoPassanteDimensions } from '../../archive/PinsDimensions/ThroughScrews';
+import PregoDimensions from '../../archive/PinsDimensions/Nails.json';
+import ParafusoSoberbaDimensions from '../../archive/PinsDimensions/SuperbScrews.json';
+import ParafusoPassanteDimensions from '../../archive/PinsDimensions/ThroughScrews.json';
 
 interface desenhoProps {
 	data: CalcModel | Record<string, never>;
@@ -99,7 +99,7 @@ const Draw: React.FC<desenhoProps> = ({ data, nails }) => {
 	return (
 		<>
 			{!loading ? (
-				<BackgroundImage source={require('../../assets/images/678-978.jpg')}>
+				<BackgroundImage source={require('../../assets/images/Detalhamento.jpg')}>
 					<ColumnSpecial>
 						<BorderFreeSpecial />
 						{calc.nNailsSpecialColumn > 0 ? (

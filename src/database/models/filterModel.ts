@@ -13,8 +13,8 @@ export class FilterModel extends Model {
 	@field('woodName')
 	woodName?: number;
 
-	@field('nailType')
-	nailType?: string;
+	@field('pinType')
+	pinType?: string;
 
 	@field('calc')
 	calc?: string;

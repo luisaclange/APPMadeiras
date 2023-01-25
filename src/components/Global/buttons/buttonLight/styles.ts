@@ -9,13 +9,14 @@ export const Border = styled.View`
 	padding: ${RFValue(2, 700)}px;
 	border-radius: ${RFValue(8, 700)}px;
 	width: 100%;
+	min-width: ${RFValue(120, 700)}px;
 `;
 
 export const Container = styled.View`
 	background-color: ${globalStyle.colors.secondary};
 	justify-content: center;
 	align-items: center;
-	margin: 2px;
+	margin: ${RFValue(2, 700)}px;
 	flex-grow: 1;
 	border-radius: ${RFValue(4, 700)}px;
 `;
@@ -23,5 +24,5 @@ export const Container = styled.View`
 export const TextButton = styled.Text`
 	font-family: ${globalStyle.fonts.semibold};
 	color: ${globalStyle.colors.primary};
-	font-size: ${RFValue(18, 700)}px;
+	font-size: ${RFValue(20, 700)}px;
 `;

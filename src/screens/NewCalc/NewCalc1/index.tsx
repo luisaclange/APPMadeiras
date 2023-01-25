@@ -18,7 +18,7 @@ import { TRootStackParamList } from '../../../routes/App.routes';
 import { CalcModel } from '../../../database/models/calcModel';
 import { database } from '../../../database';
 import LoadingPage from '../../../components/global/loadingPage';
-import { WoodTypeData } from '../../../interfaces/WoodType';
+import { WoodTypeData } from '../../../datas/WoodType';
 
 export default function NewCalc1({
 	route,

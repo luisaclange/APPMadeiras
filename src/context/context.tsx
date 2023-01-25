@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 export interface Data {
 	stage1: {
@@ -10,7 +10,7 @@ export interface Data {
 	};
 	stage2: {
 		ligationType: string;
-		nailType: string;
+		pinType: string;
 		calc: string;
 	};
 	stage3: {
@@ -18,12 +18,12 @@ export interface Data {
 		widthWood: string;
 		espWood_1: string;
 		espWood_2: string;
-		nailDimension: string;
-		numberNails: string;
+		pinSelected: string;
+		numberPins: string;
 	};
-	setStage1(data: Data['stage1']): void;
-	setStage2(data: Data['stage2']): void;
-	setStage3(data: Data['stage3']): void;
+	setStage1: Dispatch<SetStateAction<Data['stage1']>>;
+	setStage2: Dispatch<SetStateAction<Data['stage2']>>;
+	setStage3: Dispatch<SetStateAction<Data['stage3']>>;
 }
 
 const DataContext = createContext<Data>({} as Data);
@@ -40,16 +40,16 @@ export function DataProvider({ children }: any) {
 	const [stage2, setStage2] = useState<Data['stage2']>({
 		calc: undefined,
 		ligationType: undefined,
-		nailType: undefined,
+		pinType: undefined,
 	});
 
 	const [stage3, setStage3] = useState<Data['stage3']>({
 		espWood_1: undefined,
 		espWood_2: undefined,
-		nailDimension: undefined,
+		pinSelected: undefined,
 		tractiveForce: undefined,
 		widthWood: undefined,
-		numberNails: undefined,
+		numberPins: undefined,
 	});
 
 	return (

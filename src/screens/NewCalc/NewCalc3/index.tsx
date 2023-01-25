@@ -54,7 +54,7 @@ export default function NewCalc3({
 
 	// Buscar dimensões de pinos
 	const GetNails = useCallback(() => {
-		switch (stage2.nailType) {
+		switch (stage2.pinType) {
 			case 'prego':
 				SelectionPrego({
 					setData: setDataNails,
@@ -82,7 +82,7 @@ export default function NewCalc3({
 				setDataNails([]);
 				break;
 		}
-	}, [stage2.ligationType, stage2.nailType, watch]);
+	}, [stage2.ligationType, stage2.pinType, watch]);
 
 	// Buscar dados
 	const GetData = useCallback(async () => {
@@ -101,7 +101,7 @@ export default function NewCalc3({
 		} finally {
 			setLoadingPage(false);
 		}
-	}, [id_calc]);
+	}, [GetNails, id_calc, setValue]);
 
 	useEffect(() => {
 		GetData();
@@ -125,13 +125,13 @@ export default function NewCalc3({
 						// Parte 2
 						item.calc = stage2.calc;
 						item.ligationType = stage2.ligationType;
-						item.nailType = stage2.nailType;
+						item.pinType = stage2.pinType;
 
 						// Parte 3
 						item.espWood_1 = Number(data.espWood_1);
 						item.espWood_2 = Number(data.espWood_2);
-						item.nailDimension = data.nailDimension;
-						item.numberNails = Number(data.numberNails) || 0;
+						item.pinSelected = data.pinSelected;
+						item.numberPins = Number(data.numberPins) || 0;
 						item.tractiveForce = Number(data.tractiveForce) || 0;
 						item.widthWood = Number(data.widthWood);
 
@@ -151,13 +151,13 @@ export default function NewCalc3({
 						// Parte 2
 						newCalc.calc = stage2.calc;
 						newCalc.ligationType = stage2.ligationType;
-						newCalc.nailType = stage2.nailType;
+						newCalc.pinType = stage2.pinType;
 
 						// Parte 3
 						newCalc.espWood_1 = Number(data.espWood_1);
 						newCalc.espWood_2 = Number(data.espWood_2);
-						newCalc.nailDimension = data.nailDimension;
-						newCalc.numberNails = Number(data.numberNails) || 0;
+						newCalc.pinSelected = data.pinSelected;
+						newCalc.numberPins = Number(data.numberPins) || 0;
 						newCalc.tractiveForce = Number(data.tractiveForce) || 0;
 						newCalc.widthWood = Number(data.widthWood);
 
@@ -260,14 +260,14 @@ export default function NewCalc3({
 							<FieldSelect
 								data={dataNails}
 								control={control}
-								name="nailDimension"
+								name="pinSelected"
 								title="Pino utilizado"
-								defaultValue={dataStage.nailDimension}
+								defaultValue={dataStage.pinSelected}
 								onPress={() => {
 									if (watch('espWood_1') && watch('espWood_2')) GetNails();
 									else setDataNails([]);
 								}}
-								error={errors.nailDimension}
+								error={errors.pinSelected}
 							/>
 							{stage2.calc === 'nailQtde' ||
 								dataStage.calc == 'nailQtde' ? (
@@ -286,13 +286,13 @@ export default function NewCalc3({
 							) : (
 								<FieldInput
 									control={control}
-									name="numberNails"
+									name="numberPins"
 									title="Quantidade de pinos"
-									error={errors.numberNails}
+									error={errors.numberPins}
 									dimension="un"
 									defaultValue={
-										dataStage?.numberNails
-											? String(dataStage.numberNails)
+										dataStage?.numberPins
+											? String(dataStage.numberPins)
 											: null
 									}
 								/>

@@ -15,9 +15,9 @@ import { TRootStackParamList } from '../../../routes/App.routes';
 import { CalcModel } from '../../../database/models/calcModel';
 import { database } from '../../../database';
 import LoadingPage from '../../../components/global/loadingPage';
-import { LigationTypeData } from '../../../interfaces/LigationType';
-import { NailTypeData } from '../../../interfaces/NailType';
-import { CalcData } from '../../../interfaces/Calc';
+import { LigationTypeData } from '../../../datas/LigationType';
+import { PinTypeData } from '../../../datas/PinType';
+import { CalcData } from '../../../datas/Calc';
 
 export default function NewCalc2({
 	route,
@@ -93,11 +93,11 @@ export default function NewCalc2({
 							/>
 							<FieldSelect
 								control={control}
-								data={NailTypeData}
-								name="nailType"
+								data={PinTypeData}
+								name="pinType"
 								title="Tipo de pino metálico"
-								error={errors.nailType}
-								defaultValue={dataStage.nailType}
+								error={errors.pinType}
+								defaultValue={dataStage.pinType}
 							/>
 							<FieldSelect
 								control={control}

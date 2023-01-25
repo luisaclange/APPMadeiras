@@ -26,10 +26,10 @@ import PopUpOneButton from '../../global/popUps/popUpOneButton';
 import PopUpTwoButtons from '../../global/popUps/popUpTwoButtons';
 import { database } from '../../../database';
 import { NativeWoods } from '../../../archive/NBRTables/NativeWood/NativeWood';
-import { PregoDimensions } from '../../../archive/PinsDimensions/Nails';
+import PregoDimensions from '../../../archive/PinsDimensions/Nails.json';
 import New from '../../../assets/svgs/new.svg';
-import { ParafusoPassanteDimensions } from '../../../archive/PinsDimensions/ThroughScrews';
-import { ParafusoSoberbaDimensions } from '../../../archive/PinsDimensions/SuperbScrews';
+import ParafusoPassanteDimensions from '../../../archive/PinsDimensions/ThroughScrews.json';
+import ParafusoSoberbaDimensions from '../../../archive/PinsDimensions/SuperbScrews.json';
 
 interface IProps {
 	item: CalcModel;
@@ -94,7 +94,7 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 			wood_name: wood?.name,
 			wood_resistance: wood?.class,
 		});
-	}, []);
+	}, [item.charging, item.humidityClass, item.nailDimension, item.nailType, item.woodName]);
 
 	useEffect(GetData, [GetData]);
 

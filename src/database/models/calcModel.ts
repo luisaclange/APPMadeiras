@@ -22,8 +22,8 @@ export class CalcModel extends Model {
 	@field('ligationType')
 	ligationType!: string;
 
-	@field('nailType')
-	nailType!: string;
+	@field('pinType')
+	pinType!: string;
 
 	@field('calc')
 	calc!: string;
@@ -34,8 +34,8 @@ export class CalcModel extends Model {
 	@field('espWood_2')
 	espWood_2!: number;
 
-	@field('nailDimension')
-	nailDimension!: string;
+	@field('pinSelected')
+	pinSelected!: string;
 
 	@field('widthWood')
 	widthWood!: number;
@@ -43,8 +43,8 @@ export class CalcModel extends Model {
 	@field('tractiveForce')
 	tractiveForce?: number;
 
-	@field('numberNails')
-	numberNails?: number;
+	@field('numberPins')
+	numberPins?: number;
 
 	@field('created_at')
 	created_at!: number;

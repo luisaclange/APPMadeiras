@@ -21,8 +21,8 @@ import { database } from '../../database';
 import { FilterModel } from '../../database/models/filterModel';
 import { useNavigation } from '@react-navigation/native';
 import LoadingPage from '../../components/global/loadingPage';
-import { CalcData } from '../../interfaces/Calc';
-import { NailTypeData } from '../../interfaces/NailType';
+import { CalcData } from '../../datas/Calc';
+import { PinTypeData } from '../../datas/PinType';
 
 export default function Filter() {
 	// Navegação
@@ -52,7 +52,7 @@ export default function Filter() {
 		setValue('description', '');
 		setValue('charging', '');
 		setValue('woodName', 0);
-		setValue('nailType', '');
+		setValue('pinType', '');
 		setValue('calc', '');
 	}
 
@@ -82,7 +82,7 @@ export default function Filter() {
 				await dataFilter.update(item => {
 					item.charging = data.charging;
 					item.description = data.description;
-					item.nailType = data.nailType;
+					item.pinType = data.pinType;
 					item.woodName = data.woodName;
 					item.calc = data.calc;
 					item.updated_at = Number(new Date());
@@ -127,10 +127,10 @@ export default function Filter() {
 							/>
 							<FieldSelect
 								control={control}
-								data={NailTypeData}
-								name="nailType"
+								data={PinTypeData}
+								name="pinType"
 								title="Tipo de pino metálico"
-								defaultValue={dataFilter?.nailType}
+								defaultValue={dataFilter?.pinType}
 							/>
 							<FieldSelect
 								control={control}

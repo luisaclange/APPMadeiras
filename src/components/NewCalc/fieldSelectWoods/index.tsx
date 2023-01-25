@@ -11,10 +11,12 @@ import {
 	FlatList,
 	TextInputProps,
 	TouchableOpacity,
-	TouchableWithoutFeedback,
 	View,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import DoubleArrow from '../../../assets/svgs/doubleArrow.svg';
+import ArrowUp from '../../../assets/svgs/arrowUp.svg';
+import ArrowDown from '../../../assets/svgs/arrowDown.svg';
+import FindIcon from '../../../assets/svgs/find.svg';
 import { RFValue } from 'react-native-responsive-fontsize';
 import {
 	Error,
@@ -55,8 +57,7 @@ export default function FieldSelectWoods<
 	error,
 	name,
 	control,
-	defaultValue,
-	...rest
+	defaultValue
 }: IProps<TFieldValues, TFieldArrayName>) {
 	const [visible, setVisible] = useState(false);
 	const [data, setData] = useState(
@@ -103,11 +104,7 @@ export default function FieldSelectWoods<
 											setText(txt);
 										}}
 									/>
-									<Icon
-										name="search"
-										size={RFValue(30, 700)}
-										color={globalStyle.colors.grey}
-									/>
+									<FindIcon />
 								</Find>
 								<FlatList
 									data={data}
@@ -127,14 +124,7 @@ export default function FieldSelectWoods<
 												key={`Madeira${item.item.id}`}
 											>
 												<ItemSelect>
-													<Icon
-														name="double-arrow"
-														color={
-															globalStyle.colors
-																.primary
-														}
-														size={RFValue(30, 700)}
-													/>
+													<DoubleArrow />
 													<View>
 														<ItemText>
 															{item.item.name} #
@@ -168,19 +158,10 @@ export default function FieldSelectWoods<
 								}
 								editable={false}
 								multiline
-								{...rest}
 							/>
-							<TouchableWithoutFeedback>
-								<Icon
-									name="keyboard-arrow-down"
-									size={RFValue(30, 700)}
-									color={
-										error
-											? globalStyle.colors.error
-											: globalStyle.colors.primary
-									}
-								/>
-							</TouchableWithoutFeedback>
+							{
+								visible ? <ArrowUp /> : <ArrowDown />
+							}
 						</InputContainer>
 						{error ? <Error>{error.message}</Error> : <Space />}
 						<Space />

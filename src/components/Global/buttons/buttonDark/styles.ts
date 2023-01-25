@@ -16,13 +16,13 @@ export const Container = styled.View`
 	background-color: ${globalStyle.colors.primary};
 	justify-content: center;
 	align-items: center;
-	margin: 2px;
+	margin: ${RFValue(2, 700)}px;
 	flex-grow: 1;
 	border-radius: ${RFValue(4, 700)}px;
 `;
 
 export const TextButton = styled.Text`
-	font-family: ${globalStyle.fonts.bold};
+	font-family: ${globalStyle.fonts.semibold};
 	color: ${globalStyle.colors.secondary};
-	font-size: ${RFValue(24, 700)}px;
+	font-size: ${RFValue(20, 700)}px;
 `;
