@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { ISelect } from '../../components/global/fields/fieldSelect';
-import { ParafusoPassanteDimensions } from '../../archive/2_Dimensions/ParafusoPassante';
+import { ParafusoPassanteDimensions } from '../../archive/PinsDimensions/ThroughScrews';
 
 interface IProps {
 	setData: Dispatch<SetStateAction<ISelect[]>>;

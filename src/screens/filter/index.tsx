@@ -12,7 +12,7 @@ import FieldInput from '../../components/global/fields/fieldInput';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { IFilter, schemaFilter } from '../../validations/filter';
-import { Kmod } from '../../archive/4_WoodProperties/Kmod';
+import { Kmod } from '../../archive/NBRTables/WoodProperties/Kmod';
 import FieldSelect from '../../components/global/fields/fieldSelect';
 import FieldSelectWoods from '../../components/newCalc/fieldSelectWoods';
 import ButtonDark from '../../components/global/buttons/buttonDark';

@@ -1,6 +1,6 @@
-import { ParafusoPassanteDimensions } from '../../../archive/2_Dimensions/ParafusoPassante';
-import { ParafusoSoberbaDimensions } from '../../../archive/2_Dimensions/ParafusoSoberba';
-import { PregoDimensions } from '../../../archive/2_Dimensions/Pregos';
+import { ParafusoPassanteDimensions } from '../../../archive/PinsDimensions/ThroughScrews';
+import { ParafusoSoberbaDimensions } from '../../../archive/PinsDimensions/SuperbScrews';
+import { PregoDimensions } from '../../../archive/PinsDimensions/Nails';
 
 interface IProps {
 	FvRk: number;

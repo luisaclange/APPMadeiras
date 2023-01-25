@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { ISelect } from '../../components/global/fields/fieldSelect';
-import { PregoDimensions } from '../../archive/2_Dimensions/Pregos';
+import { PregoDimensions } from '../../archive/PinsDimensions/Nails';
 
 interface IProps {
 	setData: Dispatch<SetStateAction<ISelect[]>>;

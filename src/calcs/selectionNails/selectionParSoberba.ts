@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { ISelect } from '../../components/global/fields/fieldSelect';
-import { ParafusoSoberbaDimensions } from '../../archive/2_Dimensions/ParafusoSoberba';
+import { ParafusoSoberbaDimensions } from '../../archive/PinsDimensions/SuperbScrews';
 
 interface IProps {
 	setData: Dispatch<SetStateAction<ISelect[]>>;
@@ -14,8 +14,7 @@ export function SelectionParSoberba({ setData, esp1, esp2 }: IProps) {
 
 		if (nail.diametro > Math.min(esp1, esp2) * 0.2) {
 			console.log(
-				`Falha 1: ${nail.id} => ${nail.diametro} > ${
-					Math.min(esp1, esp2) * 0.2
+				`Falha 1: ${nail.id} => ${nail.diametro} > ${Math.min(esp1, esp2) * 0.2
 				}`,
 			);
 			return false;
@@ -28,8 +27,7 @@ export function SelectionParSoberba({ setData, esp1, esp2 }: IProps) {
 		}
 		if (nail.comprimento > esp1 * 2 + esp2) {
 			console.log(
-				`Falha 3: ${nail.id} => ${nail.comprimento} > ${
-					esp1 * 2 + esp2
+				`Falha 3: ${nail.id} => ${nail.comprimento} > ${esp1 * 2 + esp2
 				}`,
 			);
 			return false;

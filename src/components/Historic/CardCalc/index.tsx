@@ -21,15 +21,15 @@ import {
 	Title,
 } from './styles';
 import { CalcModel } from '../../../database/models/calcModel';
-import { Kmod } from '../../../archive/4_WoodProperties/Kmod';
+import { Kmod } from '../../../archive/NBRTables/WoodProperties/Kmod';
 import PopUpOneButton from '../../global/popUps/popUpOneButton';
 import PopUpTwoButtons from '../../global/popUps/popUpTwoButtons';
 import { database } from '../../../database';
-import { NativeWoods } from '../../../archive/3_NativeWood/NativeWood';
-import { PregoDimensions } from '../../../archive/2_Dimensions/Pregos';
+import { NativeWoods } from '../../../archive/NBRTables/NativeWood/NativeWood';
+import { PregoDimensions } from '../../../archive/PinsDimensions/Nails';
 import New from '../../../assets/svgs/new.svg';
-import { ParafusoPassanteDimensions } from '../../../archive/2_Dimensions/ParafusoPassante';
-import { ParafusoSoberbaDimensions } from '../../../archive/2_Dimensions/ParafusoSoberba';
+import { ParafusoPassanteDimensions } from '../../../archive/PinsDimensions/ThroughScrews';
+import { ParafusoSoberbaDimensions } from '../../../archive/PinsDimensions/SuperbScrews';
 
 interface IProps {
 	item: CalcModel;

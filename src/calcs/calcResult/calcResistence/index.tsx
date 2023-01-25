@@ -1,6 +1,6 @@
-import { ParafusoPassanteDimensions } from '../../../archive/2_Dimensions/ParafusoPassante';
-import { ParafusoSoberbaDimensions } from '../../../archive/2_Dimensions/ParafusoSoberba';
-import { PregoDimensions } from '../../../archive/2_Dimensions/Pregos';
+import { ParafusoPassanteDimensions } from '../../../archive/PinsDimensions/ThroughScrews';
+import { ParafusoSoberbaDimensions } from '../../../archive/PinsDimensions/SuperbScrews';
+import { PregoDimensions } from '../../../archive/PinsDimensions/Nails';
 import CalcFk1_Double from './double/calcFk1';
 import CalcFk2_Double from './double/calcFk2';
 import CalcFk3_Double from './double/calcFk3';

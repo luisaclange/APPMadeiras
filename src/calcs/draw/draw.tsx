@@ -1,20 +1,37 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import DataContext from '../../context/context';
-import { NailDimensions } from '../../archive/2_Dimensions/Pregos';
 import calcDraw from './calcsDraw';
 import { CalcModel } from '../../database/models/calcModel';
-import { database } from '../../database';
-import { Item } from '../../components/newCalc/progressBar/styles';
+import { PregoDimensions } from '../../archive/PinsDimensions/Nails';
+import { ParafusoSoberbaDimensions } from '../../archive/PinsDimensions/SuperbScrews';
+import { ParafusoPassanteDimensions } from '../../archive/PinsDimensions/ThroughScrews';
 
 interface desenhoProps {
-	data: CalcModel;
+	data: CalcModel | Record<string, never>;
 	nails: number;
 }
 
 const Draw: React.FC<desenhoProps> = ({ data, nails }) => {
-	const nail = NailDimensions.find(item => item.id === data.nailDimension);
+	let d: number;
+	switch (data.nailType) {
+		case 'prego':
+			d = PregoDimensions.find(item => item.id === data.nailDimension).JP;
+
+			break;
+		case 'parafusoSoberba':
+			d = ParafusoSoberbaDimensions.find(
+				item => item.id === data.nailDimension,
+			).diametro;
+
+			break;
+		case 'parafusoPassante':
+			d = ParafusoPassanteDimensions.find(
+				item => item.id === data.nailDimension,
+			).diametro;
+
+			break;
+	}
+
 	const [calc, setCalc] = useState({
 		bfHorizontal: 0,
 		bfVertical: 0,
@@ -26,16 +43,16 @@ const Draw: React.FC<desenhoProps> = ({ data, nails }) => {
 		spaceSpecialColumnNails: 0,
 		spaceColumns: 0,
 	});
-	const [itsOk, setItsOk] = useState(false);
+	const [loading, setLoading] = useState(true);
 
-	async function GetData() {
-		setCalc(await calcDraw(nails, data.id));
-		setItsOk(true);
-	}
+	const GetData = useCallback(async () => {
+		setCalc(await calcDraw({ nails, data }));
+		setLoading(false);
+	}, [data, nails]);
 
 	useEffect(() => {
 		GetData();
-	}, []);
+	}, [GetData]);
 
 	const BackgroundImage = styled.ImageBackground`
 		height: ${Number(data.widthWood)}px;
@@ -44,33 +61,33 @@ const Draw: React.FC<desenhoProps> = ({ data, nails }) => {
 	`;
 
 	const Nail = styled.View`
-		height: ${nail.JP}px;
-		width: ${nail.JP}px;
+		height: ${d}px;
+		width: ${d}px;
 		border-width: 1px;
 		background-color: grey;
-		border-radius: ${nail.JP / 2}px;
+		border-radius: ${d / 2}px;
 	`;
 
 	const SpaceVerticalNormal = styled.View`
-		height: ${calc.spaceNormalColumnNails - nail.JP}px;
+		height: ${calc.spaceNormalColumnNails - d}px;
 	`;
 
 	const SpaceVerticalSpecial = styled.View`
-		height: ${calc.spaceSpecialColumnNails - nail.JP}px;
+		height: ${calc.spaceSpecialColumnNails - d}px;
 	`;
 
 	const ColumnNormal = styled.View`
-		margin-left: ${calc.spaceColumns - nail.JP}px;
+		margin-left: ${calc.spaceColumns - d}px;
 	`;
 
 	const BorderFreeNormal = styled.View`
-		height: ${calc.bfVertical - nail.JP / 2}px;
+		height: ${calc.bfVertical - d / 2}px;
 	`;
 
 	const ColumnSpecial = styled.View``;
 
 	const BorderFreeSpecial = styled.View`
-		height: ${calc.bfVerticalSpecial - nail.JP / 2}px;
+		height: ${calc.bfVerticalSpecial - d / 2}px;
 	`;
 
 	const MarginHorizontal = styled.View`
@@ -81,8 +98,8 @@ const Draw: React.FC<desenhoProps> = ({ data, nails }) => {
 
 	return (
 		<>
-			{itsOk ? (
-				<BackgroundImage source={require('../../assets/678-978.jpg')}>
+			{!loading ? (
+				<BackgroundImage source={require('../../assets/images/678-978.jpg')}>
 					<ColumnSpecial>
 						<BorderFreeSpecial />
 						{calc.nNailsSpecialColumn > 0 ? (
@@ -104,11 +121,11 @@ const Draw: React.FC<desenhoProps> = ({ data, nails }) => {
 					{[
 						...Array(
 							calc.nColumns -
-								(calc.nNailsSpecialColumn > 0 ? 1 : 0),
+							(calc.nNailsSpecialColumn > 0 ? 1 : 0),
 						),
-					].map(() => {
+					].map((item, index) => {
 						return (
-							<ColumnNormal>
+							<ColumnNormal key={index}>
 								<BorderFreeNormal />
 								<Nail />
 								{[...Array(calc.nNailsColumn - 1)].map(() => {

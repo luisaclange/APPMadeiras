@@ -30,7 +30,7 @@ import {
 	Space,
 	Title,
 } from './styles';
-import { NativeWoods } from '../../../archive/3_NativeWood/NativeWood';
+import { NativeWoods } from '../../../archive/NBRTables/NativeWood/NativeWood';
 import globalStyle from '../../../styles/globalStyle';
 import CustomModal from '../../global/modal';
 

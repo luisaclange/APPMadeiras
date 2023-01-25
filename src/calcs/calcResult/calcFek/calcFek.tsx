@@ -1,8 +1,8 @@
-import { WoodResistanceClasses } from '../../../archive/1_ClassesResistencia/ClassesResistencia';
-import { ParafusoPassanteDimensions } from '../../../archive/2_Dimensions/ParafusoPassante';
-import { ParafusoSoberbaDimensions } from '../../../archive/2_Dimensions/ParafusoSoberba';
-import { PregoDimensions } from '../../../archive/2_Dimensions/Pregos';
-import { NativeWoods } from '../../../archive/3_NativeWood/NativeWood';
+import { WoodResistanceClasses } from '../../../archive/NBRTables/ResistenceClasses/ClassesResistencia';
+import { ParafusoPassanteDimensions } from '../../../archive/PinsDimensions/ThroughScrews';
+import { ParafusoSoberbaDimensions } from '../../../archive/PinsDimensions/SuperbScrews';
+import { PregoDimensions } from '../../../archive/PinsDimensions/Nails';
+import { NativeWoods } from '../../../archive/NBRTables/NativeWood/NativeWood';
 
 export default function CalcFek(
 	nailType: string,

@@ -1,30 +1,66 @@
-import { NailDimensions } from '../../archive/2_Dimensions/Pregos';
-import { database } from '../../database';
+import { ParafusoPassanteDimensions } from '../../archive/PinsDimensions/ThroughScrews';
+import { ParafusoSoberbaDimensions } from '../../archive/PinsDimensions/SuperbScrews';
+import { PregoDimensions } from '../../archive/PinsDimensions/Nails';
 import { CalcModel } from '../../database/models/calcModel';
 
-export default async function calcDraw(nails: number, id_calc: string) {
-	const { nailDimension, widthWood } = await database
-		.get<CalcModel>('calcs')
-		.find(id_calc);
+interface IProps {
+	data: CalcModel | Record<string, never>;
+	nails: number;
+}
 
-	const nail = NailDimensions.find(item => {
-		return nailDimension === item.id;
-	});
+export default async function calcDraw({ nails, data }: IProps) {
+
+	let d: number;
+	switch (data.nailType) {
+		case 'prego':
+			d = PregoDimensions.find(item => item.id === data.nailDimension).JP;
+
+			break;
+		case 'parafusoSoberba':
+			d = ParafusoSoberbaDimensions.find(
+				item => item.id === data.nailDimension,
+			).diametro;
+
+			break;
+		case 'parafusoPassante':
+			d = ParafusoPassanteDimensions.find(
+				item => item.id === data.nailDimension,
+			).diametro;
+
+			break;
+	}
 
 	//Borda livre horizontal
-	const bfHorizontal = Math.ceil((nail.JP * 7) / 5) * 5;
+	let bfHorizontal: number;
+	if (data.nailType === 'prego') {
+		bfHorizontal = Math.ceil((d * 11.5) / 5) * 5;
+	} else {
+		bfHorizontal = Math.ceil((Math.max(d * 6.5, 80 - d / 2)) / 5) * 5;
+	}
 
 	//Borda livre vertical
-	const bfVertical = Math.ceil((nail.JP * 1.5) / 5) * 5;
+	const bfVertical = Math.ceil((d * 2.5) / 5) * 5;
 
 	//Numero de pregos por coluna
-	const nNailsColumn = Math.ceil(
-		(Number(widthWood) - bfVertical * 2) / (3 * nail.JP),
-	);
+	let nNailsColumn: number;
+	if (data.nailType === 'prego') {
+		nNailsColumn = Math.ceil(
+			(data.widthWood - bfVertical * 2) / (3 * d),
+		);
+	} else {
+		nNailsColumn = Math.ceil(
+			(data.widthWood - bfVertical * 2) / (4 * d),
+		);
+	}
 
+	console.log(nails);
 	//Espaçamento entre pregos - coluna normal
-	const spaceNormalColumnNails =
-		(Number(widthWood) - bfVertical * 2) / (nNailsColumn - 1);
+	let spaceNormalColumnNails: number;
+	if (nails >= nNailsColumn) {
+		spaceNormalColumnNails = (data.widthWood - bfVertical * 2) / (nNailsColumn - 1);
+	} else {
+		spaceNormalColumnNails = (data.widthWood - bfVertical * 2) / (nails - 1);
+	}
 
 	//Numero de colunas
 	const nColumns = Math.ceil(nails / nNailsColumn);
@@ -35,17 +71,29 @@ export default async function calcDraw(nails: number, id_calc: string) {
 	//Borda livre horizontal - ultima coluna
 	const bfVerticalSpecial =
 		Math.floor(
-			(Number(widthWood) - (nNailsSpecialColumn - 1) * 3 * nail.JP) /
-				2 /
-				5,
+			(Number(data.widthWood) - (nNailsSpecialColumn - 1) * 3 * d) /
+			2 /
+			5,
 		) * 5;
 
 	//Espacamento entre pregos ultima coluna
 	const spaceSpecialColumnNails =
-		(Number(widthWood) - bfVerticalSpecial * 2) / (nNailsSpecialColumn - 1);
+		(Number(data.widthWood) - bfVerticalSpecial * 2) / (nNailsSpecialColumn - 1);
 
 	//Espaço entre colunas
-	const spaceColumns = Math.ceil((6 * nail.JP) / 5) * 5;
+	const spaceColumns = Math.ceil((6 * d) / 5) * 5;
+
+	console.log({
+		bfHorizontal,
+		bfVertical,
+		nNailsColumn,
+		spaceNormalColumnNails,
+		nColumns,
+		nNailsSpecialColumn,
+		bfVerticalSpecial,
+		spaceSpecialColumnNails,
+		spaceColumns,
+	});
 
 	return {
 		bfHorizontal,

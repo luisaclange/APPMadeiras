@@ -1,4 +1,4 @@
-import { Kmod } from '../../../archive/4_WoodProperties/Kmod';
+import { Kmod } from '../../../archive/NBRTables/WoodProperties/Kmod';
 
 export default function CalcKmod1(charging: string, woodType: string) {
 	return Kmod.kmod1

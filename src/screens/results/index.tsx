@@ -24,6 +24,9 @@ import PopUpOneButton from '../../components/global/popUps/popUpOneButton';
 import CalcResult, { IResult } from '../../calcs/calcResult';
 import { View } from 'react-native';
 import globalStyle from '../../styles/globalStyle';
+import Draw from '../../calcs/draw/draw';
+import { CalcModel } from '../../database/models/calcModel';
+import { database } from '../../database';
 
 export default function Results({
 	route,
@@ -37,11 +40,14 @@ export default function Results({
 	// Variáveis
 	const [loading, setLoading] = useState(true);
 	const [visibleError, setVisibleError] = useState(false);
+	const [data, setData] = useState<CalcModel | Record<string, never>>({});
 	const [result, setResult] = useState<IResult | Record<string, never>>({});
 
 	// Buscar dados
 	const GetData = useCallback(async () => {
 		try {
+			const calc = await database.get<CalcModel>('calcs').find(id_calc);
+			setData(calc);
 			const aux = await CalcResult(id_calc);
 			setResult(aux);
 			setLoading(false);
@@ -95,6 +101,8 @@ export default function Results({
 						<TopContainerInfoLabel>Detalhamento da ligação</TopContainerInfoLabel>
 
 						<Space />
+
+						<Draw data={data} nails={result.nNails} />
 
 						<Line />
 
