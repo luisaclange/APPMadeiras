@@ -2,9 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import calcDraw from './calcsDraw';
 import { CalcModel } from '../../database/models/calcModel';
-import PregoDimensions from '../../archive/PinsDimensions/Nails.json';
-import ParafusoSoberbaDimensions from '../../archive/PinsDimensions/SuperbScrews.json';
-import ParafusoPassanteDimensions from '../../archive/PinsDimensions/ThroughScrews.json';
+import NailsDimensions from '../../archive/PinsDimensions/Nails.json';
+import SuperbScrewsDimensions from '../../archive/PinsDimensions/SuperbScrews.json';
+import ThroughScrewsDimensions from '../../archive/PinsDimensions/ThroughScrews.json';
+import { INail } from '../../interfaces/Nail';
+import { ISuperbScrew } from '../../interfaces/SuperbScrew';
+import { IThroughScrew } from '../../interfaces/ThroughScrew';
 
 interface desenhoProps {
 	data: CalcModel | Record<string, never>;
@@ -13,24 +16,25 @@ interface desenhoProps {
 
 const Draw: React.FC<desenhoProps> = ({ data, nails }) => {
 	let d: number;
-	switch (data.nailType) {
+	switch (data.pinType) {
 		case 'prego':
-			d = PregoDimensions.find(item => item.id === data.nailDimension).JP;
+			d = NailsDimensions.find((item: INail) => item.id === data.pinSelected).JP;
 
 			break;
 		case 'parafusoSoberba':
-			d = ParafusoSoberbaDimensions.find(
-				item => item.id === data.nailDimension,
+			d = SuperbScrewsDimensions.find(
+				(item: ISuperbScrew) => item.id === data.pinSelected,
 			).diametro;
 
 			break;
 		case 'parafusoPassante':
-			d = ParafusoPassanteDimensions.find(
-				item => item.id === data.nailDimension,
+			d = ThroughScrewsDimensions.find(
+				(item: IThroughScrew) => item.id === data.pinSelected,
 			).diametro;
 
 			break;
 	}
+
 
 	const [calc, setCalc] = useState({
 		bfHorizontal: 0,

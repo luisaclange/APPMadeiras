@@ -1,7 +1,10 @@
-import { ParafusoPassanteDimensions } from '../../archive/PinsDimensions/ThroughScrews';
-import { ParafusoSoberbaDimensions } from '../../archive/PinsDimensions/SuperbScrews';
-import { PregoDimensions } from '../../archive/PinsDimensions/Nails';
+import ThroughScrewsDimensions from '../../archive/PinsDimensions/ThroughScrews.json';
+import SuperbScrewsDimensions from '../../archive/PinsDimensions/SuperbScrews.json';
+import NailsDimensions from '../../archive/PinsDimensions/Nails.json';
 import { CalcModel } from '../../database/models/calcModel';
+import { INail } from '../../interfaces/Nail';
+import { ISuperbScrew } from '../../interfaces/SuperbScrew';
+import { IThroughScrew } from '../../interfaces/ThroughScrew';
 
 interface IProps {
 	data: CalcModel | Record<string, never>;
@@ -11,20 +14,20 @@ interface IProps {
 export default async function calcDraw({ nails, data }: IProps) {
 
 	let d: number;
-	switch (data.nailType) {
+	switch (data.pinType) {
 		case 'prego':
-			d = PregoDimensions.find(item => item.id === data.nailDimension).JP;
+			d = NailsDimensions.find((item: INail) => item.id === data.pinSelected).JP;
 
 			break;
 		case 'parafusoSoberba':
-			d = ParafusoSoberbaDimensions.find(
-				item => item.id === data.nailDimension,
+			d = SuperbScrewsDimensions.find(
+				(item: ISuperbScrew) => item.id === data.pinSelected,
 			).diametro;
 
 			break;
 		case 'parafusoPassante':
-			d = ParafusoPassanteDimensions.find(
-				item => item.id === data.nailDimension,
+			d = ThroughScrewsDimensions.find(
+				(item: IThroughScrew) => item.id === data.pinSelected,
 			).diametro;
 
 			break;
@@ -32,7 +35,7 @@ export default async function calcDraw({ nails, data }: IProps) {
 
 	//Borda livre horizontal
 	let bfHorizontal: number;
-	if (data.nailType === 'prego') {
+	if (data.pinType === 'prego') {
 		bfHorizontal = Math.ceil((d * 11.5) / 5) * 5;
 	} else {
 		bfHorizontal = Math.ceil((Math.max(d * 6.5, 80 - d / 2)) / 5) * 5;
@@ -43,7 +46,7 @@ export default async function calcDraw({ nails, data }: IProps) {
 
 	//Numero de pregos por coluna
 	let nNailsColumn: number;
-	if (data.nailType === 'prego') {
+	if (data.pinType === 'prego') {
 		nNailsColumn = Math.ceil(
 			(data.widthWood - bfVertical * 2) / (3 * d),
 		);

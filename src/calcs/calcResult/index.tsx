@@ -23,7 +23,7 @@ export interface IResult {
 	FvRk5: number;
 	FvRk6: number;
 	Rd: number;
-	nNails: number;
+	nPins: number;
 }
 
 export default async function CalcResult(id: string): Promise<IResult> {
@@ -31,15 +31,15 @@ export default async function CalcResult(id: string): Promise<IResult> {
 	const {
 		charging,
 		humidityClass,
-		nailDimension,
+		pinSelected,
 		tractiveForce,
 		woodType,
 		woodName,
 		espWood_1,
 		espWood_2,
 		ligationType,
-		nailType,
-		numberNails,
+		pinType,
+		numberPins,
 		calc,
 		widthWood
 	} = dados;
@@ -48,10 +48,10 @@ export default async function CalcResult(id: string): Promise<IResult> {
 	const { kmod, kmod1, kmod2 } = CalcKmod(charging, humidityClass, woodType);
 
 	//Calculo do momento resistente do pino metálico
-	const { MyRk, fuk } = CalcMyRk(nailType, nailDimension);
+	const { MyRk, fuk } = CalcMyRk(pinType, pinSelected);
 
 	//Calculo da resistencia ao embutimento da madeira
-	const { density, fek, pk } = CalcFek(nailType, woodName, nailDimension);
+	const { density, fek, pk } = CalcFek(pinType, woodName, pinSelected);
 
 	//Calculo B
 	const B = 1;
@@ -59,8 +59,8 @@ export default async function CalcResult(id: string): Promise<IResult> {
 	//Calculo resistencia caracteristica do pino
 	const { FvRk, FvRk1, FvRk2, FvRk3, FvRk4, FvRk5, FvRk6 } = CalcResistence({
 		ligationType,
-		nailType,
-		nailDimension,
+		pinType,
+		pinSelected,
 		B,
 		fek,
 		MyRk,
@@ -69,16 +69,16 @@ export default async function CalcResult(id: string): Promise<IResult> {
 	});
 
 	// Calculo da resistência da ligação e número de pinos
-	const { Rd, nNails } = CalcFinal({
+	const { Rd, nPins } = CalcFinal({
 		FvRk,
 		ligationType,
-		numberNails,
+		numberPins,
 		tractiveForce,
 		calc,
 		kmod,
 		widthWood,
-		nailType,
-		nailDimension
+		pinType,
+		pinSelected
 	});
 
 	return {
@@ -98,6 +98,6 @@ export default async function CalcResult(id: string): Promise<IResult> {
 		FvRk5,
 		FvRk6,
 		Rd,
-		nNails,
+		nPins,
 	};
 }

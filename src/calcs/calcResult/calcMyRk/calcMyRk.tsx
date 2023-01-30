@@ -1,15 +1,19 @@
-import { ParafusoPassanteDimensions } from '../../../archive/PinsDimensions/ThroughScrews';
-import { ParafusoSoberbaDimensions } from '../../../archive/PinsDimensions/SuperbScrews';
-import { PregoDimensions } from '../../../archive/PinsDimensions/Nails';
+import ThroughScrewsDimensions from '../../../archive/PinsDimensions/ThroughScrews.json';
+import SuperbScrewsDimensions from '../../../archive/PinsDimensions/SuperbScrews.json';
+import NailsDimensions from '../../../archive/PinsDimensions/Nails.json';
+import { INail } from '../../../interfaces/Nail';
+import { ISuperbScrew } from '../../../interfaces/SuperbScrew';
+import { IThroughScrew } from '../../../interfaces/ThroughScrew';
 
 export function CalcMyRk(nailType: string, id_nail: string) {
 	let diameter: number;
 	let fuk: number;
 	let name: string;
 
+	// Calculando cada força ultima resistente conforme o tipo e diametro do pino
 	switch (nailType) {
 		case 'prego':
-			diameter = PregoDimensions.find(item => item.id === id_nail).JP;
+			diameter = NailsDimensions.find((item: INail) => item.id === id_nail).JP;
 
 			if (diameter >= 3 && diameter < 3.55) {
 				fuk = 635;
@@ -21,19 +25,19 @@ export function CalcMyRk(nailType: string, id_nail: string) {
 
 			break;
 		case 'parafusoSoberba':
-			diameter = ParafusoSoberbaDimensions.find(
-				item => item.id === id_nail,
+			diameter = SuperbScrewsDimensions.find(
+				(item: ISuperbScrew) => item.id === id_nail,
 			).diametro;
 
 			fuk = 415;
 
 			break;
 		case 'parafusoPassante':
-			diameter = ParafusoPassanteDimensions.find(
-				item => item.id === id_nail,
+			diameter = ThroughScrewsDimensions.find(
+				(item: IThroughScrew) => item.id === id_nail,
 			).diametro;
-			name = ParafusoPassanteDimensions.find(
-				item => item.id === id_nail,
+			name = ThroughScrewsDimensions.find(
+				(item: IThroughScrew) => item.id === id_nail,
 			).name;
 
 			if (name.includes('A307')) {
@@ -49,6 +53,7 @@ export function CalcMyRk(nailType: string, id_nail: string) {
 			break;
 	}
 
+	// Cálculo do MyRk
 	const MyRk = 0.3 * fuk * Math.pow(diameter, 2.6);
 
 	return { MyRk, fuk };

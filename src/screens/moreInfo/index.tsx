@@ -28,9 +28,9 @@ import { database } from '../../database';
 import PopUpOneButton from '../../components/global/popUps/popUpOneButton';
 import { Kmod } from '../../archive/NBRTables/WoodProperties/Kmod';
 import { NativeWoods } from '../../archive/NBRTables/NativeWood/NativeWood';
-import PregoDimensions from '../../archive/PinsDimensions/Nails.json';
-import ParafusoSoberbaDimensions from '../../archive/PinsDimensions/SuperbScrews.json';
-import ParafusoPassanteDimensions from '../../archive/PinsDimensions/ThroughScrews.json';
+import NailsDimensions from '../../archive/PinsDimensions/Nails.json';
+import SuperbScrewsDimensions from '../../archive/PinsDimensions/SuperbScrews.json';
+import ThroughScrewsDimensions from '../../archive/PinsDimensions/ThroughScrews.json';
 import { WoodTypeData } from '../../datas/WoodType';
 import { LigationTypeData } from '../../datas/LigationType';
 import { PinTypeData } from '../../datas/PinType';
@@ -78,17 +78,17 @@ export default function MoreInfo({
 			let pinSelected = '';
 			switch (aux.pinType) {
 				case 'prego':
-					pinSelected = PregoDimensions.find(
+					pinSelected = NailsDimensions.find(
 						(item: INail) => item.id === aux.pinSelected,
 					)?.name;
 					break;
 				case 'parafusoSoberba':
-					pinSelected = ParafusoSoberbaDimensions.find(
+					pinSelected = SuperbScrewsDimensions.find(
 						(item: ISuperbScrew) => item.id === aux.pinSelected,
 					)?.name;
 					break;
 				case 'parafusoPassante':
-					pinSelected = ParafusoPassanteDimensions.find(
+					pinSelected = ThroughScrewsDimensions.find(
 						(item: IThroughScrew) => item.id === aux.pinSelected,
 					)?.name;
 					break;

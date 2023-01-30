@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { ISelect } from '../../components/global/fields/fieldSelect';
-import { ParafusoPassanteDimensions } from '../../archive/PinsDimensions/ThroughScrews';
+import ThroughScrewsDimensions from '../../archive/PinsDimensions/ThroughScrews.json';
+import { IThroughScrew } from '../../interfaces/ThroughScrew';
 
 interface IProps {
 	setData: Dispatch<SetStateAction<ISelect[]>>;
@@ -15,22 +16,22 @@ export function SelectionParPassante({
 	esp2,
 	ligationType,
 }: IProps) {
-	const aux = ParafusoPassanteDimensions.filter(nail => {
+	const aux = ThroughScrewsDimensions.filter((screw: IThroughScrew) => {
 		let verification = true;
 
-		if (nail.diametro > Math.min(esp1, esp2) * 0.5) {
+		if (screw.diametro > Math.min(esp1, esp2) * 0.5) {
 			verification = false;
 		}
 		if (ligationType === 'corteSimples') {
-			if (nail.comp < esp1 + esp2 + nail.altura) {
+			if (screw.comp < esp1 + esp2 + screw.altura) {
 				verification = false;
 			}
-			if (nail.comp > esp1 + esp2 + nail.altura - nail.roscaComp) {
+			if (screw.comp > esp1 + esp2 + screw.altura - screw.roscaComp) {
 				verification = false;
 			}
 		} else {
-			if (nail.comp < esp1 * 2 + esp2 + nail.altura) verification = false;
-			if (nail.comp > esp1 * 2 + esp2 + nail.altura - nail.roscaComp)
+			if (screw.comp < esp1 * 2 + esp2 + screw.altura) verification = false;
+			if (screw.comp > esp1 * 2 + esp2 + screw.altura - screw.roscaComp)
 				verification = false;
 		}
 

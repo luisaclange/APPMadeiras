@@ -1,6 +1,6 @@
-import { ParafusoPassanteDimensions } from '../../../archive/PinsDimensions/ThroughScrews';
-import { ParafusoSoberbaDimensions } from '../../../archive/PinsDimensions/SuperbScrews';
-import { PregoDimensions } from '../../../archive/PinsDimensions/Nails';
+import ThroughScrewsDimensions from '../../../archive/PinsDimensions/ThroughScrews.json';
+import SuperbScrewsDimensions from '../../../archive/PinsDimensions/SuperbScrews.json';
+import NailsDimensions from '../../../archive/PinsDimensions/Nails.json';
 import CalcFk1_Double from './double/calcFk1';
 import CalcFk2_Double from './double/calcFk2';
 import CalcFk3_Double from './double/calcFk3';
@@ -11,10 +11,13 @@ import CalcFk3_Simple from './simple/calcFk3';
 import CalcFk4_Simple from './simple/calcFk4';
 import CalcFk5_Simple from './simple/calcFk5';
 import CalcFk6_Simple from './simple/calcFk6';
+import { INail } from '../../../interfaces/Nail';
+import { ISuperbScrew } from '../../../interfaces/SuperbScrew';
+import { IThroughScrew } from '../../../interfaces/ThroughScrew';
 
 interface IProps {
-	nailType: string;
-	nailDimension: string;
+	pinType: string;
+	pinSelected: string;
 	fek: number;
 	B: number;
 	t1: number;
@@ -26,8 +29,8 @@ interface IProps {
 export default function CalcResistence({
 	B,
 	MyRk,
-	nailType,
-	nailDimension,
+	pinType,
+	pinSelected,
 	fek,
 	t1,
 	t2,
@@ -35,33 +38,35 @@ export default function CalcResistence({
 }: IProps) {
 	let d: number;
 
-	switch (nailType) {
+	// Determinação do diametro do pino metálico
+	switch (pinType) {
 		case 'prego':
-			d = PregoDimensions.find(item => item.id === nailDimension).JP;
+			d = NailsDimensions.find((item: INail) => item.id === pinSelected).JP;
 
 			break;
 		case 'parafusoSoberba':
-			d = ParafusoSoberbaDimensions.find(
-				item => item.id === nailDimension,
+			d = SuperbScrewsDimensions.find(
+				(item: ISuperbScrew) => item.id === pinSelected,
 			).diametro;
 
 			break;
 		case 'parafusoPassante':
-			d = ParafusoPassanteDimensions.find(
-				item => item.id === nailDimension,
+			d = ThroughScrewsDimensions.find(
+				(item: IThroughScrew) => item.id === pinSelected,
 			).diametro;
 
 			break;
 	}
 
-	let FvRk1 = 0;
-	let FvRk2 = 0;
-	let FvRk3 = 0;
-	let FvRk4 = 0;
-	let FvRk5 = 0;
-	let FvRk6 = 0;
-	let FvRk = 0;
+	let FvRk1: number;
+	let FvRk2: number;
+	let FvRk3: number;
+	let FvRk4: number;
+	let FvRk5: number;
+	let FvRk6: number;
+	let FvRk: number;
 
+	// Cálculo para caso de corte simples
 	if (ligationType === 'corteSimples') {
 		FvRk1 = CalcFk1_Simple(fek, t1, d);
 		FvRk2 = CalcFk2_Simple(fek, t2, d, B);
@@ -71,6 +76,7 @@ export default function CalcResistence({
 		FvRk6 = CalcFk6_Simple(fek, d, B, MyRk);
 		FvRk = Math.min(FvRk1, FvRk2, FvRk3, FvRk4, FvRk5, FvRk6);
 	} else {
+		// Cálculo para caso de corte duplo
 		FvRk1 = CalcFk1_Double(fek, t1, d);
 		FvRk2 = CalcFk2_Double(fek, t2, d, B);
 		FvRk3 = CalcFk3_Double(fek, t1, d, B, MyRk);

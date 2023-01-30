@@ -90,7 +90,7 @@ export default function Results({
 							<TopContainerInfoLabel>Quantidade de pinos metálicos</TopContainerInfoLabel>
 
 							<TopContainerInfoItem>
-								<TopContainerInfoItemText>{result.nNails}</TopContainerInfoItemText>
+								<TopContainerInfoItemText>{result.nPins}</TopContainerInfoItemText>
 							</TopContainerInfoItem>
 
 							<TopContainerInfoUnity>un</TopContainerInfoUnity>
@@ -102,7 +102,7 @@ export default function Results({
 
 						<Space />
 
-						<Draw data={data} nails={result.nNails} />
+						<Draw data={data} nails={result.nPins} />
 
 						<Line />
 

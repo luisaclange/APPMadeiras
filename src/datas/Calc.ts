@@ -1,6 +1,6 @@
 export const CalcData = [
 	{
-		id: 'nailQtde',
+		id: 'pinQtde',
 		value: 'Número de pinos',
 	},
 	{
