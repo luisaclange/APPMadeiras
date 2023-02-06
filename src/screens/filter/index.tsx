@@ -23,6 +23,7 @@ import { useNavigation } from '@react-navigation/native';
 import LoadingPage from '../../components/global/loadingPage';
 import { CalcData } from '../../datas/Calc';
 import { PinTypeData } from '../../datas/PinType';
+import PopUpOneButton from '../../components/global/popUps/popUpOneButton';
 
 export default function Filter() {
 	// Navegação
@@ -33,6 +34,7 @@ export default function Filter() {
 		FilterModel | Record<string, never>
 	>({});
 	const [loadingPage, setLoadingPage] = useState(true);
+	const [visibleError, setVisibleError] = useState(false);
 
 	// Controle de formulário
 	const { control, handleSubmit, setValue } = useForm<IFilter>({
@@ -91,14 +93,21 @@ export default function Filter() {
 
 			navigation.goBack();
 		} catch (error) {
-			Alert.alert('Ops, ocorreu um erro!', error.message);
+			setVisibleError(true);
 		}
 	}
 
 	return (
-		<View>
+		<View style={{ height: '100%' }}>
+			<PopUpOneButton
+				actionButton={() => setVisibleError(false)}
+				message='Ops, ocorreu um erro!'
+				setVisible={setVisibleError}
+				textButton='Voltar'
+				visible={visibleError}
+			/>
 			<Header title="Filtro" />
-			<ContainerScroll>
+			<ContainerScroll contentContainerStyle={{ flexGrow: 1 }}>
 				<Container>
 					<ButtonCleanFilter onPress={CleanFilter}>
 						<ButtonCleanText>Limpar filtro</ButtonCleanText>

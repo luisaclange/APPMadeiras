@@ -3,6 +3,6 @@ import { calcSchema } from './calcSchema';
 import { filterSchema } from './filterSchema';
 
 export const schemas = appSchema({
-	version: 12,
+	version: 13,
 	tables: [calcSchema, filterSchema],
 });

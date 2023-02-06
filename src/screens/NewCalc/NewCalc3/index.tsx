@@ -9,7 +9,7 @@ import FieldSelect, {
 } from '../../../components/global/fields/fieldSelect';
 import Header, { ProgressNewCalc } from '../../../components/newCalc/header';
 import { ButtonsPrevNext } from '../../../components/newCalc/buttonsPrevNext';
-import { Container, ContainerFields, ImageCorte } from './styles';
+import { Container, ContainerFields, ImageCorte, SmallText, Title } from './styles';
 import { TitleSection } from '../../../components/newCalc/titleSection';
 import { schemaNewCalc3 } from '../../../validations/newCalc3';
 import FieldInput from '../../../components/global/fields/fieldInput';
@@ -93,7 +93,7 @@ export default function NewCalc3({
 					.find(id_calc);
 				setDataStage(calc);
 				setValue('espWood_1', String(calc.espWood_1).replace('.', ','));
-				setValue('espWood_1', String(calc.espWood_2).replace('.', ','));
+				setValue('espWood_2', String(calc.espWood_2).replace('.', ','));
 				GetNails();
 			}
 		} catch (error) {
@@ -205,7 +205,7 @@ export default function NewCalc3({
 				visible={visibleError}
 			/>
 			<Header title="Novo cálculo" progress={ProgressNewCalc.newCalc3} />
-			<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
 				<ContainerFields>
 					<TitleSection
 						title="Etapa 3"
@@ -224,19 +224,19 @@ export default function NewCalc3({
 							<FieldInput
 								control={control}
 								name="espWood_1"
-								title="Espessura - peça 1 (t1)"
+								titleElement={<Title error={!!errors.espWood_1}>Espessura - peça 1 (t<SmallText>1</SmallText>)</Title>}
 								error={errors.espWood_1}
 								dimension="mm"
 								defaultValue={
 									dataStage?.espWood_1
-										? String(dataStage.espWood_1)
-										: null
+									&& String(dataStage.espWood_1)
 								}
+								keyboardType='numeric'
 							/>
 							<FieldInput
 								control={control}
 								name="espWood_2"
-								title="Espessura - peça 2 (t2)"
+								titleElement={<Title error={!!errors.espWood_1}>Espessura - peça 2 (t<SmallText>2</SmallText>)</Title>}
 								error={errors.espWood_2}
 								dimension="mm"
 								defaultValue={
@@ -244,6 +244,7 @@ export default function NewCalc3({
 										? String(dataStage.espWood_2)
 										: null
 								}
+								keyboardType='numeric'
 							/>
 							<FieldInput
 								control={control}
@@ -256,6 +257,7 @@ export default function NewCalc3({
 										? String(dataStage.widthWood)
 										: null
 								}
+								keyboardType='numeric'
 							/>
 							<FieldSelect
 								data={dataNails}
@@ -269,12 +271,12 @@ export default function NewCalc3({
 								}}
 								error={errors.pinSelected}
 							/>
-							{stage2.calc === 'nailQtde' ||
-								dataStage.calc == 'nailQtde' ? (
+							{stage2.calc === 'pinQtde' ||
+								dataStage.calc == 'pinQtde' ? (
 								<FieldInput
 									control={control}
 									name="tractiveForce"
-									title="Força solicitante (Sd)"
+									titleElement={<Title error={!!errors.espWood_1}>Força solicitante - S<SmallText>d</SmallText></Title>}
 									error={errors.tractiveForce}
 									dimension="KN"
 									defaultValue={
@@ -282,6 +284,7 @@ export default function NewCalc3({
 											? String(dataStage.tractiveForce)
 											: null
 									}
+									keyboardType='numeric'
 								/>
 							) : (
 								<FieldInput
@@ -295,6 +298,7 @@ export default function NewCalc3({
 											? String(dataStage.numberPins)
 											: null
 									}
+									keyboardType='numeric'
 								/>
 							)}
 						</>

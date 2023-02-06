@@ -94,7 +94,7 @@ export default function NewCalc1({
 	return (
 		<Container>
 			<Header title="Novo cálculo" progress={ProgressNewCalc.newCalc1} />
-			<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
 				<ContainerFields>
 					<TitleSection
 						title="Etapa 1"

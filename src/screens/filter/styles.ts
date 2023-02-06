@@ -1,7 +1,6 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import globalStyle from '../../styles/globalStyle';
-import { Dimensions } from 'react-native';
 
 export const ButtonCleanFilter = styled.TouchableOpacity`
 	border-width: ${RFValue(2, 700)}px;
@@ -22,15 +21,10 @@ export const ButtonCleanText = styled.Text`
 
 export const Container = styled.View`
 	padding: ${RFValue(16, 700)}px;
+	flex-grow: 1;
 `;
 
-export const ContainerScroll = styled.ScrollView.attrs({
-	contentContainerStyle: { flexGrow: 1 },
-})`
-	height: ${RFValue(488, 700) +
-	Dimensions.get('screen').height -
-	Dimensions.get('window').height}px;
-`;
+export const ContainerScroll = styled.ScrollView``;
 
 export const ButtonsContainer = styled.View`
 	padding: ${RFValue(16, 700)}px;

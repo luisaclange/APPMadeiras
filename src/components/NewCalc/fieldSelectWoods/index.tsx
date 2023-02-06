@@ -9,6 +9,7 @@ import {
 } from 'react-hook-form';
 import {
 	FlatList,
+	KeyboardAvoidingView,
 	TextInputProps,
 	TouchableOpacity,
 	View,
@@ -94,55 +95,57 @@ export default function FieldSelectWoods<
 							visible={visible}
 							positionVertical="bottom"
 						>
-							<Modal>
-								<SelectText>Selecione:</SelectText>
-								<Find>
-									<FindInput
-										placeholder="Buscar..."
-										value={text}
-										onChangeText={txt => {
-											setText(txt);
+							<KeyboardAvoidingView behavior="padding">
+								<Modal>
+									<SelectText>Selecione:</SelectText>
+									<Find>
+										<FindInput
+											placeholder="Buscar..."
+											value={text}
+											onChangeText={txt => {
+												setText(txt);
+											}}
+										/>
+										<FindIcon />
+									</Find>
+									<FlatList
+										data={data}
+										contentContainerStyle={{
+											borderTopWidth: RFValue(2, 700),
+											borderColor: globalStyle.colors.primary,
+											borderStyle: 'dashed',
+										}}
+										renderItem={item => {
+											return (
+												<TouchableOpacity
+													onPress={() => {
+														onChange(item.item.id);
+														setVisible(false);
+														setText(undefined);
+													}}
+													key={`Madeira${item.item.id}`}
+												>
+													<ItemSelect>
+														<DoubleArrow />
+														<View>
+															<ItemText>
+																{item.item.name} #
+																{item.item.class}
+															</ItemText>
+															<ItemSubText>
+																{
+																	item.item
+																		.scientificName
+																}
+															</ItemSubText>
+														</View>
+													</ItemSelect>
+												</TouchableOpacity>
+											);
 										}}
 									/>
-									<FindIcon />
-								</Find>
-								<FlatList
-									data={data}
-									contentContainerStyle={{
-										borderTopWidth: RFValue(2, 700),
-										borderColor: globalStyle.colors.primary,
-										borderStyle: 'dashed',
-									}}
-									renderItem={item => {
-										return (
-											<TouchableOpacity
-												onPress={() => {
-													onChange(item.item.id);
-													setVisible(false);
-													setText(undefined);
-												}}
-												key={`Madeira${item.item.id}`}
-											>
-												<ItemSelect>
-													<DoubleArrow />
-													<View>
-														<ItemText>
-															{item.item.name} #
-															{item.item.class}
-														</ItemText>
-														<ItemSubText>
-															{
-																item.item
-																	.scientificName
-															}
-														</ItemSubText>
-													</View>
-												</ItemSelect>
-											</TouchableOpacity>
-										);
-									}}
-								/>
-							</Modal>
+								</Modal>
+							</KeyboardAvoidingView>
 						</CustomModal>
 
 						<Title error={!!error}>{title}</Title>

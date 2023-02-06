@@ -14,6 +14,7 @@ export const Container = styled.Pressable<props>`
 	flex-direction: row;
 	margin-bottom: ${RFValue(16, 700)}px;
 	position: relative;
+	min-height: ${RFValue(250, 700)}px;
 
 	${({ isNew }) =>
 		isNew &&

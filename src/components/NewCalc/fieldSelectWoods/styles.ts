@@ -1,6 +1,7 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled, { css } from 'styled-components/native';
 import globalStyle from '../../../styles/globalStyle';
+import { Dimensions } from 'react-native';
 
 type props = {
 	error: boolean;
@@ -59,7 +60,7 @@ export const Modal = styled.View`
 	padding: ${RFValue(16, 700)}px;
 	height: ${RFValue(450, 700)}px;
 	margin-horizontal: ${RFValue(32, 700)}px;
-	width: 100%;
+	width: ${Dimensions.get('screen').width}px;
 `;
 
 export const SelectText = styled.Text`

@@ -66,20 +66,20 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 			wood => wood.id === item.humidityClass,
 		)?.name;
 		let nail_name = '';
-		switch (item.nailType) {
+		switch (item.pinType) {
 			case 'prego':
 				nail_name = NailsDimensions.find(
-					nail => nail.id === item.nailDimension,
+					nail => nail.id === item.pinSelected,
 				)?.name;
 				break;
 			case 'parafusoPassante':
 				nail_name = ThroughScrewsDimensions.find(
-					nail => nail.id === item.nailDimension,
+					nail => nail.id === item.pinSelected,
 				)?.name;
 				break;
 			case 'parafusoSoberba':
 				nail_name = SuperbScrewsDimensions.find(
-					nail => nail.id === item.nailDimension,
+					nail => nail.id === item.pinSelected,
 				)?.name;
 				break;
 			default:
@@ -94,7 +94,7 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 			wood_name: wood?.name,
 			wood_resistance: wood?.class,
 		});
-	}, [item.charging, item.humidityClass, item.nailDimension, item.nailType, item.woodName]);
+	}, [item.charging, item.humidityClass, item.pinSelected, item.pinType, item.woodName]);
 
 	useEffect(GetData, [GetData]);
 

@@ -40,6 +40,7 @@ export default function Home() {
 					item.created_at = Number(new Date());
 				});
 			});
+
 		navigation.dispatch(CommonActions.navigate('Historic'));
 	}
 

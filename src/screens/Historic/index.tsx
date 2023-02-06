@@ -8,7 +8,7 @@ import { FlatList } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { database } from '../../database';
 import { CalcModel } from '../../database/models/calcModel';
-import { BoxAlert, Container, FloatingButton, TextAlert } from './styles';
+import { Container, FloatingButton } from './styles';
 import CardCalc from '../../components/historic/cardCalc';
 import Header from '../../components/historic/header';
 import Background from '../../components/historic/background/index';
@@ -73,11 +73,6 @@ export default function Historic() {
 						onRefresh={() => {
 							GetData();
 						}}
-						ListEmptyComponent={
-							<BoxAlert>
-								<TextAlert>Não há cálculos ainda...</TextAlert>
-							</BoxAlert>
-						}
 						contentContainerStyle={{
 							flexGrow: 1,
 							padding: RFValue(16, 700),

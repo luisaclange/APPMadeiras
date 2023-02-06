@@ -78,3 +78,9 @@ export const TextInfoDefault = styled.Text`
 export const Space = styled.View`
 	height: ${RFValue(16, 700)}px;
 `;
+
+export const SmallText = styled.Text`
+	font-family: ${globalStyle.fonts.medium};
+	font-size: ${RFValue(12, 700)}px;
+	color: ${globalStyle.colors.primary};
+`;

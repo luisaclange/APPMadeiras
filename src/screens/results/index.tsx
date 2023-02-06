@@ -10,6 +10,7 @@ import {
 	ContainerInfo,
 	ContainerScroll,
 	Line,
+	SmallText,
 	Space,
 	TextInfoDefault,
 	TopContainerInfo,
@@ -22,7 +23,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import LoadingPage from '../../components/global/loadingPage';
 import PopUpOneButton from '../../components/global/popUps/popUpOneButton';
 import CalcResult, { IResult } from '../../calcs/calcResult';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 import globalStyle from '../../styles/globalStyle';
 import Draw from '../../calcs/draw/draw';
 import { CalcModel } from '../../database/models/calcModel';
@@ -42,6 +43,7 @@ export default function Results({
 	const [visibleError, setVisibleError] = useState(false);
 	const [data, setData] = useState<CalcModel | Record<string, never>>({});
 	const [result, setResult] = useState<IResult | Record<string, never>>({});
+	const [uriPhoto, setUriPhoto] = useState<string | undefined>();
 
 	// Buscar dados
 	const GetData = useCallback(async () => {
@@ -59,6 +61,10 @@ export default function Results({
 	useEffect(() => {
 		GetData();
 	}, [GetData]);
+
+	useEffect(() => {
+		console.log(uriPhoto);
+	}, [uriPhoto]);
 
 	return (
 		<Container>
@@ -102,15 +108,19 @@ export default function Results({
 
 						<Space />
 
-						<Draw data={data} nails={result.nPins} />
+						<Draw data={data} pins={result.nPins} setUriPhoto={setUriPhoto} />
+
+						{
+							uriPhoto ? <Image resizeMode='center' style={{ width: 300, height: 300 }} source={{ uri: uriPhoto }} /> : null
+						}
 
 						<Line />
 
 						<TopContainerInfoLabel>Resistência ao embutimento da madeira</TopContainerInfoLabel>
 
-						<TextInfoDefault>ρ med = {String(result.density.toFixed(2)).replace('.', ',')} kg/m³</TextInfoDefault>
-						<TextInfoDefault>ρ k = {String(result.pk.toFixed(2)).replace('.', ',')} kg/m³</TextInfoDefault>
-						<TextInfoDefault>fe k = {String(result.fek.toFixed(2)).replace('.', ',')} N/mm²</TextInfoDefault>
+						<TextInfoDefault>ρ<SmallText>med</SmallText> = {String(result.density.toFixed(2)).replace('.', ',')} kg/m³</TextInfoDefault>
+						<TextInfoDefault>ρ<SmallText>k</SmallText> = {String(result.pk.toFixed(2)).replace('.', ',')} kg/m³</TextInfoDefault>
+						<TextInfoDefault>f<SmallText>ek</SmallText> = {String(result.fek.toFixed(2)).replace('.', ',')} N/mm²</TextInfoDefault>
 						<TextInfoDefault>β = 1,00</TextInfoDefault>
 
 						<Space />
@@ -119,8 +129,8 @@ export default function Results({
 
 						<Space />
 
-						<TextInfoDefault>f uk = {String(result.fuk.toFixed(2)).replace('.', ',')} MPa</TextInfoDefault>
-						<TextInfoDefault>MyRk = {String(result.MyRk.toFixed(2)).replace('.', ',')} N.mm</TextInfoDefault>
+						<TextInfoDefault>f<SmallText>uk</SmallText> = {String(result.fuk.toFixed(2)).replace('.', ',')} MPa</TextInfoDefault>
+						<TextInfoDefault>M<SmallText>yRk</SmallText> = {String(result.MyRk.toFixed(2)).replace('.', ',')} N.mm</TextInfoDefault>
 
 						<Space />
 
@@ -129,25 +139,25 @@ export default function Results({
 						<Space />
 
 						<View style={{ backgroundColor: result.FvRk === result.FvRk1 ? globalStyle.colors.yellow : 'transparent' }}>
-							<TextInfoDefault>Fv,Rk1 = {String(result.FvRk1.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
+							<TextInfoDefault>F<SmallText>v,Rk1</SmallText> = {String(result.FvRk1.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
 						</View>
 						<View style={{ backgroundColor: result.FvRk === result.FvRk2 ? globalStyle.colors.yellow : 'transparent' }}>
-							<TextInfoDefault>Fv,Rk2 = {String(result.FvRk2.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
+							<TextInfoDefault>F<SmallText>v,Rk2</SmallText> = {String(result.FvRk2.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
 						</View>
 						<View style={{ backgroundColor: result.FvRk === result.FvRk3 ? globalStyle.colors.yellow : 'transparent' }}>
-							<TextInfoDefault>Fv,Rk3 = {String(result.FvRk3.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
+							<TextInfoDefault>F<SmallText>v,Rk3</SmallText> = {String(result.FvRk3.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
 						</View>
 						<View style={{ backgroundColor: result.FvRk === result.FvRk4 ? globalStyle.colors.yellow : 'transparent' }}>
-							<TextInfoDefault>Fv,Rk4 = {String(result.FvRk4.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
+							<TextInfoDefault>F<SmallText>v,Rk4</SmallText> = {String(result.FvRk4.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
 						</View>
 						{
-							result.FvRk5 === 0 ? null : <View style={{ backgroundColor: result.FvRk === result.FvRk5 ? globalStyle.colors.yellow : 'transparent' }}>
-								<TextInfoDefault>Fv,Rk5 = {String(result.FvRk5.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
+							!result.FvRk5 ? null : <View style={{ backgroundColor: result.FvRk === result.FvRk5 ? globalStyle.colors.yellow : 'transparent' }}>
+								<TextInfoDefault>F<SmallText>v,Rk5</SmallText> = {String(result.FvRk5.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
 							</View>
 						}
 						{
-							result.FvRk6 === 0 ? null : <View style={{ backgroundColor: result.FvRk === result.FvRk6 ? globalStyle.colors.yellow : 'transparent' }}>
-								<TextInfoDefault>Fv,Rk6 = {String(result.FvRk6.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
+							!result.FvRk6 ? null : <View style={{ backgroundColor: result.FvRk === result.FvRk6 ? globalStyle.colors.yellow : 'transparent' }}>
+								<TextInfoDefault>F<SmallText>v,Rk6</SmallText> = {String(result.FvRk6.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
 							</View>
 						}
 
@@ -157,29 +167,9 @@ export default function Results({
 
 						<Space />
 
-						<TopContainerInfo>
-							<TopContainerInfoLabel>Kmod1</TopContainerInfoLabel>
-
-							<TopContainerInfoItem>
-								<TopContainerInfoItemText>{String(result.kmod1.toFixed(2)).replace('.', ',')}</TopContainerInfoItemText>
-							</TopContainerInfoItem>
-						</TopContainerInfo>
-
-						<TopContainerInfo>
-							<TopContainerInfoLabel>Kmod2</TopContainerInfoLabel>
-
-							<TopContainerInfoItem>
-								<TopContainerInfoItemText>{String(result.kmod2.toFixed(2)).replace('.', ',')}</TopContainerInfoItemText>
-							</TopContainerInfoItem>
-						</TopContainerInfo>
-
-						<TopContainerInfo>
-							<TopContainerInfoLabel>Kmod</TopContainerInfoLabel>
-
-							<TopContainerInfoItem>
-								<TopContainerInfoItemText>{String(result.kmod.toFixed(2)).replace('.', ',')}</TopContainerInfoItemText>
-							</TopContainerInfoItem>
-						</TopContainerInfo>
+						<TextInfoDefault>K<SmallText>mod1</SmallText> = {String(result.kmod1.toFixed(2)).replace('.', ',')}</TextInfoDefault>
+						<TextInfoDefault>K<SmallText>mod2</SmallText> = {String(result.kmod2.toFixed(2)).replace('.', ',')}</TextInfoDefault>
+						<TextInfoDefault>K<SmallText>mod</SmallText> = {String(result.kmod.toFixed(2)).replace('.', ',')}</TextInfoDefault>
 					</ContainerInfo>
 				) : (
 					<LoadingPage />

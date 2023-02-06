@@ -28,6 +28,7 @@ interface IProps<
 	error?: FieldError;
 	space?: boolean;
 	defaultValue?: PathValue<TFieldValues, TFieldArrayName>;
+	titleElement?: Element;
 }
 
 export default function FieldInput<
@@ -40,7 +41,9 @@ export default function FieldInput<
 	control,
 	error,
 	space,
-	defaultValue
+	defaultValue,
+	titleElement,
+	...rest
 }: IProps<TFieldValues, TFieldArrayName>) {
 	return (
 		<Controller
@@ -50,13 +53,16 @@ export default function FieldInput<
 			render={({ field: { value, onChange } }) => {
 				return (
 					<View>
-						<Title error={!!error}>{title}</Title>
+						{
+							!titleElement ? <Title error={!!error}>{title}</Title> : titleElement
+						}
 						<InputContainer error={!!error}>
 							<Input
 								value={value}
 								onChangeText={text => {
 									onChange(text);
 								}}
+								{...rest}
 							/>
 							{dimension ? (
 								<Dimension error={!!error}>

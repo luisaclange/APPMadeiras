@@ -55,7 +55,7 @@ export default function CalcFinal({
 	let Rd: number;
 	let nPins: number;
 
-	if (calc === 'nailQtde') {
+	if (calc === 'pinQtde') {
 		// Cálculo da quantidade de pinos necessários
 		const result = CalcPinQtde({
 			d,

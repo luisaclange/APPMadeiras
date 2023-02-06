@@ -8,11 +8,11 @@ import { IThroughScrew } from '../../interfaces/ThroughScrew';
 
 interface IProps {
 	data: CalcModel | Record<string, never>;
-	nails: number;
+	pins: number;
 }
 
-export default async function calcDraw({ nails, data }: IProps) {
-
+export default async function calcDraw({ pins, data }: IProps) {
+	// Diâmetro do pino
 	let d: number;
 	switch (data.pinType) {
 		case 'prego':
@@ -36,52 +36,47 @@ export default async function calcDraw({ nails, data }: IProps) {
 	//Borda livre horizontal
 	let bfHorizontal: number;
 	if (data.pinType === 'prego') {
-		bfHorizontal = Math.ceil((d * 11.5) / 5) * 5;
+		bfHorizontal = Math.ceil((d * 12) / 5) * 5;
 	} else {
-		bfHorizontal = Math.ceil((Math.max(d * 6.5, 80 - d / 2)) / 5) * 5;
+		bfHorizontal = Math.ceil((Math.max(d * 7, 80 - d / 2)) / 5) * 5;
 	}
 
 	//Borda livre vertical
-	const bfVertical = Math.ceil((d * 2.5) / 5) * 5;
+	const bfVertical = Math.ceil((d * 3) / 5) * 5;
 
-	//Numero de pregos por coluna
-	let nNailsColumn: number;
+	//Número de pregos por coluna
+	let nPinsColumn: number;
 	if (data.pinType === 'prego') {
-		nNailsColumn = Math.ceil(
+		nPinsColumn = Math.ceil(
 			(data.widthWood - bfVertical * 2) / (3 * d),
 		);
 	} else {
-		nNailsColumn = Math.ceil(
+		nPinsColumn = Math.ceil(
 			(data.widthWood - bfVertical * 2) / (4 * d),
 		);
 	}
 
-	console.log(nails);
-	//Espaçamento entre pregos - coluna normal
-	let spaceNormalColumnNails: number;
-	if (nails >= nNailsColumn) {
-		spaceNormalColumnNails = (data.widthWood - bfVertical * 2) / (nNailsColumn - 1);
+	//Espaçamento vertical entre pregos - coluna normal
+	let spaceNormalColumnPins: number;
+	if (pins >= nPinsColumn) {
+		spaceNormalColumnPins = (data.widthWood - bfVertical * 2) / (nPinsColumn - 1);
 	} else {
-		spaceNormalColumnNails = (data.widthWood - bfVertical * 2) / (nails - 1);
+		spaceNormalColumnPins = (data.widthWood - bfVertical * 2) / (pins - 1);
 	}
 
-	//Numero de colunas
-	const nColumns = Math.ceil(nails / nNailsColumn);
+	//Número de colunas
+	const nColumns = Math.ceil(pins / nPinsColumn);
 
-	//Numero de pregos na ultima coluna
-	const nNailsSpecialColumn = nails - (nColumns - 1) * nNailsColumn;
+	//Número de pregos na última coluna
+	const nPinsSpecialColumn = pins - (nColumns - 1) * nPinsColumn;
 
-	//Borda livre horizontal - ultima coluna
+	//Borda livre horizontal - última coluna
 	const bfVerticalSpecial =
-		Math.floor(
-			(Number(data.widthWood) - (nNailsSpecialColumn - 1) * 3 * d) /
-			2 /
-			5,
-		) * 5;
+		nPinsSpecialColumn === 1 ? (data.widthWood) / 2 : bfVertical;
 
-	//Espacamento entre pregos ultima coluna
-	const spaceSpecialColumnNails =
-		(Number(data.widthWood) - bfVerticalSpecial * 2) / (nNailsSpecialColumn - 1);
+	//Espaçamento entre pregos - última coluna
+	const spaceSpecialColumnPins =
+		nPinsSpecialColumn === 1 ? 0 : (data.widthWood - 2 * bfVerticalSpecial) / (nPinsSpecialColumn - 1);
 
 	//Espaço entre colunas
 	const spaceColumns = Math.ceil((6 * d) / 5) * 5;
@@ -89,24 +84,26 @@ export default async function calcDraw({ nails, data }: IProps) {
 	console.log({
 		bfHorizontal,
 		bfVertical,
-		nNailsColumn,
-		spaceNormalColumnNails,
+		nPinsColumn,
+		spaceNormalColumnPins,
 		nColumns,
-		nNailsSpecialColumn,
+		nPinsSpecialColumn,
 		bfVerticalSpecial,
-		spaceSpecialColumnNails,
+		spaceSpecialColumnPins,
 		spaceColumns,
+		d
 	});
 
 	return {
 		bfHorizontal,
 		bfVertical,
-		nNailsColumn,
-		spaceNormalColumnNails,
+		nPinsColumn,
+		spaceNormalColumnPins,
 		nColumns,
-		nNailsSpecialColumn,
+		nPinsSpecialColumn,
 		bfVerticalSpecial,
-		spaceSpecialColumnNails,
+		spaceSpecialColumnPins,
 		spaceColumns,
+		d
 	};
 }

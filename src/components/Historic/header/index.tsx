@@ -5,7 +5,6 @@ import { TouchableWithoutFeedback } from 'react-native';
 import Logo from '../../../assets/svgs/logo.svg';
 import { Container, IconBox } from './styles';
 import Filter from '../../../assets/svgs/filter.svg';
-import Settings from '../../../assets/svgs/settings.svg';
 
 export default function Header() {
 	const navigation = useNavigation();
@@ -33,14 +32,6 @@ export default function Header() {
 					}}
 				>
 					<Filter />
-				</IconBox>
-
-				<IconBox
-					onPress={() => {
-						navigation.dispatch(CommonActions.navigate('Historic'));
-					}}
-				>
-					<Settings />
 				</IconBox>
 			</Container>
 		</Container>

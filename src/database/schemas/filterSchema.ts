@@ -16,7 +16,7 @@ export const filterSchema = tableSchema({
 			type: 'number',
 		},
 		{
-			name: 'nailType',
+			name: 'pinType',
 			type: 'string',
 		},
 		{

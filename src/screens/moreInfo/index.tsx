@@ -74,6 +74,7 @@ export default function MoreInfo({
 	const GetData = useCallback(async () => {
 		try {
 			const aux = await database.get<CalcModel>('calcs').find(id_calc);
+			console.log(aux.calc);
 
 			let pinSelected = '';
 			switch (aux.pinType) {

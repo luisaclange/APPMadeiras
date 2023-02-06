@@ -21,9 +21,9 @@ export default function CalcMaxForce({ numberPins, ligationType, d, kmod, pinTyp
 	let pinsPerColumn: number; // Pinos por coluna]
 	let nPins = numberPins;
 	if (pinType === 'prego')
-		pinsPerColumn = Math.floor((widthWood - 6 * d) / (3 * d)) + 1;
+		pinsPerColumn = Math.ceil((widthWood - 5 * d) / (3 * d));
 	else
-		pinsPerColumn = Math.floor((widthWood - 6 * d) / (4 * d)) + 1;
+		pinsPerColumn = Math.ceil((widthWood - 5 * d) / (4 * d));
 	const numberColumns = Math.ceil(numberPins / pinsPerColumn); // Número de colunas
 	if (numberColumns > 8) {
 		const nPinsNormal = 8 * pinsPerColumn;

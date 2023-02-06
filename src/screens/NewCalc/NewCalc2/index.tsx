@@ -78,7 +78,7 @@ export default function NewCalc2({
 	return (
 		<Container>
 			<Header title="Novo cálculo" progress={ProgressNewCalc.newCalc2} />
-			<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
 				<ContainerFields>
 					<TitleSection title="Etapa 2" subtitle="Tipo de ligação" />
 					{!loadingPage ? (
