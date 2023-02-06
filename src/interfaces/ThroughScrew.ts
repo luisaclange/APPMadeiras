@@ -2,7 +2,7 @@ export interface IThroughScrew {
 	'id': string,
 	'name': string,
 	'diametro': number,
-	'comp': number,
+	'comprimento': number,
 	'roscaComp': number,
 	'altura': number
 }

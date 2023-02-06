@@ -3,6 +3,9 @@ import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
 import { schemas } from './schemas';
 import { CalcModel } from './models/calcModel';
 import { FilterModel } from './models/filterModel';
+import { NailModel } from './models/nailModel';
+import { SuperbScrewModel } from './models/superbScrewModel';
+import { ThroughbScrewModel } from './models/throughScrewModel';
 
 const adapter = new SQLiteAdapter({
 	schema: schemas,
@@ -10,5 +13,5 @@ const adapter = new SQLiteAdapter({
 
 export const database = new Database({
 	adapter,
-	modelClasses: [CalcModel, FilterModel],
+	modelClasses: [CalcModel, FilterModel, NailModel, SuperbScrewModel, ThroughbScrewModel],
 });
