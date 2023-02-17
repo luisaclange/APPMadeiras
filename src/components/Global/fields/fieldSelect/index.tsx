@@ -14,11 +14,13 @@ import {
 	View,
 } from 'react-native';
 import DoubleArrow from '../../../../assets/svgs/doubleArrow.svg';
+import Delete from '../../../../assets/svgs/delete.svg';
 import ArrowUp from '../../../../assets/svgs/arrowUp.svg';
 import ArrowDown from '../../../../assets/svgs/arrowDown.svg';
 import { RFValue } from 'react-native-responsive-fontsize';
 import CustomModal from '../../../global/modal';
 import {
+	ContainerExclude,
 	Error,
 	Input,
 	InputContainer,
@@ -30,10 +32,16 @@ import {
 	Title,
 } from './styles';
 import globalStyle from '../../../../styles/globalStyle';
+import { database } from '../../../../database';
+import PopUpOneButton from '../../popUps/popUpOneButton';
+import ButtonDark from '../../buttons/buttonDark';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import PopUpTwoButtons from '../../popUps/popUpTwoButtons';
 
 export interface ISelect {
 	value: string;
 	id: string;
+	isDataFile?: boolean;
 }
 
 interface IProps<
@@ -48,6 +56,9 @@ interface IProps<
 	space?: boolean;
 	defaultValue?: PathValue<TFieldValues, TFieldArrayName>;
 	onPress?: () => void;
+	tableName?: string;
+	refresh?: () => void;
+	navigationScreen?: string;
 }
 
 export default function FieldSelect<
@@ -61,9 +72,28 @@ export default function FieldSelect<
 	control,
 	data,
 	defaultValue,
+	tableName,
+	navigationScreen,
+	refresh,
 	onPress
 }: IProps<TFieldValues, TFieldArrayName>) {
 	const [visible, setVisible] = useState(false);
+	const [visibleError, setVisibleError] = useState(false);
+	const [visibleQuestion, setVisibleQuestion] = useState(false);
+	const [id, setId] = useState('');
+	const navigation = useNavigation();
+
+	async function DeleteItem(id: string) {
+		try {
+			const aux = await database.get(tableName).find(id);
+			await database.write(async () => {
+				aux.destroyPermanently();
+			});
+			refresh();
+		} catch (error) {
+			setVisibleError(true);
+		}
+	}
 
 	return (
 		<Controller
@@ -73,6 +103,27 @@ export default function FieldSelect<
 			render={({ field: { value, onChange } }) => {
 				return (
 					<View>
+						<PopUpOneButton
+							actionButton={() => setVisibleError(false)}
+							message='Ops, ocorreu um erro!'
+							setVisible={setVisibleError}
+							textButton='Voltar'
+							visible={visibleError}
+						/>
+						<PopUpTwoButtons
+							lActionButton={() => {
+								setVisibleQuestion(false);
+							}}
+							message='Tem certeza de que deseja excluir esse item?'
+							setVisible={setVisibleQuestion}
+							lTextButton='Não'
+							rActionButton={() => {
+								setVisibleQuestion(false);
+								DeleteItem(id);
+							}}
+							rTextButton='Sim'
+							visible={visibleQuestion}
+						/>
 						<CustomModal
 							backdrop
 							dismissOnPress
@@ -102,11 +153,31 @@ export default function FieldSelect<
 													<ItemText>
 														{item.item.value}
 													</ItemText>
+													{
+														item.item.isDataFile &&
+														<ContainerExclude onPress={() => {
+															setId(item.item.id);
+															setVisibleQuestion(true);
+														}}>
+															<Delete />
+														</ContainerExclude>
+													}
 												</ItemSelect>
 											</TouchableOpacity>
 										);
 									}}
 								/>
+								{
+									navigationScreen &&
+									<ButtonDark
+										text={`Novo ${navigationScreen === 'NewNail' ? 'Prego' : 'Parafuso'}`}
+										style={{ marginTop: RFValue(8, 700) }}
+										onPress={() => {
+											setVisible(false);
+											navigation.dispatch(CommonActions.navigate(navigationScreen));
+										}}
+									/>
+								}
 							</Modal>
 						</CustomModal>
 
@@ -115,7 +186,7 @@ export default function FieldSelect<
 							error={!!error}
 							onPress={() => {
 								if (onPress) onPress();
-								setVisible(true);
+								setVisible(prevState => !prevState);
 							}}
 						>
 							<Input
@@ -131,7 +202,7 @@ export default function FieldSelect<
 						</InputContainer>
 						{error ? <Error>{error.message}</Error> : <Space />}
 						<Space />
-						{space ? <Space /> : null}
+						{space && <Space />}
 					</View>
 				);
 			}}

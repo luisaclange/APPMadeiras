@@ -1,5 +1,5 @@
 import { CommonActions, useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Logo from '../../assets/svgs/logo.svg';
@@ -11,7 +11,6 @@ import {
 	ContainerText,
 	Description,
 } from './styles';
-import PopUpOneButton from '../../components/global/popUps/popUpOneButton';
 import { database } from '../../database';
 import { FilterModel } from '../../database/models/filterModel';
 
@@ -25,9 +24,6 @@ const styles = StyleSheet.create({
 export default function Home() {
 	// Navegação
 	const navigation = useNavigation();
-
-	// Variáveis
-	const [visibleAboutModal, setVisibleAboutModal] = useState(false);
 
 	// Começar
 	async function Begin() {
@@ -46,15 +42,6 @@ export default function Home() {
 
 	return (
 		<>
-			<PopUpOneButton
-				actionButton={() => {
-					setVisibleAboutModal(false);
-				}}
-				message="Sobre o aplicativo"
-				setVisible={setVisibleAboutModal}
-				textButton="Fechar"
-				visible={visibleAboutModal}
-			/>
 			<Background
 				source={require('../../assets/images/HomeBackground.png')}
 			>
@@ -70,7 +57,7 @@ export default function Home() {
 							text="Sobre"
 							style={styles.buttonLight}
 							onPress={() => {
-								setVisibleAboutModal(true);
+								navigation.dispatch(CommonActions.navigate('About'));
 							}}
 						/>
 						<ButtonLight

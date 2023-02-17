@@ -38,6 +38,9 @@ import { CalcData } from '../../datas/Calc';
 import { INail } from '../../interfaces/Nail';
 import { ISuperbScrew } from '../../interfaces/SuperbScrew';
 import { IThroughScrew } from '../../interfaces/ThroughScrew';
+import { NailModel } from '../../database/models/nailModel';
+import { SuperbScrewModel } from '../../database/models/superbScrewModel';
+import { ThroughScrewModel } from '../../database/models/throughScrewModel';
 
 interface IInfo {
 	description: string;
@@ -74,7 +77,6 @@ export default function MoreInfo({
 	const GetData = useCallback(async () => {
 		try {
 			const aux = await database.get<CalcModel>('calcs').find(id_calc);
-			console.log(aux.calc);
 
 			let pinSelected = '';
 			switch (aux.pinType) {
@@ -82,16 +84,25 @@ export default function MoreInfo({
 					pinSelected = NailsDimensions.find(
 						(item: INail) => item.id === aux.pinSelected,
 					)?.name;
+
+					if (!pinSelected)
+						pinSelected = (await database.get<NailModel>('nails').find(aux.pinSelected))?.name;
 					break;
 				case 'parafusoSoberba':
 					pinSelected = SuperbScrewsDimensions.find(
 						(item: ISuperbScrew) => item.id === aux.pinSelected,
 					)?.name;
+
+					if (!pinSelected)
+						pinSelected = (await database.get<SuperbScrewModel>('superbScrews').find(aux.pinSelected))?.name;
 					break;
 				case 'parafusoPassante':
 					pinSelected = ThroughScrewsDimensions.find(
 						(item: IThroughScrew) => item.id === aux.pinSelected,
 					)?.name;
+
+					if (!pinSelected)
+						pinSelected = (await database.get<ThroughScrewModel>('throughScrews').find(aux.pinSelected))?.name;
 					break;
 				default:
 					pinSelected = '';
@@ -173,7 +184,7 @@ export default function MoreInfo({
 						<ValueInfo>{dataInfo.pinType}</ValueInfo>
 
 						<Label>Pino utilizado</Label>
-						<ValueInfo>{dataInfo.pinSelected}</ValueInfo>
+						<ValueInfo>{dataInfo.pinSelected || 'Não encontrado'}</ValueInfo>
 
 						<Label>Cálculo</Label>
 						<ValueInfo>{dataInfo.calc}</ValueInfo>
@@ -257,16 +268,19 @@ export default function MoreInfo({
 							</ItemUnity>
 						</ContainerUnity>
 
-						<ButtonDark
-							text="Resultados"
-							onPress={() => {
-								navigation.dispatch(
-									CommonActions.navigate('Results', {
-										params: { id_calc },
-									}),
-								);
-							}}
-						/>
+						{
+							dataInfo.pinSelected ? <ButtonDark
+								text="Resultados"
+								onPress={() => {
+									navigation.dispatch(
+										CommonActions.navigate('Results', {
+											params: { id_calc },
+										}),
+									);
+								}}
+							/>
+								: <Label>ATENÇÃO: o pino selecionado não foi encontrado. Isso pode ter ocorrido pela exclusão dele do banco de dados. Edite seu cálculo e selecione um novo pino.</Label>
+						}
 					</ContainerInfo>
 				) : (
 					<LoadingPage />

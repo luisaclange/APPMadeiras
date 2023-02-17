@@ -19,9 +19,9 @@ import PopUpOneButton from '../../../components/global/popUps/popUpOneButton';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { TRootStackParamList } from '../../../routes/App.routes';
 import LoadingPage from '../../../components/global/loadingPage';
-import { SelectionPrego } from '../../../calcs/selectionNails/selectionPrego';
-import { SelectionParPassante } from '../../../calcs/selectionNails/selectionParPassante';
-import { SelectionParSoberba } from '../../../calcs/selectionNails/selectionParSoberba';
+import { SelectionNail } from '../../../calcs/selectionNails/selectionNail';
+import { SelectionThroughScrew } from '../../../calcs/selectionNails/selectionThroughScrew';
+import { SelectionSuperbScrew } from '../../../calcs/selectionNails/selectionSuperbScrew';
 
 export default function NewCalc3({
 	route,
@@ -53,10 +53,10 @@ export default function NewCalc3({
 	} = useForm<Data['stage3']>({ resolver: yupResolver(schemaNewCalc3) });
 
 	// Buscar dimensões de pinos
-	const GetNails = useCallback(() => {
+	const GetNails = useCallback(async () => {
 		switch (stage2.pinType) {
 			case 'prego':
-				SelectionPrego({
+				await SelectionNail({
 					setData: setDataNails,
 					esp1: Number(watch('espWood_1')?.replace(',', '.')),
 					esp2: Number(watch('espWood_2')?.replace(',', '.')),
@@ -64,7 +64,7 @@ export default function NewCalc3({
 				});
 				break;
 			case 'parafusoPassante':
-				SelectionParPassante({
+				await SelectionThroughScrew({
 					setData: setDataNails,
 					esp1: Number(watch('espWood_1')?.replace(',', '.')),
 					esp2: Number(watch('espWood_2')?.replace(',', '.')),
@@ -72,10 +72,11 @@ export default function NewCalc3({
 				});
 				break;
 			case 'parafusoSoberba':
-				SelectionParSoberba({
+				await SelectionSuperbScrew({
 					setData: setDataNails,
 					esp1: Number(watch('espWood_1')?.replace(',', '.')),
 					esp2: Number(watch('espWood_2')?.replace(',', '.')),
+					ligationType: stage2.ligationType,
 				});
 				break;
 			default:
@@ -173,7 +174,6 @@ export default function NewCalc3({
 
 			setVisibleSuccess(true);
 		} catch (error) {
-			console.error(error);
 			setVisibleError(true);
 		}
 	}
@@ -270,6 +270,11 @@ export default function NewCalc3({
 									else setDataNails([]);
 								}}
 								error={errors.pinSelected}
+								tableName={stage2.pinType === 'prego' ? 'nails' : stage2.pinType === 'parafusoSoberba' ? 'superbScrews' : 'throughScrews'}
+								refresh={() => {
+									GetNails();
+								}}
+								navigationScreen={stage2.pinType === 'prego' ? 'NewNail' : stage2.pinType === 'parafusoSoberba' ? 'NewSuperbScrew' : 'NewThroughScrew'}
 							/>
 							{stage2.calc === 'pinQtde' ||
 								dataStage.calc == 'pinQtde' ? (

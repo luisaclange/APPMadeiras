@@ -1,7 +1,7 @@
 import { Model } from '@nozbe/watermelondb';
 import { field } from '@nozbe/watermelondb/decorators';
 
-export class ThroughbScrewModel extends Model {
+export class ThroughScrewModel extends Model {
 	static table = 'throughScrews';
 
 	@field('name')

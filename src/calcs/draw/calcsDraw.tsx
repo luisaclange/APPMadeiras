@@ -5,6 +5,10 @@ import { CalcModel } from '../../database/models/calcModel';
 import { INail } from '../../interfaces/Nail';
 import { ISuperbScrew } from '../../interfaces/SuperbScrew';
 import { IThroughScrew } from '../../interfaces/ThroughScrew';
+import { database } from '../../database';
+import { NailModel } from '../../database/models/nailModel';
+import { SuperbScrewModel } from '../../database/models/superbScrewModel';
+import { ThroughScrewModel } from '../../database/models/throughScrewModel';
 
 interface IProps {
 	data: CalcModel | Record<string, never>;
@@ -16,19 +20,28 @@ export default async function calcDraw({ pins, data }: IProps) {
 	let d: number;
 	switch (data.pinType) {
 		case 'prego':
-			d = NailsDimensions.find((item: INail) => item.id === data.pinSelected).JP;
+			d = NailsDimensions.find((item: INail) => item.id === data.pinSelected)?.JP;
+
+			if (!d)
+				d = (await database.get<NailModel>('nails').find(data.pinSelected))?.JP;
 
 			break;
 		case 'parafusoSoberba':
 			d = SuperbScrewsDimensions.find(
 				(item: ISuperbScrew) => item.id === data.pinSelected,
-			).diametro;
+			)?.diametro;
+
+			if (!d)
+				d = (await database.get<SuperbScrewModel>('superbScrews').find(data.pinSelected))?.diametro;
 
 			break;
 		case 'parafusoPassante':
 			d = ThroughScrewsDimensions.find(
 				(item: IThroughScrew) => item.id === data.pinSelected,
-			).diametro;
+			)?.diametro;
+
+			if (!d)
+				d = (await database.get<ThroughScrewModel>('throughScrews').find(data.pinSelected))?.diametro;
 
 			break;
 	}
@@ -44,7 +57,7 @@ export default async function calcDraw({ pins, data }: IProps) {
 	//Borda livre vertical
 	const bfVertical = Math.ceil((d * 3) / 5) * 5;
 
-	//Número de pregos por coluna
+	//Número de pinos por coluna
 	let nPinsColumn: number;
 	if (data.pinType === 'prego') {
 		nPinsColumn = Math.ceil(
@@ -56,7 +69,7 @@ export default async function calcDraw({ pins, data }: IProps) {
 		);
 	}
 
-	//Espaçamento vertical entre pregos - coluna normal
+	//Espaçamento vertical entre pinos - coluna normal
 	let spaceNormalColumnPins: number;
 	if (pins >= nPinsColumn) {
 		spaceNormalColumnPins = (data.widthWood - bfVertical * 2) / (nPinsColumn - 1);
@@ -65,7 +78,13 @@ export default async function calcDraw({ pins, data }: IProps) {
 	}
 
 	//Número de colunas
-	const nColumns = Math.ceil(pins / nPinsColumn);
+	const nColumns = Math.ceil(pins / nPinsColumn) <= 1 && pins > 1 ? 2 : Math.ceil(pins / nPinsColumn);
+
+	// Recalculando o número de pinos por coluna
+	nPinsColumn = Math.ceil(pins / nColumns);
+
+	// Recalculando o espaçamento entre pinos - normal
+	spaceNormalColumnPins = (data.widthWood - bfVertical * 2) / (nPinsColumn - 1);
 
 	//Número de pregos na última coluna
 	const nPinsSpecialColumn = pins - (nColumns - 1) * nPinsColumn;
@@ -81,18 +100,8 @@ export default async function calcDraw({ pins, data }: IProps) {
 	//Espaço entre colunas
 	const spaceColumns = Math.ceil((6 * d) / 5) * 5;
 
-	console.log({
-		bfHorizontal,
-		bfVertical,
-		nPinsColumn,
-		spaceNormalColumnPins,
-		nColumns,
-		nPinsSpecialColumn,
-		bfVerticalSpecial,
-		spaceSpecialColumnPins,
-		spaceColumns,
-		d
-	});
+	// Transpasse
+	const passThrough = 2 * bfHorizontal + (nColumns - 1) * spaceColumns;
 
 	return {
 		bfHorizontal,
@@ -104,6 +113,7 @@ export default async function calcDraw({ pins, data }: IProps) {
 		bfVerticalSpecial,
 		spaceSpecialColumnPins,
 		spaceColumns,
-		d
+		d,
+		passThrough
 	};
 }

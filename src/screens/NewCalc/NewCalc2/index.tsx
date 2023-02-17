@@ -107,10 +107,10 @@ export default function NewCalc2({
 								error={errors.calc}
 								defaultValue={dataStage.calc}
 							/>
-							{watch('ligationType') ? (
+							{watch('ligationType') || dataStage.ligationType ? (
 								<ImageCorte
 									source={
-										watch('ligationType') === 'corteSimples'
+										(watch('ligationType') && watch('ligationType') === 'corteSimples') || (!watch('ligationType') && dataStage.ligationType === 'corteSimples')
 											? require('../../../assets/images/cortes/cortesimples.png')
 											: require('../../../assets/images/cortes/corteduplo.png')
 									}

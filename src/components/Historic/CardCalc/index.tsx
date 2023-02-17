@@ -30,6 +30,9 @@ import NailsDimensions from '../../../archive/PinsDimensions/Nails.json';
 import New from '../../../assets/svgs/new.svg';
 import ThroughScrewsDimensions from '../../../archive/PinsDimensions/ThroughScrews.json';
 import SuperbScrewsDimensions from '../../../archive/PinsDimensions/SuperbScrews.json';
+import { NailModel } from '../../../database/models/nailModel';
+import { ThroughScrewModel } from '../../../database/models/throughScrewModel';
+import { SuperbScrewModel } from '../../../database/models/superbScrewModel';
 
 interface IProps {
 	item: CalcModel;
@@ -38,6 +41,7 @@ interface IProps {
 
 interface IData {
 	wood_name: string;
+	pin_type: string;
 	wood_resistance: string;
 	charging: string;
 	humidityClass: string;
@@ -57,7 +61,7 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 	const [data, setData] = useState<IData>();
 
 	// Buscar dados
-	const GetData = useCallback(() => {
+	const GetData = useCallback(async () => {
 		const wood = NativeWoods.find(wood => wood.id === item.woodName);
 		const charging = Kmod.kmod1.find(
 			wood => wood.id === item.charging,
@@ -66,21 +70,31 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 			wood => wood.id === item.humidityClass,
 		)?.name;
 		let nail_name = '';
+		let pin_type = '';
 		switch (item.pinType) {
 			case 'prego':
+				pin_type = 'Prego';
 				nail_name = NailsDimensions.find(
 					nail => nail.id === item.pinSelected,
 				)?.name;
+				if (!nail_name)
+					nail_name = (await database.get<NailModel>('nails').find(item.pinSelected))?.name;
 				break;
 			case 'parafusoPassante':
+				pin_type = 'Parafuso';
 				nail_name = ThroughScrewsDimensions.find(
 					nail => nail.id === item.pinSelected,
 				)?.name;
+				if (!nail_name)
+					nail_name = (await database.get<ThroughScrewModel>('throughScrews').find(item.pinSelected))?.name;
 				break;
 			case 'parafusoSoberba':
+				pin_type = 'Parafuso';
 				nail_name = SuperbScrewsDimensions.find(
 					nail => nail.id === item.pinSelected,
 				)?.name;
+				if (!nail_name)
+					nail_name = (await database.get<SuperbScrewModel>('superbScrews').find(item.pinSelected))?.name;
 				break;
 			default:
 				nail_name = null;
@@ -91,12 +105,15 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 			charging,
 			humidityClass,
 			nail_name,
+			pin_type,
 			wood_name: wood?.name,
 			wood_resistance: wood?.class,
 		});
 	}, [item.charging, item.humidityClass, item.pinSelected, item.pinType, item.woodName]);
 
-	useEffect(GetData, [GetData]);
+	useEffect(() => {
+		GetData();
+	}, [GetData]);
 
 	// Deletar cálculo
 	async function DeleteCalc() {
@@ -180,7 +197,7 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 								)}`}
 							</SubTitle>
 							<TextContainer>
-								<ItemText>{`- Madeira ${data.wood_name};\n- Classe de resistência ${data.wood_resistance};\n- Carregamento ${data.charging};\n- Classe de Umidade ${data.humidityClass};\n- ${data.nail_name};`}</ItemText>
+								<ItemText>{`- Madeira ${data?.wood_name};\n- Classe de resistência ${data?.wood_resistance};\n- Carregamento ${data?.charging};\n- Classe de Umidade ${data?.humidityClass};\n- ${data?.pin_type} ${data?.nail_name || 'não encontrado'};`}</ItemText>
 							</TextContainer>
 						</>
 					) : null}

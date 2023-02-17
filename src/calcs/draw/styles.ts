@@ -15,9 +15,10 @@ export const ContainerDraw = styled.View`
 	padding: ${RFValue(8, 700)}px;
 `;
 
-export const ContainerCapture = styled.View`
+export const ContainerCapture = styled.Pressable`
 	align-items: center;
 	width: 100%;
 	height: 100%;
 	justify-content: center;
+	backgroundColor: #FFFFFF;
 `;

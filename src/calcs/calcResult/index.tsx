@@ -48,16 +48,16 @@ export default async function CalcResult(id: string): Promise<IResult> {
 	const { kmod, kmod1, kmod2 } = CalcKmod(charging, humidityClass, woodType);
 
 	//Calculo do momento resistente do pino metálico
-	const { MyRk, fuk } = CalcMyRk(pinType, pinSelected);
+	const { MyRk, fuk } = await CalcMyRk(pinType, pinSelected);
 
 	//Calculo da resistencia ao embutimento da madeira
-	const { density, fek, pk } = CalcFek(pinType, woodName, pinSelected);
+	const { density, fek, pk } = await CalcFek(pinType, woodName, pinSelected);
 
 	//Calculo B
 	const B = 1;
 
 	//Calculo resistencia caracteristica do pino
-	const { FvRk, FvRk1, FvRk2, FvRk3, FvRk4, FvRk5, FvRk6 } = CalcResistence({
+	const { FvRk, FvRk1, FvRk2, FvRk3, FvRk4, FvRk5, FvRk6 } = await CalcResistence({
 		ligationType,
 		pinType,
 		pinSelected,
@@ -69,7 +69,7 @@ export default async function CalcResult(id: string): Promise<IResult> {
 	});
 
 	// Calculo da resistência da ligação e número de pinos
-	const { Rd, nPins } = CalcFinal({
+	const { Rd, nPins } = await CalcFinal({
 		FvRk,
 		ligationType,
 		numberPins,

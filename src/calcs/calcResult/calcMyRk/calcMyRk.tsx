@@ -4,16 +4,23 @@ import NailsDimensions from '../../../archive/PinsDimensions/Nails.json';
 import { INail } from '../../../interfaces/Nail';
 import { ISuperbScrew } from '../../../interfaces/SuperbScrew';
 import { IThroughScrew } from '../../../interfaces/ThroughScrew';
+import { database } from '../../../database';
+import { NailModel } from '../../../database/models/nailModel';
+import { SuperbScrewModel } from '../../../database/models/superbScrewModel';
+import { ThroughScrewModel } from '../../../database/models/throughScrewModel';
 
-export function CalcMyRk(nailType: string, id_nail: string) {
+export async function CalcMyRk(pinType: string, pinSelected: string) {
 	let diameter: number;
 	let fuk: number;
 	let name: string;
 
 	// Calculando cada força ultima resistente conforme o tipo e diametro do pino
-	switch (nailType) {
+	switch (pinType) {
 		case 'prego':
-			diameter = NailsDimensions.find((item: INail) => item.id === id_nail).JP;
+			diameter = NailsDimensions.find((item: INail) => item.id === pinSelected)?.JP;
+
+			if (!diameter)
+				diameter = (await database.get<NailModel>('nails').find(pinSelected))?.JP;
 
 			if (diameter >= 3 && diameter < 3.55) {
 				fuk = 635;
@@ -26,19 +33,28 @@ export function CalcMyRk(nailType: string, id_nail: string) {
 			break;
 		case 'parafusoSoberba':
 			diameter = SuperbScrewsDimensions.find(
-				(item: ISuperbScrew) => item.id === id_nail,
-			).diametro;
+				(item: ISuperbScrew) => item.id === pinSelected,
+			)?.diametro;
+
+			if (!diameter)
+				diameter = (await database.get<SuperbScrewModel>('superbScrews').find(pinSelected))?.diametro;
 
 			fuk = 415;
 
 			break;
 		case 'parafusoPassante':
 			diameter = ThroughScrewsDimensions.find(
-				(item: IThroughScrew) => item.id === id_nail,
-			).diametro;
+				(item: IThroughScrew) => item.id === pinSelected,
+			)?.diametro;
 			name = ThroughScrewsDimensions.find(
-				(item: IThroughScrew) => item.id === id_nail,
-			).name;
+				(item: IThroughScrew) => item.id === pinSelected,
+			)?.name;
+
+			if (!diameter)
+				diameter = (await database.get<ThroughScrewModel>('throughScrews').find(pinSelected))?.diametro;
+
+			if (!name)
+				name = (await database.get<ThroughScrewModel>('throughScrews').find(pinSelected))?.name;
 
 			if (name.includes('A307')) {
 				fuk = 415;

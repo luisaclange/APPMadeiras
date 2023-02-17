@@ -23,7 +23,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import LoadingPage from '../../components/global/loadingPage';
 import PopUpOneButton from '../../components/global/popUps/popUpOneButton';
 import CalcResult, { IResult } from '../../calcs/calcResult';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import globalStyle from '../../styles/globalStyle';
 import Draw from '../../calcs/draw/draw';
 import { CalcModel } from '../../database/models/calcModel';
@@ -43,7 +43,6 @@ export default function Results({
 	const [visibleError, setVisibleError] = useState(false);
 	const [data, setData] = useState<CalcModel | Record<string, never>>({});
 	const [result, setResult] = useState<IResult | Record<string, never>>({});
-	const [uriPhoto, setUriPhoto] = useState<string | undefined>();
 
 	// Buscar dados
 	const GetData = useCallback(async () => {
@@ -61,10 +60,6 @@ export default function Results({
 	useEffect(() => {
 		GetData();
 	}, [GetData]);
-
-	useEffect(() => {
-		console.log(uriPhoto);
-	}, [uriPhoto]);
 
 	return (
 		<Container>
@@ -108,11 +103,9 @@ export default function Results({
 
 						<Space />
 
-						<Draw data={data} pins={result.nPins} setUriPhoto={setUriPhoto} />
+						<Draw data={data} pins={result.nPins} />
 
-						{
-							uriPhoto ? <Image resizeMode='center' style={{ width: 300, height: 300 }} source={{ uri: uriPhoto }} /> : null
-						}
+						<Space />
 
 						<Line />
 

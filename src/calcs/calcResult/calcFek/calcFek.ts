@@ -6,11 +6,15 @@ import { NativeWoods } from '../../../archive/NBRTables/NativeWood/NativeWood';
 import { INail } from '../../../interfaces/Nail';
 import { ISuperbScrew } from '../../../interfaces/SuperbScrew';
 import { IThroughScrew } from '../../../interfaces/ThroughScrew';
+import { database } from '../../../database';
+import { NailModel } from '../../../database/models/nailModel';
+import { SuperbScrewModel } from '../../../database/models/superbScrewModel';
+import { ThroughScrewModel } from '../../../database/models/throughScrewModel';
 
-export default function CalcFek(
+export default async function CalcFek(
 	nailType: string,
 	woodName: number,
-	nailDimension: string,
+	pinSelected: string,
 ) {
 	let diameter: number;
 
@@ -18,20 +22,29 @@ export default function CalcFek(
 	switch (nailType) {
 		case 'prego':
 			diameter = NailsDimensions.find(
-				(item: INail) => item.id === nailDimension,
-			).JP;
+				(item: INail) => item.id === pinSelected,
+			)?.JP;
+
+			if (!diameter)
+				diameter = (await database.get<NailModel>('nails').find(pinSelected))?.JP;
 
 			break;
 		case 'parafusoSoberba':
 			diameter = SuperbScrewsDimensions.find(
-				(item: ISuperbScrew) => item.id === nailDimension,
-			).diametro;
+				(item: ISuperbScrew) => item.id === pinSelected,
+			)?.diametro;
+
+			if (!diameter)
+				diameter = (await database.get<SuperbScrewModel>('superbScrews').find(pinSelected))?.diametro;
 
 			break;
 		case 'parafusoPassante':
 			diameter = ThroughScrewsDimensions.find(
-				(item: IThroughScrew) => item.id === nailDimension,
-			).diametro;
+				(item: IThroughScrew) => item.id === pinSelected,
+			)?.diametro;
+
+			if (!diameter)
+				diameter = (await database.get<ThroughScrewModel>('throughScrews').find(pinSelected))?.diametro;
 
 			break;
 	}

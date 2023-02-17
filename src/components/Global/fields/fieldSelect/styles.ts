@@ -98,3 +98,8 @@ export const Error = styled.Text`
 export const Space = styled.View`
 	height: ${RFValue(16, 700)}px;
 `;
+
+export const ContainerExclude = styled.TouchableOpacity`
+	padding: ${RFValue(1, 700)}px;
+	justify-self: flex-end;
+`;

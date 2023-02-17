@@ -6,6 +6,10 @@ import { ISuperbScrew } from '../../../interfaces/SuperbScrew';
 import { IThroughScrew } from '../../../interfaces/ThroughScrew';
 import CalcMaxForce from './maxForce';
 import CalcPinQtde from './pinQtde';
+import { database } from '../../../database';
+import { NailModel } from '../../../database/models/nailModel';
+import { SuperbScrewModel } from '../../../database/models/superbScrewModel';
+import { ThroughScrewModel } from '../../../database/models/throughScrewModel';
 
 interface IProps {
 	FvRk: number;
@@ -19,7 +23,7 @@ interface IProps {
 	pinSelected: string;
 }
 
-export default function CalcFinal({
+export default async function CalcFinal({
 	FvRk,
 	ligationType,
 	numberPins,
@@ -35,19 +39,28 @@ export default function CalcFinal({
 
 	switch (pinType) {
 		case 'prego':
-			d = NailsDimensions.find((item: INail) => item.id === pinSelected).JP;
+			d = NailsDimensions.find((item: INail) => item.id === pinSelected)?.JP;
+
+			if (!d)
+				d = (await database.get<NailModel>('nails').find(pinSelected))?.JP;
 
 			break;
 		case 'parafusoSoberba':
 			d = SuperbScrewsDimensions.find(
 				(item: ISuperbScrew) => item.id === pinSelected,
-			).diametro;
+			)?.diametro;
+
+			if (!d)
+				d = (await database.get<SuperbScrewModel>('superbScrews').find(pinSelected))?.diametro;
 
 			break;
 		case 'parafusoPassante':
 			d = ThroughScrewsDimensions.find(
 				(item: IThroughScrew) => item.id === pinSelected,
-			).diametro;
+			)?.diametro;
+
+			if (!d)
+				d = (await database.get<ThroughScrewModel>('throughScrews').find(pinSelected))?.diametro;
 
 			break;
 	}

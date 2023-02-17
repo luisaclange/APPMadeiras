@@ -12,6 +12,7 @@ export const Title = styled.Text`
 	font-family: ${globalStyle.fonts.bold};
 	color: ${globalStyle.colors.primary};
 	line-height: ${RFValue(40, 700)}px;
+	text-align: center;
 `;
 
 export const SubTitle = styled.Text`

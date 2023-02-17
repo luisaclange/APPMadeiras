@@ -1,271 +1,271 @@
 [
 	{
 		"id": "prego_01",
-		"name": "Prego 17x21",
+		"name": "17x21",
 		"JP": 3,
 		"LPP": 48.3
 	},
 	{
 		"id": "prego_02",
-		"name": "Prego 17x24",
+		"name": "17x24",
 		"JP": 3,
 		"LPP": 55.2
 	},
 	{
 		"id": "prego_03",
-		"name": "Prego 17x27",
+		"name": "17x27",
 		"JP": 3,
 		"LPP": 62.1
 	},
 	{
 		"id": "prego_04",
-		"name": "Prego 17x30",
+		"name": "17x30",
 		"JP": 3,
 		"LPP": 69
 	},
 	{
 		"id": "prego_05",
-		"name": "Prego 18x11",
+		"name": "18x11",
 		"JP": 3.4,
 		"LPP": 25.3
 	},
 	{
 		"id": "prego_06",
-		"name": "Prego 18x21",
+		"name": "18x21",
 		"JP": 3.4,
 		"LPP": 48.3
 	},
 	{
 		"id": "prego_07",
-		"name": "Prego 18x24",
+		"name": "18x24",
 		"JP": 3.4,
 		"LPP": 55.2
 	},
 	{
 		"id": "prego_08",
-		"name": "Prego 18x27",
+		"name": "18x27",
 		"JP": 3.4,
 		"LPP": 62.1
 	},
 	{
 		"id": "prego_09",
-		"name": "Prego 18x30",
+		"name": "18x30",
 		"JP": 3.4,
 		"LPP": 69
 	},
 	{
 		"id": "prego_10",
-		"name": "Prego 18x33",
+		"name": "18x33",
 		"JP": 3.4,
 		"LPP": 75.9
 	},
 	{
 		"id": "prego_11",
-		"name": "Prego 18x36",
+		"name": "18x36",
 		"JP": 3.4,
 		"LPP": 82.8
 	},
 	{
 		"id": "prego_12",
-		"name": "Prego 19x15",
+		"name": "19x15",
 		"JP": 3.9,
 		"LPP": 34.5
 	},
 	{
 		"id": "prego_13",
-		"name": "Prego 19x21",
+		"name": "19x21",
 		"JP": 3.9,
 		"LPP": 48.3
 	},
 	{
 		"id": "prego_14",
-		"name": "Prego 19x27",
+		"name": "19x27",
 		"JP": 3.9,
 		"LPP": 62.1
 	},
 	{
 		"id": "prego_15",
-		"name": "Prego 19x30",
+		"name": "19x30",
 		"JP": 3.9,
 		"LPP": 69
 	},
 	{
 		"id": "prego_16",
-		"name": "Prego 19x33",
+		"name": "19x33",
 		"JP": 3.9,
 		"LPP": 75.9
 	},
 	{
 		"id": "prego_17",
-		"name": "Prego 19x36",
+		"name": "19x36",
 		"JP": 3.9,
 		"LPP": 82.8
 	},
 	{
 		"id": "prego_18",
-		"name": "Prego 19x39",
+		"name": "19x39",
 		"JP": 3.9,
 		"LPP": 89.7
 	},
 	{
 		"id": "prego_19",
-		"name": "Prego 19x42",
+		"name": "19x42",
 		"JP": 3.9,
 		"LPP": 96.6
 	},
 	{
 		"id": "prego_20",
-		"name": "Prego 20x30",
+		"name": "20x30",
 		"JP": 4.4,
 		"LPP": 69
 	},
 	{
 		"id": "prego_21",
-		"name": "Prego 20x33",
+		"name": "20x33",
 		"JP": 4.4,
 		"LPP": 75.9
 	},
 	{
 		"id": "prego_22",
-		"name": "Prego 20x36",
+		"name": "20x36",
 		"JP": 4.4,
 		"LPP": 82.8
 	},
 	{
 		"id": "prego_23",
-		"name": "Prego 20x39",
+		"name": "20x39",
 		"JP": 4.4,
 		"LPP": 89.7
 	},
 	{
 		"id": "prego_24",
-		"name": "Prego 20x42",
+		"name": "20x42",
 		"JP": 4.4,
 		"LPP": 96.6
 	},
 	{
 		"id": "prego_25",
-		"name": "Prego 20x48",
+		"name": "20x48",
 		"JP": 4.4,
 		"LPP": 110.4
 	},
 	{
 		"id": "prego_26",
-		"name": "Prego 21x33",
+		"name": "21x33",
 		"JP": 4.9,
 		"LPP": 75.9
 	},
 	{
 		"id": "prego_27",
-		"name": "Prego 21x36",
+		"name": "21x36",
 		"JP": 4.9,
 		"LPP": 82.8
 	},
 	{
 		"id": "prego_28",
-		"name": "Prego 21x42",
+		"name": "21x42",
 		"JP": 4.9,
 		"LPP": 96.6
 	},
 	{
 		"id": "prego_29",
-		"name": "Prego 21x45",
+		"name": "21x45",
 		"JP": 4.9,
 		"LPP": 103.5
 	},
 	{
 		"id": "prego_30",
-		"name": "Prego 21x48",
+		"name": "21x48",
 		"JP": 4.9,
 		"LPP": 110.4
 	},
 	{
 		"id": "prego_31",
-		"name": "Prego 21x54",
+		"name": "21x54",
 		"JP": 4.9,
 		"LPP": 124.2
 	},
 	{
 		"id": "prego_32",
-		"name": "Prego 22x42",
+		"name": "22x42",
 		"JP": 5.4,
 		"LPP": 96.6
 	},
 	{
 		"id": "prego_33",
-		"name": "Prego 22x45",
+		"name": "22x45",
 		"JP": 5.4,
 		"LPP": 103.5
 	},
 	{
 		"id": "prego_34",
-		"name": "Prego 22x48",
+		"name": "22x48",
 		"JP": 5.4,
 		"LPP": 110.4
 	},
 	{
 		"id": "prego_35",
-		"name": "Prego 22x54",
+		"name": "22x54",
 		"JP": 5.4,
 		"LPP": 124.2
 	},
 	{
 		"id": "prego_36",
-		"name": "Prego 23x45",
+		"name": "23x45",
 		"JP": 5.9,
 		"LPP": 103.5
 	},
 	{
 		"id": "prego_37",
-		"name": "Prego 23x54",
+		"name": "23x54",
 		"JP": 5.9,
 		"LPP": 124.2
 	},
 	{
 		"id": "prego_38",
-		"name": "Prego 23x60",
+		"name": "23x60",
 		"JP": 5.9,
 		"LPP": 138
 	},
 	{
 		"id": "prego_39",
-		"name": "Prego 23x66",
+		"name": "23x66",
 		"JP": 5.9,
 		"LPP": 151.8
 	},
 	{
 		"id": "prego_40",
-		"name": "Prego 24x60",
+		"name": "24x60",
 		"JP": 6.4,
 		"LPP": 138
 	},
 	{
 		"id": "prego_41",
-		"name": "Prego 24x66",
+		"name": "24x66",
 		"JP": 6.4,
 		"LPP": 151.8
 	},
 	{
 		"id": "prego_42",
-		"name": "Prego 25x72",
+		"name": "25x72",
 		"JP": 7,
 		"LPP": 165.6
 	},
 	{
 		"id": "prego_43",
-		"name": "Prego 26x72",
+		"name": "26x72",
 		"JP": 7.6,
 		"LPP": 165.6
 	},
 	{
 		"id": "prego_44",
-		"name": "Prego 26x78",
+		"name": "26x78",
 		"JP": 7.6,
 		"LPP": 179.4
 	},
 	{
 		"id": "prego_45",
-		"name": "Prego 26x84",
+		"name": "26x84",
 		"JP": 7.6,
 		"LPP": 193.2
 	}
