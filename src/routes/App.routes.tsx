@@ -8,9 +8,9 @@ import {
 } from '@react-navigation/native-stack';
 import globalStyle from '../styles/globalStyle';
 import Historic from '../screens/historic';
-import NewCalc1 from '../screens/NewCalc/newCalc1';
-import NewCalc2 from '../screens/NewCalc/newCalc2';
-import NewCalc3 from '../screens/NewCalc/newCalc3';
+import NewCalc1 from '../screens/newCalc/newCalc1';
+import NewCalc2 from '../screens/newCalc/newCalc2';
+import NewCalc3 from '../screens/newCalc/newCalc3';
 import Filter from '../screens/filter';
 import Home from '../screens/home';
 import { DataProvider } from '../context/context';

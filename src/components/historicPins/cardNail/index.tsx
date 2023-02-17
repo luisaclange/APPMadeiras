@@ -89,7 +89,7 @@ export default function CardNail({ dataNails, currentOpen, setCurrentOpen, getDa
 							dataNails.map(it => {
 								return (
 									<>
-										<ItemContainer key={it.id} onPress={() => {
+										<ItemContainer key={`Nail${it.id}`} onPress={() => {
 											setItem(it);
 											setVisibleNail(true);
 										}}>
