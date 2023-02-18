@@ -127,8 +127,31 @@ export default function HistoricPins() {
 						text="Novo prego"
 						style={{ width: '100%' }}
 						onPress={() => {
+							setVisible(false);
 							navigation.dispatch(
 								CommonActions.navigate('NewNail')
+							);
+						}}
+					/>
+					<Space />
+					<ButtonDark
+						text="Novo parafuso de rosca soberba"
+						style={{ width: '100%' }}
+						onPress={() => {
+							setVisible(false);
+							navigation.dispatch(
+								CommonActions.navigate('NewSuperbScrew')
+							);
+						}}
+					/>
+					<Space />
+					<ButtonDark
+						text="Novo parafuso passante"
+						style={{ width: '100%' }}
+						onPress={() => {
+							setVisible(false);
+							navigation.dispatch(
+								CommonActions.navigate('NewThroughScrew')
 							);
 						}}
 					/>

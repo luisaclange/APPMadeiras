@@ -25,10 +25,10 @@ export async function SelectionThroughScrew({
 		if (screw.diametro > Math.min(esp1, esp2) * 0.5) verification = false;
 		if (ligationType === 'corteSimples') {
 			if (screw.comprimento < esp1 + esp2 + screw.altura) verification = false;
-			if (screw.comprimento > esp1 + esp2 + screw.altura - screw.roscaComp) verification = false;
+			if (screw.comprimento > esp1 + esp2 + screw.altura + screw.roscaComp) verification = false;
 		} else {
 			if (screw.comprimento < esp1 * 2 + esp2 + screw.altura) verification = false;
-			if (screw.comprimento > esp1 * 2 + esp2 + screw.altura - screw.roscaComp)
+			if (screw.comprimento > esp1 * 2 + esp2 + screw.altura + screw.roscaComp)
 				verification = false;
 		}
 

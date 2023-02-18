@@ -19,6 +19,7 @@ export const Container = styled.View`
 	margin: ${RFValue(2, 700)}px;
 	flex-grow: 1;
 	border-radius: ${RFValue(4, 700)}px;
+	padding-horizontal: ${RFValue(8, 700)}px;
 `;
 
 export const TextButton = styled.Text`

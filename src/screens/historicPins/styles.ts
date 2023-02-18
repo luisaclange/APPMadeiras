@@ -43,4 +43,5 @@ export const Space = styled.View`
 export const Modal = styled.View`
 	padding: ${RFValue(16, 700)}px;
 	border-radius: ${RFValue(8, 700)}px;
+	background-color: white;
 `;

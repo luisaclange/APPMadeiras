@@ -60,7 +60,7 @@ export default function CardThroughScrew({ dataThroughScrews, currentOpen, setCu
 						actionButton={() => {
 							setVisibleThroughScrew(false);
 						}}
-						message={`Mais informações:\n\n${item.name}\n\nDiâmetro: ${String(item.diameter).replace('.', ',')} mm\nComprimento: ${String(item.length).replace('.', ',')} mm\n`}
+						message={`Mais informações:\n\n${item.name}\n\nDiâmetro: ${String(item.diameter).replace('.', ',')} mm\nComprimento: ${String(item.length).replace('.', ',')} mm\nComprimento de rosca: ${String(item.rosLenght).replace('.', ',')} mm\nCabeça do pino: ${String(item.height).replace('.', ',')} mm\n`}
 						setVisible={setVisibleThroughScrew}
 						textButton='OK'
 					/>
