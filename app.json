@@ -1,16 +1,23 @@
 {
-	"expo": {
-		"name": "AppMadeirasExpo",
-		"slug": "AppMadeirasExpo",
-		"version": "1.0.0",
-		"assetBundlePatterns": ["**/*"],
-		"splash": {
-			"image": "./src/assets/images/logoSplashScreen.png",
-			"backgroundColor": "#211610"
-		},
-		"android": {
-			"package": "com.appmadeiras.magali",
-			   "versionCode": 1
-		}
-	}
+  "expo": {
+    "name": "AppMadeirasExpo",
+    "slug": "AppMadeirasExpo",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "splash": {
+      "image": "./src/assets/images/logoSplashScreen.png",
+      "backgroundColor": "#211610"
+    },
+    "android": {
+      "package": "com.appmadeiras.magali",
+      "versionCode": 1
+    },
+    "extra": {
+      "eas": {
+        "projectId": "cdda5130-3961-4526-864a-997f77f8d59f"
+      }
+    }
+  }
 }
