@@ -115,6 +115,7 @@ export default function FieldSelectWoods<
 											borderColor: globalStyle.colors.primary,
 											borderStyle: 'dashed',
 										}}
+										keyboardShouldPersistTaps="always"
 										renderItem={item => {
 											return (
 												<TouchableOpacity

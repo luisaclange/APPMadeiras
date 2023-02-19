@@ -1,10 +1,9 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import globalStyle from '../../styles/globalStyle';
-import { Dimensions, StatusBar } from 'react-native';
 
 export const Container = styled.View`
-	height: ${Dimensions.get('window').height + (Dimensions.get('screen').height - Dimensions.get('window').height - StatusBar.currentHeight)}px;
+	height: 100%;
 `;
 
 export const FloatingButton = styled.View`

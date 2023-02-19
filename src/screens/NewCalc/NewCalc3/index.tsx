@@ -112,7 +112,7 @@ export default function NewCalc3({
 	async function handleDataRegister(data: Data['stage3']) {
 		try {
 			const calcs = database.get<CalcModel>('calcs');
-			const date = Number(new Date()) - 3600000;
+			const date = Number(new Date()) - 10800000;
 			await database.write(async () => {
 				if (id_calc) {
 					await dataStage.update(item => {
@@ -205,7 +205,7 @@ export default function NewCalc3({
 				visible={visibleError}
 			/>
 			<Header title="Novo cálculo" progress={ProgressNewCalc.newCalc3} />
-			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="always">
 				<ContainerFields>
 					<TitleSection
 						title="Etapa 3"
@@ -276,8 +276,8 @@ export default function NewCalc3({
 								}}
 								navigationScreen={stage2.pinType === 'prego' ? 'NewNail' : stage2.pinType === 'parafusoSoberba' ? 'NewSuperbScrew' : 'NewThroughScrew'}
 							/>
-							{stage2.calc === 'pinQtde' ||
-								dataStage.calc == 'pinQtde' ? (
+							{stage2.calc === 'pinQtde' &&
+								(dataStage.calc ? dataStage.calc === 'pinQtde' : true) ? (
 								<FieldInput
 									control={control}
 									name="tractiveForce"

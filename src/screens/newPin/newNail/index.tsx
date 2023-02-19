@@ -71,7 +71,7 @@ export default function NewNail() {
 				visible={visibleSuccess}
 			/>
 			<Header title="Novo pino" />
-			<ContainerScroll contentContainerStyle={{ flexGrow: 1 }}>
+			<ContainerScroll contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="always">
 				<Container>
 					<TitleSection
 						title="Cadastro de prego"

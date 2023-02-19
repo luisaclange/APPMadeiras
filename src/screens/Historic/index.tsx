@@ -8,13 +8,14 @@ import { FlatList } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { database } from '../../database';
 import { CalcModel } from '../../database/models/calcModel';
-import { Container, FloatingButton } from './styles';
+import { BoxAlert, Container, FloatingButton, TextAlert } from './styles';
 import CardCalc from '../../components/historic/cardCalc';
 import Header from '../../components/historic/header';
 import Background from '../../components/historic/background/index';
 import LoadingPage from '../../components/global/loadingPage';
 import ButtonDark from '../../components/global/buttons/buttonDark';
 import { FilterModel } from '../../database/models/filterModel';
+import NotFoundIcon from '../../assets/svgs/notFound.svg';
 
 export default function Historic() {
 	// Navegação
@@ -73,9 +74,18 @@ export default function Historic() {
 						onRefresh={() => {
 							GetData();
 						}}
+						ListEmptyComponent={() => {
+							return (
+								<BoxAlert>
+									<NotFoundIcon />
+									<TextAlert>Não foram encontrados resultados...</TextAlert>
+								</BoxAlert>
+							);
+						}}
 						contentContainerStyle={{
 							flexGrow: 1,
 							padding: RFValue(16, 700),
+							paddingBottom: 200,
 						}}
 						data={data}
 						renderItem={item => {
@@ -86,6 +96,7 @@ export default function Historic() {
 								/>
 							);
 						}}
+						style={{ paddingBottom: 200 }}
 					/>
 				) : (
 					<LoadingPage />

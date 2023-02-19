@@ -23,17 +23,22 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import LoadingPage from '../../components/global/loadingPage';
 import PopUpOneButton from '../../components/global/popUps/popUpOneButton';
 import CalcResult, { IResult } from '../../calcs/calcResult';
-import { View } from 'react-native';
+import { BackHandler, View } from 'react-native';
 import globalStyle from '../../styles/globalStyle';
 import Draw from '../../calcs/draw/draw';
 import { CalcModel } from '../../database/models/calcModel';
 import { database } from '../../database';
+import ModalLoading from '../../components/global/modalLoading';
 
 export default function Results({
 	route,
 }: NativeStackScreenProps<TRootStackParamList, 'Results'>) {
 	// Parâmetros
 	const { id_calc } = route.params.params || {};
+	const [uri, setUri] = useState<string>();
+
+	// Evitar de sair pelo botão de vola do celular
+	BackHandler.addEventListener('hardwareBackPress', () => true);
 
 	// Navegação
 	const navigation = useNavigation();
@@ -63,6 +68,9 @@ export default function Results({
 
 	return (
 		<Container>
+			{
+				!uri && <ModalLoading />
+			}
 			<PopUpOneButton
 				actionButton={() => {
 					setVisibleError(false);
@@ -103,7 +111,7 @@ export default function Results({
 
 						<Space />
 
-						<Draw data={data} pins={result.nPins} />
+						<Draw data={data} pins={result.nPins} setUri={setUri} uri={uri} />
 
 						<Space />
 

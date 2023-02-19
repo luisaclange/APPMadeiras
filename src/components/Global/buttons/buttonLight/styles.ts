@@ -1,8 +1,12 @@
 import { RFValue } from 'react-native-responsive-fontsize';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import globalStyle from '../../../../styles/globalStyle';
 
-export const Border = styled.View`
+interface IProps {
+	blackBorder: boolean;
+}
+
+export const Border = styled.View<IProps>`
 	height: ${RFValue(60, 700)}px;
 	border-width: ${RFValue(2, 700)}px;
 	border-color: ${globalStyle.colors.secondary};
@@ -10,6 +14,10 @@ export const Border = styled.View`
 	border-radius: ${RFValue(8, 700)}px;
 	width: 100%;
 	min-width: ${RFValue(120, 700)}px;
+	${({ blackBorder }) => blackBorder && css`
+			background-color: black;
+		`
+	}
 `;
 
 export const Container = styled.View`

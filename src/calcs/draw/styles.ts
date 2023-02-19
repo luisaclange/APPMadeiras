@@ -3,7 +3,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import globalStyle from '../../styles/globalStyle';
 
-export const ContainerDraw = styled.View`
+export const ContainerDraw = styled.TouchableOpacity`
 	width: ${Dimensions.get('screen').width - RFValue(32, 700)}px;
 	height: ${Dimensions.get('screen').width - RFValue(32, 700)}px;
 	border-width: ${RFValue(2, 700)}px;

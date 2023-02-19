@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components/native';
 import calcDraw from './calcsDraw';
 import { CalcModel } from '../../database/models/calcModel';
-import { ContainerCapture, ContainerDraw } from './styles';
+import { ContainerDraw } from './styles';
 import ViewShot from 'react-native-view-shot';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Dimensions, Modal, View } from 'react-native';
+import { AppState, Dimensions, Image, Modal, View } from 'react-native';
 import ButtonDark from '../../components/global/buttons/buttonDark';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import ButtonLight from '../../components/global/buttons/buttonLight';
@@ -17,9 +17,11 @@ import * as ImagePicker from 'expo-image-picker';
 interface IProps {
 	data: CalcModel | Record<string, never>;
 	pins: number;
+	uri: string;
+	setUri: Dispatch<SetStateAction<string>>;
 }
 
-export default function Draw({ data, pins }: IProps) {
+export default function Draw({ data, pins, setUri, uri }: IProps) {
 
 	// Variáveis
 	const [calc, setCalc] = useState({
@@ -36,7 +38,7 @@ export default function Draw({ data, pins }: IProps) {
 		passThrough: 0
 	});
 	const [loading, setLoading] = useState(true);
-	const [uri, setUri] = useState('');
+
 	const [visibleImage, setVisibleImage] = useState(false);
 	const [visibleSuccess, setVisibleSuccess] = useState(false);
 	const ref = useRef();
@@ -61,168 +63,184 @@ export default function Draw({ data, pins }: IProps) {
 		});
 	};
 
+	// Excluir foto do cachê quando sai do aplicativo
+	AppState.addEventListener('change', nextAppState => {
+		if (nextAppState === 'inactive') excludeBeforeOut();
+	});
+
 	// Salvar na galeria
-	const onSave = useCallback(() => {
-		ref?.current?.capture().then(async uri => {
-			let permissionCamera = await ImagePicker.getCameraPermissionsAsync();
-			if (!permissionCamera.granted) {
-				permissionCamera = await ImagePicker.requestCameraPermissionsAsync();
-			}
+	const onSave = useCallback(async () => {
+		let permissionCamera = await ImagePicker.getCameraPermissionsAsync();
+		if (!permissionCamera.granted) {
+			permissionCamera = await ImagePicker.requestCameraPermissionsAsync();
+		}
 
-			let permissionLibrary = await ImagePicker.getMediaLibraryPermissionsAsync();
-			if (!permissionLibrary.granted) {
-				permissionLibrary = await ImagePicker.requestMediaLibraryPermissionsAsync();
-			}
+		let permissionLibrary = await ImagePicker.getMediaLibraryPermissionsAsync();
+		if (!permissionLibrary.granted) {
+			permissionLibrary = await ImagePicker.requestMediaLibraryPermissionsAsync();
+		}
 
-			if (permissionCamera.granted && permissionLibrary.granted) {
-				CameraRoll.save(uri, { type: 'photo' }).then(() => {
-					setVisibleSuccess(true);
-				}).catch(error => {
-					console.error(error);
-				});
-			}
+		if (permissionCamera.granted && permissionLibrary.granted) {
+			CameraRoll.save(uri, { type: 'photo' }).then(() => {
+				setVisibleSuccess(true);
+			}).catch(error => {
+				console.error(JSON.stringify(error));
+			});
+		}
+	}, [uri]);
+
+	const setURI = useCallback(() => {
+		ref?.current?.capture().then((uriViewShot: string) => {
+			console.log(uriViewShot);
+			setUri(uriViewShot);
 		});
 	}, []);
 
 	// Abrir imagem
 	const openImage = useCallback(() => {
-		ref?.current?.capture().then(uri => {
-			setUri(uri);
-			setVisibleImage(true);
-		});
-	}, [setUri]);
-
-	// Escala
-	const scale = ((calc.passThrough + 90) / (Dimensions.get('screen').width - 48)) * 700;
+		setVisibleImage(true);
+	}, []);
 
 	// Estilo
+	const ContainerCapture = styled.View`
+		align-items: center;
+		width: ${calc.passThrough + 90}px;
+		height: 100%;
+		justify-content: center;
+		backgroundColor: #FFFFFF;
+	`;
+
+	const Border = styled.View`
+		background-color: black;
+		padding: ${1}px;
+		height: ${data.widthWood}px;
+		flex: 1;
+	`;
+
 	const BackgroundImage = styled.ImageBackground`
-		height: ${RFValue(data.widthWood, scale)}px;
 		flex-direction: row;
 		justify-content: center;
-		flex: 1;
-		border-top-width: ${RFValue(1, scale)}px;
-		border-bottom-width: ${RFValue(1, scale)}px;
+		height: 100%;
 	`;
 
 	const Pin = styled.View`
-		height: ${RFValue(calc.d, scale)}px;
-		width: ${RFValue(calc.d, scale)}px;
-		border-width: ${RFValue(1, scale)}px;
+		height: ${calc.d}px;
+		width: ${calc.d}px;
+		border-width: ${1}px;
 		background-color: grey;
-		border-radius: ${RFValue(calc.d / 2, scale)}px;
+		border-radius: ${calc.d / 2}px;
 	`;
 
 	const SpaceVerticalNormal = styled.View`
-		height: ${RFValue(calc.spaceNormalColumnPins - calc.d, scale)}px;
+		height: ${calc.spaceNormalColumnPins - calc.d}px;
 	`;
 
 	const SpaceVerticalSpecial = styled.View`
-		height: ${RFValue(calc.spaceSpecialColumnPins - calc.d, scale)}px;
+		height: ${calc.spaceSpecialColumnPins - calc.d}px;
 	`;
 
 	const ColumnNormal = styled.View`
-		margin-left: ${RFValue(calc.spaceColumns - calc.d, scale)}px;
+		margin-left: ${calc.spaceColumns - calc.d}px;
 	`;
 
 	const BorderFreeNormal = styled.View`
-		height: ${RFValue(calc.bfVertical - calc.d / 2, scale)}px;
+		height: ${calc.bfVertical - calc.d / 2 - 1}px;
 	`;
 
 	const ColumnSpecial = styled.View``;
 
 	const BorderFreeSpecial = styled.View`
-		height: ${RFValue(calc.bfVerticalSpecial - calc.d / 2, scale)}px;
+		height: ${calc.bfVerticalSpecial - calc.d / 2 - 1}px;
 	`;
 
 	const MarginHorizontalRight = styled.View`
-		border-right-width: ${RFValue(1, scale)}px;
+		border-right-width: ${1}px;
 		height: 100%;
-		width: ${RFValue(calc.bfHorizontal - calc.d / 2, scale)}px;
-		margin-right: ${RFValue(20, scale)}px;
+		width: ${calc.bfHorizontal - calc.d / 2 + 1}px;
+		margin-right: ${20}px;
 	`;
 
 	const MarginHorizontalLeft = styled.View`
-		border-left-width: ${RFValue(1, scale)}px;
+		border-left-width: ${1}px;
 		border-style: dashed;
 		height: 100%;
-		width: ${RFValue(calc.bfHorizontal - calc.d / 2, scale)}px;
-		margin-left: ${RFValue(20, scale)}px;
+		width: ${calc.bfHorizontal - calc.d / 2 + 1}px;
+		margin-left: ${20}px;
 	`;
 
 	const CotaTop = styled.View`
-		margin-bottom: ${RFValue(2, scale)}px;
-		margin-left: ${RFValue(calc.bfHorizontal - calc.d / 2, scale)}px;
-		border-left-width: ${RFValue(1, scale)}px;
+		margin-bottom: ${2}px;
+		margin-left: ${calc.bfHorizontal}px;
+		border-left-width: ${1}px;
 		flex-direction: row;
 	`;
 
 	const CotaLeft = styled.View`
-		margin-right: ${RFValue(2, scale)}px;
-		border-bottom-width: ${RFValue(1, scale)}px;
-		margin-left: ${RFValue(16, scale)}px;
+		margin-right: ${2}px;
+		border-bottom-width: ${1}px;
+		margin-left: ${16}px;
 	`;
 
 	const CotaRight = styled.View`
-		margin-left: ${RFValue(2, scale)}px;
-		border-bottom-width: ${RFValue(1, scale)}px;
-		margin-right: ${RFValue(16, scale)}px;
+		margin-left: ${2}px;
+		border-bottom-width: ${1}px;
+		margin-right: ${16}px;
 	`;
 
 	const CotaBottom = styled.View`
-		margin-top: ${RFValue(2, scale)}px;
-		border-left-width: ${RFValue(1, scale)}px;
-		border-right-width: ${RFValue(1, scale)}px;
+		margin-top: ${2}px;
+		border-left-width: ${1}px;
+		border-right-width: ${1}px;
 		flex-direction: row;
 	`;
 
 	const CotaMarginHorizontal = styled.View`
-		border-right-width: ${RFValue(1, scale)}px;
-		border-top-width: ${RFValue(1, scale)}px;
-		width: ${RFValue(calc.bfHorizontal, scale)}px;
-		height: ${RFValue(10, scale)}px;
+		border-right-width: ${1}px;
+		border-top-width: ${1}px;
+		width: ${calc.bfHorizontal}px;
+		height: ${10}px;
 	`;
 
 	const CotaMarginBottom = styled.View`
-		border-horizontal-width: ${RFValue(1, scale)}px;
-		border-bottom-width: ${RFValue(1, scale)}px;
-		width: ${RFValue(calc.passThrough, scale)}px;
-		height: ${RFValue(10, scale)}px;
+		border-horizontal-width: ${1}px;
+		border-bottom-width: ${1}px;
+		width: ${calc.passThrough}px;
+		height: ${10}px;
 	`;
 
 	const CotaSpaceHorizontal = styled.View`
-		border-right-width: ${RFValue(1, scale)}px;
-		border-top-width: ${RFValue(1, scale)}px;
-		width: ${RFValue(calc.spaceColumns, scale)}px;
-		height: ${RFValue(10, scale)}px;
+		border-right-width: ${1}px;
+		border-top-width: ${1}px;
+		width: ${calc.spaceColumns}px;
+		height: ${10}px;
 	`;
 
 	const CotaSpaceVerticalSpecial = styled.View`
-		border-left-width: ${RFValue(1, scale)}px;
-		border-top-width: ${RFValue(1, scale)}px;
-		height: ${RFValue(calc.spaceSpecialColumnPins, scale)}px;
-		width: ${RFValue(10, scale)}px;
+		border-left-width: ${1}px;
+		border-top-width: ${1}px;
+		height: ${calc.spaceSpecialColumnPins}px;
+		width: ${10}px;
 	`;
 
 	const CotaSpaceVerticalNormal = styled.View`
-		border-right-width: ${RFValue(1, scale)}px;
-		border-top-width: ${RFValue(1, scale)}px;
-		height: ${RFValue(calc.spaceNormalColumnPins, scale)}px;
-		width: ${RFValue(10, scale)}px;
+		border-right-width: ${1}px;
+		border-top-width: ${1}px;
+		height: ${calc.spaceNormalColumnPins}px;
+		width: ${10}px;
 	`;
 
 	const CotaBorderFreeSpecial = styled.View`
-		border-left-width: ${RFValue(1, scale)}px;
-		border-top-width: ${RFValue(1, scale)}px;
-		height: ${RFValue(calc.bfVerticalSpecial, scale)}px;
-		width: ${RFValue(10, scale)}px;
+		border-left-width: ${1}px;
+		border-top-width: ${1}px;
+		height: ${calc.bfVerticalSpecial}px;
+		width: ${10}px;
 	`;
 
 	const CotaBorderFreeNormal = styled.View`
-		border-right-width: ${RFValue(1, scale)}px;
-		border-top-width: ${RFValue(1, scale)}px;
-		height: ${RFValue(calc.bfVertical, scale)}px;
-		width: ${RFValue(10, scale)}px;
+		border-right-width: ${1}px;
+		border-top-width: ${1}px;
+		height: ${calc.bfVertical}px;
+		width: ${10}px;
 	`;
 
 	const CotaItemHorizontal = styled.View`
@@ -237,27 +255,27 @@ export default function Draw({ data, pins }: IProps) {
 	`;
 
 	const CotaTextHorizontal = styled.Text`
-		font-size: ${RFValue(10, scale)}px;
+		font-size: ${10}px;
 		position: absolute;
-		bottom: ${RFValue(10, scale)}px;
+		bottom: ${10}px;
 	`;
 
 	const CotaTextBottom = styled.Text`
-		font-size: ${RFValue(10, scale)}px;
+		font-size: ${10}px;
 		position: absolute;
-		bottom: -${RFValue(12, scale)}px;
+		bottom: -${12}px;
 	`;
 
 	const CotaTextVerticalLeft = styled.Text`
-		font-size: ${RFValue(10, scale)}px;
+		font-size: ${10}px;
 		position: absolute;
-		right: ${RFValue(11, scale)}px;
+		right: ${11}px;
 	`;
 
 	const CotaTextVerticalRight = styled.Text`
-		font-size: ${RFValue(10, scale)}px;
+		font-size: ${10}px;
 		position: absolute;
-		left: ${RFValue(11, scale)}px;
+		left: ${11}px;
 	`;
 
 	const Center = styled.View`
@@ -276,133 +294,142 @@ export default function Draw({ data, pins }: IProps) {
 				textButton='OK'
 				visible={visibleSuccess}
 			/>
-			<ContainerDraw>
+			<ContainerDraw onPress={openImage}>
 				{!loading && (
-					<ViewShot ref={ref}>
-						<ContainerCapture onPress={openImage}>
-							{/* Cota no topo */}
-							<CotaTop>
-								{[
-									...Array(
-										calc.nColumns - 1,
-									),
-								].map((item, index) => {
-									return (
-										<CotaItemHorizontal key={`cotaSpaceHorizontal${index}`}>
-											<CotaTextHorizontal>{calc.spaceColumns}</CotaTextHorizontal>
-											<CotaSpaceHorizontal />
-										</CotaItemHorizontal>
-									);
-								})}
-								<CotaItemHorizontal>
-									<CotaTextHorizontal>{calc.bfHorizontal}</CotaTextHorizontal>
-									<CotaMarginHorizontal />
-								</CotaItemHorizontal>
-							</CotaTop>
-							<Center>
+					<>
+						{
+							!uri ?
+								<ViewShot ref={ref} options={{ quality: 1 }}>
+									<ContainerCapture>
+										{/* Cota no topo */}
+										<CotaTop>
+											{[
+												...Array(
+													calc.nColumns - 1,
+												),
+											].map((item, index) => {
+												return (
+													<CotaItemHorizontal key={`cotaSpaceHorizontal${index}`}>
+														<CotaTextHorizontal>{calc.spaceColumns}</CotaTextHorizontal>
+														<CotaSpaceHorizontal />
+													</CotaItemHorizontal>
+												);
+											})}
+											<CotaItemHorizontal>
+												<CotaTextHorizontal>{calc.bfHorizontal}</CotaTextHorizontal>
+												<CotaMarginHorizontal />
+											</CotaItemHorizontal>
+										</CotaTop>
+										<Center>
 
-								{/* Cota esquerda */}
-								<CotaLeft>
-									<CotaItemVertical>
-										<CotaTextVerticalLeft>{calc.bfVertical}</CotaTextVerticalLeft>
-										<CotaBorderFreeSpecial />
-									</CotaItemVertical>
-									{[...Array(calc.nPinsSpecialColumn - 1)].map(
-										(item, index) => {
-											return (
-												<CotaItemVertical key={`cotaSpaceLeft${index}`}>
-													<CotaTextVerticalLeft>{calc.spaceSpecialColumnPins}</CotaTextVerticalLeft>
-													<CotaSpaceVerticalSpecial />
+											{/* Cota esquerda */}
+											<CotaLeft>
+												<CotaItemVertical>
+													<CotaTextVerticalLeft>{calc.bfVerticalSpecial}</CotaTextVerticalLeft>
+													<CotaBorderFreeSpecial />
 												</CotaItemVertical>
-											);
-										},
-									)}
-									<CotaItemVertical>
-										<CotaTextVerticalLeft>{calc.bfVertical}</CotaTextVerticalLeft>
-										<CotaBorderFreeSpecial />
-									</CotaItemVertical>
-								</CotaLeft>
-
-								<BackgroundImage source={require('../../assets/images/Detalhamento.jpg')}>
-									<MarginHorizontalLeft />
-									<ColumnSpecial>
-										<BorderFreeSpecial />
-										{calc.nPinsSpecialColumn > 0 && (
-											<>
-												<Pin />
 												{[...Array(calc.nPinsSpecialColumn - 1)].map(
 													(item, index) => {
 														return (
-															<>
-																<SpaceVerticalSpecial key={`specialSpace${index}`} />
-																<Pin key={`specialPin${index}`} />
-															</>
+															<CotaItemVertical key={`cotaSpaceLeft${index}`}>
+																<CotaTextVerticalLeft>{calc.spaceSpecialColumnPins}</CotaTextVerticalLeft>
+																<CotaSpaceVerticalSpecial />
+															</CotaItemVertical>
 														);
 													},
 												)}
-											</>
-										)}
-									</ColumnSpecial>
-									{[
-										...Array(
-											calc.nColumns -
-											(calc.nPinsSpecialColumn > 0 ? 1 : 0),
-										),
-									].map((item, index) => {
-										return (
-											<ColumnNormal key={`normalColumn${index}`}>
-												<BorderFreeNormal />
-												<Pin />
-												{[...Array(calc.nPinsColumn - 1)].map(() => {
-													return (
-														<>
-															<SpaceVerticalNormal />
-															<Pin />
-														</>
-													);
-												})}
-												<BorderFreeNormal />
-											</ColumnNormal>
-										);
-									})}
-									<MarginHorizontalRight />
-								</BackgroundImage>
-
-								<CotaRight>
-									<CotaItemVertical>
-										<CotaTextVerticalRight>{calc.bfVertical}</CotaTextVerticalRight>
-										<CotaBorderFreeNormal />
-									</CotaItemVertical>
-									{[...Array(calc.nPinsColumn - 1)].map(
-										(item, index) => {
-											return (
-												<CotaItemVertical key={`cotaSpaceRight${index}`}>
-													<CotaTextVerticalRight>{calc.spaceNormalColumnPins}</CotaTextVerticalRight>
-													<CotaSpaceVerticalNormal />
+												<CotaItemVertical>
+													<CotaTextVerticalLeft>{calc.bfVerticalSpecial}</CotaTextVerticalLeft>
+													<CotaBorderFreeSpecial />
 												</CotaItemVertical>
-											);
-										},
-									)}
-									<CotaItemVertical>
-										<CotaTextVerticalRight>{calc.bfVertical}</CotaTextVerticalRight>
-										<CotaBorderFreeNormal />
-									</CotaItemVertical>
-								</CotaRight>
-							</Center>
+											</CotaLeft>
 
-							<CotaBottom>
-								<CotaItemHorizontal>
-									<CotaTextBottom>{calc.passThrough}</CotaTextBottom>
-									<CotaMarginBottom />
-								</CotaItemHorizontal>
-							</CotaBottom>
-						</ContainerCapture>
-					</ViewShot>
+											<Border>
+												<BackgroundImage source={require('../../assets/images/Detalhamento.jpg')} onLoadEnd={setURI}>
+													<MarginHorizontalLeft />
+													<ColumnSpecial>
+														<BorderFreeSpecial />
+														{calc.nPinsSpecialColumn > 0 && (
+															<>
+																<Pin key={'specialPin'} />
+																{[...Array(calc.nPinsSpecialColumn - 1)].map(
+																	(item, index) => {
+																		return (
+																			<>
+																				<SpaceVerticalSpecial key={`specialSpace${index}`} />
+																				<Pin key={`specialPin${index}`} />
+																			</>
+																		);
+																	},
+																)}
+															</>
+														)}
+													</ColumnSpecial>
+													{[
+														...Array(
+															calc.nColumns -
+															(calc.nPinsSpecialColumn > 0 ? 1 : 0),
+														),
+													].map((item, index) => {
+														return (
+															<ColumnNormal key={`normalColumn${index}`}>
+																<BorderFreeNormal />
+																<Pin />
+																{[...Array(calc.nPinsColumn - 1)].map((item, index) => {
+																	return (
+																		<>
+																			<SpaceVerticalNormal key={`spacenormal${index}`} />
+																			<Pin key={`pin${index}`} />
+																		</>
+																	);
+																})}
+																<BorderFreeNormal />
+															</ColumnNormal>
+														);
+													})}
+													<MarginHorizontalRight />
+												</BackgroundImage>
+											</Border>
+
+											<CotaRight>
+												<CotaItemVertical>
+													<CotaTextVerticalRight>{calc.bfVertical}</CotaTextVerticalRight>
+													<CotaBorderFreeNormal />
+												</CotaItemVertical>
+												{[...Array(calc.nPinsColumn - 1)].map(
+													(item, index) => {
+														return (
+															<CotaItemVertical key={`cotaSpaceRight${index}`}>
+																<CotaTextVerticalRight>{calc.spaceNormalColumnPins}</CotaTextVerticalRight>
+																<CotaSpaceVerticalNormal />
+															</CotaItemVertical>
+														);
+													},
+												)}
+												<CotaItemVertical>
+													<CotaTextVerticalRight>{calc.bfVertical}</CotaTextVerticalRight>
+													<CotaBorderFreeNormal />
+												</CotaItemVertical>
+											</CotaRight>
+										</Center>
+
+										<CotaBottom>
+											<CotaItemHorizontal>
+												<CotaTextBottom>{calc.passThrough}</CotaTextBottom>
+												<CotaMarginBottom />
+											</CotaItemHorizontal>
+										</CotaBottom>
+									</ContainerCapture>
+								</ViewShot>
+								: <Image source={{ uri }} resizeMode='contain' style={{ width: '100%', height: '100%' }} />
+						}
+					</>
 				)}
 			</ContainerDraw>
 			<Modal visible={visibleImage} transparent style={{ height: Dimensions.get('window').height }} statusBarTranslucent>
 				<ImageViewer
 					imageUrls={[{ url: uri }]}
+
 					style={{ flexGrow: 1 }}
 					renderFooter={() => {
 						return (
@@ -411,8 +438,8 @@ export default function Draw({ data, pins }: IProps) {
 									text='Fechar'
 									onPress={() => {
 										setVisibleImage(false);
-										excludeBeforeOut();
 									}}
+									blackBorder
 								/>
 							</View>
 						);
@@ -422,7 +449,9 @@ export default function Draw({ data, pins }: IProps) {
 			</Modal>
 			<ButtonDark
 				text='Salvar na galeria'
-				onPress={onSave}
+				onPress={() => {
+					onSave();
+				}}
 			/>
 		</>
 	);

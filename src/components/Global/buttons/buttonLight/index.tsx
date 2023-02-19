@@ -11,12 +11,13 @@ interface IProps extends TouchableOpacityProps {
 	text: string;
 	style?: StyleProp<ViewStyle>;
 	onPress?: () => void;
+	blackBorder?: boolean;
 }
 
-export default function ButtonLight({ text, onPress, style }: IProps) {
+export default function ButtonLight({ text, onPress, style, blackBorder }: IProps) {
 	return (
 		<TouchableOpacity onPress={onPress}>
-			<Border style={style}>
+			<Border style={style} blackBorder={blackBorder}>
 				<Container>
 					<TextButton>{text}</TextButton>
 				</Container>

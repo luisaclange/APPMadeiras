@@ -13,12 +13,15 @@ export const FloatingButton = styled.View`
 `;
 
 export const TextAlert = styled.Text`
-	font-size: ${RFValue(28, 700)}px;
+	font-size: ${RFValue(24, 700)}px;
 	text-align: center;
 	font-family: ${globalStyle.fonts.bold};
 	color: ${globalStyle.colors.primary};
+	margin-top: ${RFValue(32, 700)}px;
 `;
 
 export const BoxAlert = styled.View`
 	margin-top: ${RFValue(100, 700)}px;
+	align-items: center;
+	padding-horizontal: ${RFValue(32, 700)}px;
 `;
