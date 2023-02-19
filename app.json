@@ -7,6 +7,10 @@
 		"splash": {
 			"image": "./src/assets/images/logoSplashScreen.png",
 			"backgroundColor": "#211610"
+		},
+		"android": {
+			"package": "com.appmadeiras.magali",
+			   "versionCode": 1
 		}
 	}
 }
