@@ -2,11 +2,11 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import styled, { css } from 'styled-components/native';
 import globalStyle from '../../../styles/globalStyle';
 
-interface props {
+interface IProps {
 	isNew: boolean;
 }
 
-export const Container = styled.Pressable<props>`
+export const Container = styled.Pressable<IProps>`
 	background-color: ${globalStyle.colors.secondary};
 	padding: ${RFValue(16, 700)}px;
 	border-radius: ${RFValue(8, 700)}px;
@@ -25,16 +25,14 @@ export const Container = styled.Pressable<props>`
 		`}
 `;
 
-export const Title = styled.Text`
-	font-size: ${RFValue(28, 700)}px;
-	font-family: ${globalStyle.fonts.semibold};
-	color: ${globalStyle.colors.primary};
+export const IconsContainer = styled.View`
+	flex: 1;
+	align-items: flex-end;
+	justify-content: space-between;
 `;
 
-export const SubTitle = styled.Text`
-	font-size: ${RFValue(16, 700)}px;
-	font-family: ${globalStyle.fonts.semibold};
-	color: ${globalStyle.colors.grey};
+export const InfoContainer = styled.View`
+	flex: 4;
 `;
 
 export const ItemText = styled.Text`
@@ -43,17 +41,19 @@ export const ItemText = styled.Text`
 	line-height: ${RFValue(24, 700)}px;
 `;
 
+export const SubTitle = styled.Text`
+	font-size: ${RFValue(16, 700)}px;
+	font-family: ${globalStyle.fonts.semibold};
+	color: ${globalStyle.colors.grey};
+`;
+
 export const TextContainer = styled.View`
 	padding: ${RFValue(12, 700)}px;
 	padding-bottom: 0px;
 `;
 
-export const InfoContainer = styled.View`
-	flex: 4;
-`;
-
-export const IconsContainer = styled.View`
-	flex: 1;
-	align-items: flex-end;
-	justify-content: space-between;
+export const Title = styled.Text`
+	font-size: ${RFValue(28, 700)}px;
+	font-family: ${globalStyle.fonts.semibold};
+	color: ${globalStyle.colors.primary};
 `;

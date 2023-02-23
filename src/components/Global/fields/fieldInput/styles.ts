@@ -6,43 +6,6 @@ type IProps = {
 	error: boolean;
 };
 
-export const Title = styled.Text<IProps>`
-	font-size: ${RFValue(18, 700)}px;
-	font-family: ${globalStyle.fonts.bold};
-	color: ${globalStyle.colors.primary};
-	line-height: ${RFValue(23, 700)}px;
-	margin-bottom: ${RFValue(8, 700)}px;
-
-	${({ error }) =>
-		error &&
-		css`
-			color: ${globalStyle.colors.error};
-		`}
-`;
-export const InputContainer = styled.View<IProps>`
-	border-bottom-width: ${RFValue(1, 700)}px;
-	border-color: ${globalStyle.colors.primary};
-	flex-direction: row;
-	align-items: center;
-	padding-horizontal: ${RFValue(8, 700)}px;
-
-	${({ error }) =>
-		error &&
-		css`
-			border-color: ${globalStyle.colors.error};
-		`}
-`;
-
-export const Input = styled.TextInput`
-	font-size: ${RFValue(17, 700)}px;
-	font-family: ${globalStyle.fonts.medium};
-	color: ${globalStyle.colors.primary};
-	height: ${RFValue(32, 700)}px;
-	margin: 0;
-	padding: 0;
-	flex: 1;
-`;
-
 export const Dimension = styled.Text<IProps>`
 	font-size: ${RFValue(17, 700)}px;
 	font-family: ${globalStyle.fonts.medium};
@@ -64,6 +27,44 @@ export const Error = styled.Text`
 	margin-top: ${RFValue(2, 700)}px;
 `;
 
+export const Input = styled.TextInput`
+	font-size: ${RFValue(17, 700)}px;
+	font-family: ${globalStyle.fonts.medium};
+	color: ${globalStyle.colors.primary};
+	min-height: ${RFValue(32, 700)}px;
+	margin: 0;
+	padding: 0;
+	flex: 1;
+`;
+
+export const InputContainer = styled.View<IProps>`
+	border-bottom-width: ${RFValue(1, 700)}px;
+	border-color: ${globalStyle.colors.primary};
+	flex-direction: row;
+	align-items: center;
+	padding-horizontal: ${RFValue(8, 700)}px;
+
+	${({ error }) =>
+		error &&
+		css`
+			border-color: ${globalStyle.colors.error};
+		`}
+`;
+
 export const Space = styled.View`
 	height: ${RFValue(16, 700)}px;
+`;
+
+export const Title = styled.Text<IProps>`
+	font-size: ${RFValue(18, 700)}px;
+	font-family: ${globalStyle.fonts.bold};
+	color: ${globalStyle.colors.primary};
+	line-height: ${RFValue(23, 700)}px;
+	margin-bottom: ${RFValue(8, 700)}px;
+
+	${({ error }) =>
+		error &&
+		css`
+			color: ${globalStyle.colors.error};
+		`}
 `;

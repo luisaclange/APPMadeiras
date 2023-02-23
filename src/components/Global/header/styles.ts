@@ -7,9 +7,8 @@ export const Container = styled.ImageBackground`
 	position: relative;
 `;
 
-export const Shadow = styled.View`
-	background-color: ${globalStyle.colors.primary};
-	flex: 1;
+export const IconContainer = styled.View`
+	width: ${RFValue(40, 700)}px;
 `;
 
 export const ItensContainer = styled.View`
@@ -17,13 +16,14 @@ export const ItensContainer = styled.View`
 	justify-content: space-between;
 `;
 
+export const Shadow = styled.View`
+	background-color: ${globalStyle.colors.primary};
+	flex: 1;
+`;
+
 export const Title = styled.Text`
 	font-size: ${RFValue(28, 700)}px;
 	color: ${globalStyle.colors.secondary};
 	font-family: ${globalStyle.fonts.bold};
 	text-align: center;
-`;
-
-export const IconContainer = styled.View`
-	width: ${RFValue(40, 700)}px;
 `;

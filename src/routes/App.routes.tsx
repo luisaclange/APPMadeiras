@@ -21,6 +21,9 @@ import NewNail from '../screens/newPin/newNail';
 import NewThroughScrew from '../screens/newPin/newThroughScrew';
 import NewSuperbScrew from '../screens/newPin/newSuperbScrew';
 import HistoricPins from '../screens/historicPins';
+import { ICardNail } from '../components/historicPins/cardNail';
+import { ICardSuperbScrew } from '../components/historicPins/cardSuperbScrew';
+import { ICardThroughScrew } from '../components/historicPins/cardThroughScrew';
 
 const screenOptions: NativeStackNavigationOptions = {
 	headerShown: false,
@@ -33,6 +36,9 @@ export type TRootStackParamList = {
 	NewCalc1: { id_calc?: string };
 	NewCalc2: { id_calc?: string };
 	NewCalc3: { id_calc?: string };
+	NewNail: { data?: ICardNail };
+	NewSuperbScrew: { data?: ICardSuperbScrew };
+	NewThroughScrew: { data?: ICardThroughScrew };
 };
 
 export default function App() {

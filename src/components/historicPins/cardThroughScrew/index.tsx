@@ -1,9 +1,14 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { ItemContainer, ItemText, ScrollItems, TitleButtonContainer, TitleButtonText } from './styles';
+import { ItemContainer, ItemText } from './styles';
 import { ThroughScrewModel } from '../../../database/models/throughScrewModel';
 import { database } from '../../../database';
 import PopUpTwoButtons from '../../global/popUps/popUpTwoButtons';
 import PopUpOneButton from '../../global/popUps/popUpOneButton';
+import DoubleArrow from '../../../assets/svgs/doubleArrow.svg';
+import Delete from '../../../assets/svgs/delete.svg';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import ButtonLight from '../../global/buttons/buttonLight';
 
 export interface ICardThroughScrew {
 	id: string;
@@ -23,48 +28,31 @@ interface IProps {
 }
 
 export default function CardThroughScrew({ dataThroughScrews, currentOpen, setCurrentOpen, getData }: IProps) {
-	const [visibleThroughScrew, setVisibleThroughScrew] = useState(false);
+	// Variáveis
 	const [visibleDelete, setVisibleDelete] = useState(false);
+	const [visibleSuccess, setVisibleSuccess] = useState(false);
+	const [visibleError, setVisibleError] = useState(false);
 	const [item, setItem] = useState<ICardThroughScrew | Record<string, never>>({});
 
+	// Navegação
+	const navigation = useNavigation();
+
+	// Deletar pino
 	async function deleteAction() {
-		setVisibleDelete(false);
-		const aux = await database.get<ThroughScrewModel>('throughScrews').find(item.id);
-		await database.write(async () => {
-			await aux.destroyPermanently();
-		});
-		getData();
+		try {
+			setVisibleDelete(false);
+			const aux = await database.get<ThroughScrewModel>('throughScrews').find(item.id);
+			await database.write(async () => {
+				await aux.destroyPermanently();
+			});
+			getData();
+		} catch (error) {
+			setVisibleError(true);
+		}
 	}
 
 	return (
 		<>
-			{
-				item.isData ?
-					<PopUpTwoButtons
-						visible={visibleThroughScrew}
-						setVisible={setVisibleThroughScrew}
-						lActionButton={() => {
-							setVisibleThroughScrew(false);
-							setVisibleDelete(true);
-						}}
-						lTextButton='Excluir'
-						message={`Mais informações:\n\n${item.name}\n\nDiâmetro: ${String(item.diameter).replace('.', ',')} mm\nComprimento: ${String(item.length).replace('.', ',')} mm\n`}
-						rActionButton={() => {
-							setVisibleThroughScrew(false);
-						}}
-						rTextButton='OK'
-					/>
-					:
-					<PopUpOneButton
-						visible={visibleThroughScrew}
-						actionButton={() => {
-							setVisibleThroughScrew(false);
-						}}
-						message={`Mais informações:\n\n${item.name}\n\nDiâmetro: ${String(item.diameter).replace('.', ',')} mm\nComprimento: ${String(item.length).replace('.', ',')} mm\nComprimento de rosca: ${String(item.rosLenght).replace('.', ',')} mm\nCabeça do pino: ${String(item.height).replace('.', ',')} mm\n`}
-						setVisible={setVisibleThroughScrew}
-						textButton='OK'
-					/>
-			}
 			<PopUpTwoButtons
 				visible={visibleDelete}
 				setVisible={setVisibleDelete}
@@ -78,29 +66,66 @@ export default function CardThroughScrew({ dataThroughScrews, currentOpen, setCu
 				}}
 				rTextButton='Não'
 			/>
-			<TitleButtonContainer onPress={() => {
-				setCurrentOpen(currentOpen === 'throughScrew' ? '' : 'throughScrew');
-			}}>
-				<TitleButtonText>Parafusos passantes</TitleButtonText>
-			</TitleButtonContainer>
+			<PopUpOneButton
+				actionButton={() => {
+					setVisibleSuccess(false);
+				}}
+				message="Parafuso deletado com sucesso!"
+				setVisible={setVisibleSuccess}
+				textButton='OK'
+				visible={visibleSuccess}
+			/>
+			<PopUpOneButton
+				actionButton={() => {
+					setVisibleError(false);
+				}}
+				message="Ops, ocorreu um erro! Tente novamente mais tarde"
+				setVisible={setVisibleError}
+				textButton='OK'
+				visible={visibleError}
+			/>
+			<ButtonLight
+				onPress={() => {
+					setCurrentOpen(currentOpen === 'throughScrew' ? '' : 'throughScrew');
+				}}
+				text='Parafusos passantes'
+				style={{ width: '100%' }}
+				blackBorder
+			/>
 			{
 				currentOpen === 'throughScrew' ?
-					<ScrollItems contentContainerStyle={{
+					<ScrollView contentContainerStyle={{
 						flexGrow: 1
 					}}>
 						{
 							dataThroughScrews.map(it => {
 								return (
-									<ItemContainer key={it.id} onPress={() => {
-										setItem(it);
-										setVisibleThroughScrew(true);
+									<ItemContainer key={`throughScrew${it.id}`} onPress={() => {
+										navigation.dispatch(CommonActions.navigate('NewThroughScrew', {
+											params: {
+												data: it,
+											}
+										}));
 									}}>
-										<ItemText>{it.name}{it.isData && '**'}</ItemText>
+										<View style={{ flexDirection: 'row', flex: 4 }}>
+											<DoubleArrow />
+											<ItemText>{it.name}{it.isData && '**'}</ItemText>
+										</View>
+										<TouchableOpacity onPress={it.isData ? () => {
+											setItem(it);
+											setVisibleDelete(true);
+										} : undefined}
+											style={{ flex: 1, alignItems: 'flex-end' }}
+										>
+											{
+												it.isData && <Delete />
+											}
+										</TouchableOpacity>
 									</ItemContainer>
 								);
 							})
 						}
-					</ScrollItems>
+					</ScrollView>
 					: null
 			}
 		</>

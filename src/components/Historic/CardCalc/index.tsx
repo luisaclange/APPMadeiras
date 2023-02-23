@@ -186,7 +186,7 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 					lTextButton="Sim"
 				/>
 				<InfoContainer>
-					{data ? (
+					{data && (
 						<>
 							<Title>{item.description}</Title>
 							<SubTitle>
@@ -200,7 +200,7 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 								<ItemText>{`- Madeira ${data?.wood_name};\n- Classe de resistência ${data?.wood_resistance};\n- Carregamento ${data?.charging};\n- Classe de Umidade ${data?.humidityClass};\n- ${data?.pin_type} ${data?.nail_name || 'não encontrado'};`}</ItemText>
 							</TextContainer>
 						</>
-					) : null}
+					)}
 				</InfoContainer>
 
 				<IconsContainer>
@@ -213,12 +213,12 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 					</TouchableOpacity>
 				</IconsContainer>
 			</Container>
-			{item.visualized_at === 0 ? (
+			{item.visualized_at === 0 && (
 				<New
 					style={{ position: 'absolute', bottom: RFValue(16, 700) }}
 					scale={1.5}
 				/>
-			) : null}
+			)}
 		</>
 	);
 }

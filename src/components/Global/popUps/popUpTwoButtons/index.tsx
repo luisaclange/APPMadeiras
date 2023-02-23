@@ -7,6 +7,8 @@ import {
 	Message,
 	MessageContainer,
 } from './styles';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Dimensions } from 'react-native';
 
 interface IProps {
 	visible: boolean;
@@ -39,8 +41,16 @@ export default function PopUpTwoButtons({
 					<Message>{message}</Message>
 				</MessageContainer>
 				<ButtonsContainer>
-					<ButtonDark onPress={lActionButton} text={lTextButton} />
-					<ButtonDark onPress={rActionButton} text={rTextButton} />
+					<ButtonDark onPress={lActionButton} text={lTextButton} style={{
+						width: (Dimensions.get('screen').width - RFValue(64, 700)) / 2 - RFValue(8, 700),
+						maxWidth: (RFValue(318, 700)) / 2 - RFValue(8, 700),
+						marginRight: RFValue(8, 700)
+					}} />
+					<ButtonDark onPress={rActionButton} text={rTextButton} style={{
+						width: (Dimensions.get('screen').width - RFValue(64, 700)) / 2 - RFValue(8, 700),
+						maxWidth: (RFValue(318, 700)) / 2 - RFValue(8, 700),
+						marginLeft: RFValue(8, 700)
+					}} />
 				</ButtonsContainer>
 			</Container>
 		</CustomModal>

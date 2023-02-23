@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, ReactElement, SetStateAction } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { Backdrop, Modal, PopUp } from './styles';
 
-interface Props {
-	children: any;
+interface IProps {
+	children: ReactElement;
 	visible: boolean;
 	setVisible: Dispatch<SetStateAction<boolean>>;
 	backdrop: boolean;
@@ -20,7 +20,7 @@ export default function CustomModal({
 	dismissOnPress,
 	positionVertical,
 	positionHorizontal,
-}: Props) {
+}: IProps) {
 	return (
 		<Modal statusBarTranslucent visible={visible} transparent>
 			<View>

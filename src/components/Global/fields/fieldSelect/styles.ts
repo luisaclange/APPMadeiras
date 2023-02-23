@@ -3,35 +3,21 @@ import styled, { css } from 'styled-components/native';
 import globalStyle from '../../../../styles/globalStyle';
 import { Dimensions } from 'react-native';
 
-type props = {
+type IProps = {
 	error: boolean;
 };
 
-export const Title = styled.Text<props>`
-	font-size: ${RFValue(18, 700)}px;
-	font-family: ${globalStyle.fonts.bold};
-	color: ${globalStyle.colors.primary};
-	line-height: ${RFValue(23, 700)}px;
-	margin-bottom: ${RFValue(8, 700)}px;
-
-	${({ error }) =>
-		error &&
-		css`
-			color: ${globalStyle.colors.error};
-		`}
+export const ContainerExclude = styled.TouchableOpacity`
+	padding: ${RFValue(1, 700)}px;
+	justify-self: flex-end;
 `;
-export const InputContainer = styled.Pressable<props>`
-	border-bottom-width: ${RFValue(1, 700)}px;
-	border-color: ${globalStyle.colors.primary};
-	flex-direction: row;
-	align-items: center;
-	padding-horizontal: ${RFValue(8, 700)}px;
 
-	${({ error }) =>
-		error &&
-		css`
-			border-color: ${globalStyle.colors.error};
-		`}
+export const Error = styled.Text`
+	font-size: ${RFValue(12, 700)}px;
+	font-family: ${globalStyle.fonts.medium};
+	color: ${globalStyle.colors.error};
+	line-height: ${RFValue(14, 700)}px;
+	margin-top: ${RFValue(2, 700)}px;
 `;
 
 export const Input = styled.TextInput`
@@ -45,12 +31,36 @@ export const Input = styled.TextInput`
 	margin-bottom: -${RFValue(8, 700)}px;
 `;
 
-export const Dimension = styled.Text`
+export const InputContainer = styled.Pressable<IProps>`
+	border-bottom-width: ${RFValue(1, 700)}px;
+	border-color: ${globalStyle.colors.primary};
+	flex-direction: row;
+	align-items: center;
+	padding-horizontal: ${RFValue(8, 700)}px;
+
+	${({ error }) =>
+		error &&
+		css`
+			border-color: ${globalStyle.colors.error};
+		`}
+`;
+
+export const ItemSelect = styled.View`
+	padding: ${RFValue(8, 700)}px;
+	min-height: ${RFValue(60, 700)}px;
+	align-items: center;
+	flex-direction: row;
+	border-bottom-width: ${RFValue(2, 700)}px;
+	border-color: ${globalStyle.colors.primary};
+	border-style: dashed;
+`;
+
+export const ItemText = styled.Text`
 	font-size: ${RFValue(17, 700)}px;
 	font-family: ${globalStyle.fonts.medium};
 	color: ${globalStyle.colors.primary};
-	flex: 1;
-	text-align: right;
+	flex: 10;
+	padding-left: ${RFValue(32, 700)}px;
 `;
 
 export const Modal = styled.View`
@@ -69,37 +79,20 @@ export const SelectText = styled.Text`
 	padding-bottom: ${RFValue(16, 700)}px;
 `;
 
-export const ItemText = styled.Text`
-	font-size: ${RFValue(17, 700)}px;
-	font-family: ${globalStyle.fonts.medium};
-	color: ${globalStyle.colors.primary};
-	flex: 10;
-	padding-left: ${RFValue(32, 700)}px;
-`;
-
-export const ItemSelect = styled.View`
-	padding: ${RFValue(8, 700)}px;
-	min-height: ${RFValue(60, 700)}px;
-	align-items: center;
-	flex-direction: row;
-	border-bottom-width: ${RFValue(2, 700)}px;
-	border-color: ${globalStyle.colors.primary};
-	border-style: dashed;
-`;
-
-export const Error = styled.Text`
-	font-size: ${RFValue(12, 700)}px;
-	font-family: ${globalStyle.fonts.medium};
-	color: ${globalStyle.colors.error};
-	line-height: ${RFValue(14, 700)}px;
-	margin-top: ${RFValue(2, 700)}px;
-`;
-
 export const Space = styled.View`
 	height: ${RFValue(16, 700)}px;
 `;
 
-export const ContainerExclude = styled.TouchableOpacity`
-	padding: ${RFValue(1, 700)}px;
-	justify-self: flex-end;
+export const Title = styled.Text<IProps>`
+	font-size: ${RFValue(18, 700)}px;
+	font-family: ${globalStyle.fonts.bold};
+	color: ${globalStyle.colors.primary};
+	line-height: ${RFValue(23, 700)}px;
+	margin-bottom: ${RFValue(8, 700)}px;
+
+	${({ error }) =>
+		error &&
+		css`
+			color: ${globalStyle.colors.error};
+		`}
 `;

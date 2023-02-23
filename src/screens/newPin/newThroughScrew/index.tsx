@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
-import { View } from 'react-native';
+import React, { useCallback, useMemo, useState } from 'react';
+import { ScrollView, View } from 'react-native';
 import {
 	Container,
-	ContainerScroll,
+	ContainerButton,
 	ImagePin,
 } from './styles';
 import { useNavigation } from '@react-navigation/native';
@@ -11,19 +11,29 @@ import { TitleSection } from '../../../components/newCalc/titleSection';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import FieldInput from '../../../components/global/fields/fieldInput';
-import { ButtonsPrevNext } from '../../../components/newCalc/buttonsPrevNext';
 import { database } from '../../../database';
 import PopUpOneButton from '../../../components/global/popUps/popUpOneButton';
 import { INewThroughScrew, schemaNewThroughScrew } from '../../../validations/newThroughScrew';
 import { ThroughScrewModel } from '../../../database/models/throughScrewModel';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { TRootStackParamList } from '../../../routes/App.routes';
+import ButtonDark from '../../../components/global/buttons/buttonDark';
+import { RFValue } from 'react-native-responsive-fontsize';
 
-export default function NewSuperbScrew() {
+export default function NewThroughScrew({
+	route,
+}: NativeStackScreenProps<TRootStackParamList, 'NewThroughScrew'>) {
 	// Navegação
 	const navigation = useNavigation();
+	const { data } = route?.params?.params || {};
 
 	// Variáveis
 	const [visibleError, setVisibleError] = useState(false);
 	const [visibleSuccess, setVisibleSuccess] = useState(false);
+	const edit = useMemo(() => {
+		if (data) return false;
+		else return true;
+	}, [data]);
 
 	// Controle de formulário
 	const {
@@ -73,7 +83,7 @@ export default function NewSuperbScrew() {
 				visible={visibleSuccess}
 			/>
 			<Header title="Novo pino" />
-			<ContainerScroll contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="always">
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="always">
 				<Container>
 					<TitleSection
 						title="Cadastro de parafuso passante"
@@ -88,6 +98,8 @@ export default function NewSuperbScrew() {
 						name='name'
 						title='Nome'
 						error={errors.name}
+						defaultValue={data?.name}
+						editable={edit}
 					/>
 
 					<FieldInput
@@ -97,6 +109,8 @@ export default function NewSuperbScrew() {
 						error={errors.diametro}
 						dimension='mm'
 						keyboardType='numeric'
+						defaultValue={data ? String(data?.diameter).replace('.', ',') : null}
+						editable={edit}
 					/>
 
 					<FieldInput
@@ -106,6 +120,8 @@ export default function NewSuperbScrew() {
 						error={errors.comprimento}
 						dimension='mm'
 						keyboardType='numeric'
+						defaultValue={data ? String(data?.length).replace('.', ',') : null}
+						editable={edit}
 					/>
 
 					<FieldInput
@@ -115,6 +131,8 @@ export default function NewSuperbScrew() {
 						error={errors.roscaComp}
 						dimension='mm'
 						keyboardType='numeric'
+						defaultValue={data ? String(data?.rosLenght).replace('.', ',') : null}
+						editable={edit}
 					/>
 
 					<FieldInput
@@ -124,13 +142,28 @@ export default function NewSuperbScrew() {
 						error={errors.altura}
 						dimension='mm'
 						keyboardType='numeric'
+						defaultValue={data ? String(data?.height).replace('.', ',') : null}
+						editable={edit}
 					/>
 				</Container>
-			</ContainerScroll>
-			<ButtonsPrevNext
-				prevAction={() => navigation.goBack()}
-				nextAction={handleSubmit(handleDataRegister)}
-			/>
+			</ScrollView>
+			<ContainerButton>
+				<ButtonDark
+					text="Voltar"
+					onPress={() => {
+						navigation.goBack();
+					}}
+					style={{ width: RFValue(150, 700) }}
+				/>
+				{
+					!data &&
+					<ButtonDark
+						text="Cadastrar"
+						onPress={handleSubmit(handleDataRegister)}
+						style={{ width: RFValue(150, 700) }}
+					/>
+				}
+			</ContainerButton>
 		</View>
 	);
 }

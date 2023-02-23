@@ -1,14 +1,10 @@
 import styled, { css } from 'styled-components/native';
 
-interface Props {
+interface IProps {
 	backdrop: boolean;
 }
 
-export const Modal = styled.Modal`
-	position: relative;
-`;
-
-export const Backdrop = styled.View<Props>`
+export const Backdrop = styled.View<IProps>`
 	width: 100%;
 	height: 100%;
 	opacity: 0.5;
@@ -18,6 +14,10 @@ export const Backdrop = styled.View<Props>`
 		css`
 			background-color: black;
 		`}
+`;
+
+export const Modal = styled.Modal`
+	position: relative;
 `;
 
 export const PopUp = styled.View`

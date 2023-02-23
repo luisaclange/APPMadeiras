@@ -15,7 +15,7 @@ export const Border = styled.View<IProps>`
 	width: 100%;
 	min-width: ${RFValue(120, 700)}px;
 	${({ blackBorder }) => blackBorder && css`
-			background-color: black;
+			background-color: ${globalStyle.colors.primary};
 		`
 	}
 `;

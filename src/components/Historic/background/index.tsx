@@ -10,29 +10,27 @@ interface IProps {
 
 export default function Background({ children }: IProps) {
 	return (
-		<>
-			<Image
-				source={require('../../../assets/images/Background.png')}
-				imageStyle={{
-					height:
-						RFValue(580, 700) +
-						Dimensions.get('screen').height -
-						Dimensions.get('window').height,
-				}}
+		<Image
+			source={require('../../../assets/images/Background.png')}
+			imageStyle={{
+				height:
+					RFValue(580, 700) +
+					Dimensions.get('screen').height -
+					Dimensions.get('window').height,
+			}}
+		>
+			<LinearGradient
+				colors={[
+					'#593b2b',
+					'transparent',
+					'transparent',
+					'transparent',
+					'#593b2b',
+				]}
+				style={{ height: '100%' }}
 			>
-				<LinearGradient
-					colors={[
-						'#593b2b',
-						'transparent',
-						'transparent',
-						'transparent',
-						'#593b2b',
-					]}
-					style={{ height: '100%' }}
-				>
-					{children}
-				</LinearGradient>
-			</Image>
-		</>
+				{children}
+			</LinearGradient>
+		</Image>
 	);
 }

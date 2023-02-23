@@ -54,7 +54,10 @@ export default function FieldInput<
 				return (
 					<View>
 						{
-							!titleElement ? <Title error={!!error}>{title}</Title> : titleElement
+							!titleElement
+								?
+								(<Title error={!!error}>{title}</Title>)
+								: titleElement
 						}
 						<InputContainer error={!!error}>
 							<Input
@@ -62,17 +65,18 @@ export default function FieldInput<
 								onChangeText={text => {
 									onChange(text);
 								}}
+								multiline
 								{...rest}
 							/>
-							{dimension ? (
+							{dimension && (
 								<Dimension error={!!error}>
 									{dimension}
 								</Dimension>
-							) : null}
+							)}
 						</InputContainer>
 						{error ? <Error>{error.message}</Error> : <Space />}
 						<Space />
-						{space ? <Space /> : null}
+						{space && <Space />}
 					</View>
 				);
 			}}
