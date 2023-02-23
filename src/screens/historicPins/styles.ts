@@ -1,27 +1,5 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
-import globalStyle from '../../styles/globalStyle';
-
-export const Container = styled.View`
-	height: 100%;
-`;
-
-export const FloatingButton = styled.View`
-	position: absolute;
-	bottom: ${RFValue(60, 700)}px;
-	right: ${RFValue(16, 700)}px;
-`;
-
-export const TextAlert = styled.Text`
-	font-size: ${RFValue(28, 700)}px;
-	text-align: center;
-	font-family: ${globalStyle.fonts.bold};
-	color: ${globalStyle.colors.primary};
-`;
-
-export const BoxAlert = styled.View`
-	margin-top: ${RFValue(100, 700)}px;
-`;
 
 export const ButtonContainer = styled.View`
 	padding: ${RFValue(16, 700)}px;
@@ -35,12 +13,12 @@ export const ContainerItems = styled.View`
 	flex: 1
 `;
 
-export const Space = styled.View`
-	height: ${RFValue(16, 700)}px;
-`;
-
 export const Modal = styled.View`
 	padding: ${RFValue(16, 700)}px;
 	border-radius: ${RFValue(8, 700)}px;
 	background-color: white;
+`;
+
+export const Space = styled.View`
+	height: ${RFValue(16, 700)}px;
 `;

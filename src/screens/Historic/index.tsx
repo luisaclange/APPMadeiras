@@ -16,6 +16,7 @@ import LoadingPage from '../../components/global/loadingPage';
 import ButtonDark from '../../components/global/buttons/buttonDark';
 import { FilterModel } from '../../database/models/filterModel';
 import NotFoundIcon from '../../assets/svgs/notFound.svg';
+import ScreenView from '../../components/global/screenView';
 
 export default function Historic() {
 	// Navegação
@@ -65,53 +66,55 @@ export default function Historic() {
 	);
 
 	return (
-		<Container>
-			<Header />
-			<Background>
-				{!isLoading ? (
-					<FlatList
-						refreshing={refresh}
-						onRefresh={() => {
-							GetData();
-						}}
-						ListEmptyComponent={() => {
-							return (
-								<BoxAlert>
-									<NotFoundIcon />
-									<TextAlert>Não foram encontrados resultados...</TextAlert>
-								</BoxAlert>
-							);
-						}}
-						contentContainerStyle={{
-							flexGrow: 1,
-							padding: RFValue(16, 700),
-							paddingBottom: 200,
-						}}
-						data={data}
-						renderItem={item => {
-							return (
-								<CardCalc
-									item={item.item}
-									setRefresh={setRefresh}
-								/>
-							);
-						}}
-						style={{ paddingBottom: 200 }}
-					/>
-				) : (
-					<LoadingPage />
-				)}
-			</Background>
+		<ScreenView>
+			<Container>
+				<Header />
+				<Background>
+					{!isLoading ? (
+						<FlatList
+							refreshing={refresh}
+							onRefresh={() => {
+								GetData();
+							}}
+							ListEmptyComponent={() => {
+								return (
+									<BoxAlert>
+										<NotFoundIcon />
+										<TextAlert>Não foram encontrados resultados...</TextAlert>
+									</BoxAlert>
+								);
+							}}
+							contentContainerStyle={{
+								flexGrow: 1,
+								padding: RFValue(16, 700),
+								paddingBottom: 200,
+							}}
+							data={data}
+							renderItem={item => {
+								return (
+									<CardCalc
+										item={item.item}
+										setRefresh={setRefresh}
+									/>
+								);
+							}}
+							style={{ paddingBottom: 200 }}
+						/>
+					) : (
+						<LoadingPage />
+					)}
+				</Background>
 
-			<FloatingButton>
-				<ButtonDark
-					text="Novo cálculo"
-					style={{ width: RFValue(230, 700) }}
-					onPress={() => {
-						navigation.dispatch(CommonActions.navigate('NewCalc1'));
-					}}
-				/>
-			</FloatingButton>
-		</Container>
+				<FloatingButton>
+					<ButtonDark
+						text="Novo cálculo"
+						style={{ width: RFValue(230, 700) }}
+						onPress={() => {
+							navigation.dispatch(CommonActions.navigate('NewCalc1'));
+						}}
+					/>
+				</FloatingButton>
+			</Container>
+		</ScreenView>
 	);
 }

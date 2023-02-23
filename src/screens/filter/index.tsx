@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Alert, View } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 import Header from '../../components/global/header';
 import {
 	ButtonCleanFilter,
 	ButtonCleanText,
 	ButtonsContainer,
 	Container,
-	ContainerScroll,
 } from './styles';
 import FieldInput from '../../components/global/fields/fieldInput';
 import { useForm } from 'react-hook-form';
@@ -24,6 +23,7 @@ import LoadingPage from '../../components/global/loadingPage';
 import { CalcData } from '../../datas/Calc';
 import { PinTypeData } from '../../datas/PinType';
 import PopUpOneButton from '../../components/global/popUps/popUpOneButton';
+import ScreenView from '../../components/global/screenView';
 
 export default function Filter() {
 	// Navegação
@@ -98,7 +98,7 @@ export default function Filter() {
 	}
 
 	return (
-		<View style={{ height: '100%' }}>
+		<ScreenView>
 			<PopUpOneButton
 				actionButton={() => setVisibleError(false)}
 				message='Ops, ocorreu um erro!'
@@ -107,7 +107,7 @@ export default function Filter() {
 				visible={visibleError}
 			/>
 			<Header title="Filtro" />
-			<ContainerScroll contentContainerStyle={{ flexGrow: 1 }}>
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 				<Container>
 					<ButtonCleanFilter onPress={CleanFilter}>
 						<ButtonCleanText>Limpar filtro</ButtonCleanText>
@@ -153,7 +153,7 @@ export default function Filter() {
 						<LoadingPage />
 					)}
 				</Container>
-			</ContainerScroll>
+			</ScrollView>
 			<ButtonsContainer>
 				<ButtonDark
 					text="Cancelar"
@@ -168,6 +168,6 @@ export default function Filter() {
 					style={{ width: RFValue(150, 700) }}
 				/>
 			</ButtonsContainer>
-		</View>
+		</ScreenView>
 	);
 }

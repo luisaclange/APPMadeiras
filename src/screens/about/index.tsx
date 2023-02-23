@@ -1,10 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 import Header from '../../components/global/header';
 import {
 	ButtonContainer,
 	Container,
-	ContainerScroll,
 	ImageCorte,
 	Subtitle,
 	TextContact,
@@ -13,15 +12,16 @@ import {
 } from './styles';
 import ButtonDark from '../../components/global/buttons/buttonDark';
 import { useNavigation } from '@react-navigation/native';
+import ScreenView from '../../components/global/screenView';
 
 export default function About() {
 	// Navegação
 	const navigation = useNavigation();
 
 	return (
-		<View style={{ height: '100%' }}>
+		<ScreenView>
 			<Header title="Sobre" />
-			<ContainerScroll contentContainerStyle={{ flexGrow: 1 }}>
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 				<Container>
 					<Title>Magali</Title>
 					<Subtitle>Aplicativo de dimensionamento de ligações em madeira</Subtitle>
@@ -55,7 +55,7 @@ export default function About() {
 					<TextContact>Luisa Lange</TextContact>
 					<TextContact>luisalange@alunos.utfpr.edu.br</TextContact>
 				</Container>
-			</ContainerScroll>
+			</ScrollView>
 			<ButtonContainer>
 				<ButtonDark
 					text="Voltar"
@@ -64,6 +64,6 @@ export default function About() {
 					}}
 				/>
 			</ButtonContainer>
-		</View>
+		</ScreenView>
 	);
 }

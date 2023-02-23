@@ -5,7 +5,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { TRootStackParamList } from '../../routes/App.routes';
 import Header from '../../components/global/header';
 import {
-	Container,
 	ContainerButtons,
 	ContainerInfo,
 	ContainerScroll,
@@ -29,6 +28,7 @@ import Draw from '../../calcs/draw/draw';
 import { CalcModel } from '../../database/models/calcModel';
 import { database } from '../../database';
 import ModalLoading from '../../components/global/modalLoading';
+import ScreenView from '../../components/global/screenView';
 
 export default function Results({
 	route,
@@ -67,7 +67,7 @@ export default function Results({
 	}, [GetData]);
 
 	return (
-		<Container>
+		<ScreenView>
 			{
 				!uri && <ModalLoading />
 			}
@@ -196,6 +196,6 @@ export default function Results({
 					style={{ width: RFValue(150, 700) }}
 				/>
 			</ContainerButtons>
-		</Container>
+		</ScreenView>
 	);
 }

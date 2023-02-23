@@ -7,7 +7,7 @@ import DataContext, { Data } from '../../../context/context';
 import FieldSelect from '../../../components/global/fields/fieldSelect';
 import Header, { ProgressNewCalc } from '../../../components/newCalc/header';
 import { ButtonsPrevNext } from '../../../components/newCalc/buttonsPrevNext';
-import { Container, ContainerFields, ImageCorte } from './styles';
+import { ContainerFields, ImageCorte } from './styles';
 import { schemaNewCalc2 } from '../../../validations/newCalc2';
 import { TitleSection } from '../../../components/newCalc/titleSection';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -18,6 +18,7 @@ import LoadingPage from '../../../components/global/loadingPage';
 import { LigationTypeData } from '../../../datas/LigationType';
 import { PinTypeData } from '../../../datas/PinType';
 import { CalcData } from '../../../datas/Calc';
+import ScreenView from '../../../components/global/screenView';
 
 export default function NewCalc2({
 	route,
@@ -76,9 +77,9 @@ export default function NewCalc2({
 	}
 
 	return (
-		<Container>
+		<ScreenView>
 			<Header title="Novo cálculo" progress={ProgressNewCalc.newCalc2} />
-			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="always">
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
 				<ContainerFields>
 					<TitleSection title="Etapa 2" subtitle="Tipo de ligação" />
 					{!loadingPage ? (
@@ -127,6 +128,6 @@ export default function NewCalc2({
 				prevAction={() => navigation.goBack()}
 				nextAction={handleSubmit(handleDataRegister)}
 			/>
-		</Container>
+		</ScreenView>
 	);
 }

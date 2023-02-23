@@ -24,8 +24,6 @@ export const Container = styled.View`
 	flex-grow: 1;
 `;
 
-export const ContainerScroll = styled.ScrollView``;
-
 export const ButtonsContainer = styled.View`
 	padding: ${RFValue(16, 700)}px;
 	justify-content: space-between;

@@ -6,7 +6,7 @@ import {
 import React, { useCallback, useState } from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { database } from '../../database';
-import { ButtonContainer, Container, ContainerItems, Modal, Space } from './styles';
+import { ButtonContainer, ContainerItems, Modal, Space } from './styles';
 import LoadingPage from '../../components/global/loadingPage';
 import ButtonDark from '../../components/global/buttons/buttonDark';
 import { NailModel } from '../../database/models/nailModel';
@@ -20,6 +20,7 @@ import CardNail, { ICardNail } from '../../components/historicPins/cardNail';
 import CardSuperbScrew, { ICardSuperbScrew } from '../../components/historicPins/cardSuperbScrew';
 import CardThroughScrew, { ICardThroughScrew } from '../../components/historicPins/cardThroughScrew';
 import CustomModal from '../../components/global/modal';
+import ScreenView from '../../components/global/screenView';
 
 export default function HistoricPins() {
 	// Navegação
@@ -115,7 +116,7 @@ export default function HistoricPins() {
 	);
 
 	return (
-		<Container>
+		<ScreenView>
 			<CustomModal
 				backdrop
 				dismissOnPress
@@ -192,6 +193,6 @@ export default function HistoricPins() {
 					}}
 				/>
 			</ButtonContainer>
-		</Container>
+		</ScreenView>
 	);
 }

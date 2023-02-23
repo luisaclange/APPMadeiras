@@ -2,6 +2,12 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import globalStyle from '../../styles/globalStyle';
 
+export const BoxAlert = styled.View`
+	margin-top: ${RFValue(100, 700)}px;
+	align-items: center;
+	padding-horizontal: ${RFValue(32, 700)}px;
+`;
+
 export const Container = styled.View`
 	position: relative;
 `;
@@ -18,10 +24,4 @@ export const TextAlert = styled.Text`
 	font-family: ${globalStyle.fonts.bold};
 	color: ${globalStyle.colors.primary};
 	margin-top: ${RFValue(32, 700)}px;
-`;
-
-export const BoxAlert = styled.View`
-	margin-top: ${RFValue(100, 700)}px;
-	align-items: center;
-	padding-horizontal: ${RFValue(32, 700)}px;
 `;

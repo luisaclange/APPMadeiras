@@ -9,7 +9,7 @@ import FieldSelect, {
 } from '../../../components/global/fields/fieldSelect';
 import Header, { ProgressNewCalc } from '../../../components/newCalc/header';
 import { ButtonsPrevNext } from '../../../components/newCalc/buttonsPrevNext';
-import { Container, ContainerFields, ImageCorte, SmallText, Title } from './styles';
+import { ContainerFields, ImageCorte, SmallText, Title } from './styles';
 import { TitleSection } from '../../../components/newCalc/titleSection';
 import { schemaNewCalc3 } from '../../../validations/newCalc3';
 import FieldInput from '../../../components/global/fields/fieldInput';
@@ -22,6 +22,7 @@ import LoadingPage from '../../../components/global/loadingPage';
 import { SelectionNail } from '../../../calcs/selectionNails/selectionNail';
 import { SelectionThroughScrew } from '../../../calcs/selectionNails/selectionThroughScrew';
 import { SelectionSuperbScrew } from '../../../calcs/selectionNails/selectionSuperbScrew';
+import ScreenView from '../../../components/global/screenView';
 
 export default function NewCalc3({
 	route,
@@ -179,7 +180,7 @@ export default function NewCalc3({
 	}
 
 	return (
-		<Container>
+		<ScreenView>
 			<PopUpOneButton
 				actionButton={() => {
 					setVisibleSuccess(false);
@@ -205,7 +206,7 @@ export default function NewCalc3({
 				visible={visibleError}
 			/>
 			<Header title="Novo cálculo" progress={ProgressNewCalc.newCalc3} />
-			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="always">
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
 				<ContainerFields>
 					<TitleSection
 						title="Etapa 3"
@@ -316,6 +317,6 @@ export default function NewCalc3({
 				prevAction={() => navigation.goBack()}
 				nextAction={handleSubmit(handleDataRegister)}
 			/>
-		</Container>
+		</ScreenView>
 	);
 }

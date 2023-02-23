@@ -8,7 +8,7 @@ import DataContext, { Data } from '../../../context/context';
 import { Kmod } from '../../../archive/NBRTables/WoodProperties/Kmod';
 import FieldSelect from '../../../components/global/fields/fieldSelect';
 import Header, { ProgressNewCalc } from '../../../components/newCalc/header';
-import { Container, ContainerFields } from './styles';
+import { ContainerFields } from './styles';
 import { ButtonsPrevNext } from '../../../components/newCalc/buttonsPrevNext';
 import { schemaNewCalc1 } from '../../../validations/newCalc1';
 import FieldInput from '../../../components/global/fields/fieldInput';
@@ -19,6 +19,7 @@ import { CalcModel } from '../../../database/models/calcModel';
 import { database } from '../../../database';
 import LoadingPage from '../../../components/global/loadingPage';
 import { WoodTypeData } from '../../../datas/WoodType';
+import ScreenView from '../../../components/global/screenView';
 
 export default function NewCalc1({
 	route,
@@ -92,9 +93,9 @@ export default function NewCalc1({
 	}
 
 	return (
-		<Container>
+		<ScreenView hasFieldsInputs>
 			<Header title="Novo cálculo" progress={ProgressNewCalc.newCalc1} />
-			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="always">
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
 				<ContainerFields>
 					<TitleSection
 						title="Etapa 1"
@@ -150,6 +151,6 @@ export default function NewCalc1({
 				prevAction={() => navigation.goBack()}
 				nextAction={handleSubmit(handleDataRegister)}
 			/>
-		</Container>
+		</ScreenView>
 	);
 }

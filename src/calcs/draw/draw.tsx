@@ -13,6 +13,7 @@ import * as FileSystem from 'expo-file-system';
 import CameraRoll from '@react-native-community/cameraroll';
 import PopUpOneButton from '../../components/global/popUps/popUpOneButton';
 import * as ImagePicker from 'expo-image-picker';
+import globalStyle from '../../styles/globalStyle';
 
 interface IProps {
 	data: CalcModel | Record<string, never>;
@@ -57,7 +58,6 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 	const excludeBeforeOut = () => {
 		FileSystem.deleteAsync(uri).then(() => {
 			setUri('');
-			console.log('arquivo excluído');
 		}).catch(error => {
 			console.error(error);
 		});
@@ -89,12 +89,12 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 		}
 	}, [uri]);
 
+	// Setar uri
 	const setURI = useCallback(() => {
 		ref?.current?.capture().then((uriViewShot: string) => {
-			console.log(uriViewShot);
 			setUri(uriViewShot);
 		});
-	}, []);
+	}, [setUri]);
 
 	// Abrir imagem
 	const openImage = useCallback(() => {
@@ -283,6 +283,14 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 		flex-direction: row;
 	`;
 
+	const AlertText = styled.Text`
+		color: ${globalStyle.colors.primary};
+		font-size: 12px
+		font-family: ${globalStyle.fonts.semibold};
+		text-align: center;
+		margin-top: 36px;
+	`;
+
 	return (
 		<>
 			<PopUpOneButton
@@ -419,6 +427,7 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 												<CotaMarginBottom />
 											</CotaItemHorizontal>
 										</CotaBottom>
+										<AlertText>Dimensões em mm</AlertText>
 									</ContainerCapture>
 								</ViewShot>
 								: <Image source={{ uri }} resizeMode='contain' style={{ width: '100%', height: '100%' }} />
@@ -426,7 +435,7 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 					</>
 				)}
 			</ContainerDraw>
-			<Modal visible={visibleImage} transparent style={{ height: Dimensions.get('window').height }} statusBarTranslucent>
+			<Modal visible={visibleImage} transparent style={{ height: Dimensions.get('screen').height }} statusBarTranslucent>
 				<ImageViewer
 					imageUrls={[{ url: uri }]}
 

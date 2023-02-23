@@ -12,11 +12,6 @@ export const ContainerFields = styled.View`
 	flex-grow: 1;
 `;
 
-export const Container = styled.View`
-	background-color: ${globalStyle.colors.secondary};
-	height: 100%;
-`;
-
 export const ImageCorte = styled.Image`
 	width: ${Dimensions.get('screen').width - RFValue(32, 700)}px;
 	height: ${Dimensions.get('screen').width - RFValue(32, 700)}px;

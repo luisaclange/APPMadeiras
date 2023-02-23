@@ -13,6 +13,7 @@ import {
 } from './styles';
 import { database } from '../../database';
 import { FilterModel } from '../../database/models/filterModel';
+import ScreenView from '../../components/global/screenView';
 
 const styles = StyleSheet.create({
 	buttonLight: {
@@ -41,9 +42,10 @@ export default function Home() {
 	}
 
 	return (
-		<>
+		<ScreenView>
 			<Background
 				source={require('../../assets/images/HomeBackground.png')}
+				resizeMode='cover'
 			>
 				<Container>
 					<ContainerText>
@@ -70,6 +72,6 @@ export default function Home() {
 					</ContainerButtons>
 				</Container>
 			</Background>
-		</>
+		</ScreenView>
 	);
 }

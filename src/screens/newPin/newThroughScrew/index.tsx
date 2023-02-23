@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import {
 	Container,
 	ContainerButton,
@@ -19,6 +19,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { TRootStackParamList } from '../../../routes/App.routes';
 import ButtonDark from '../../../components/global/buttons/buttonDark';
 import { RFValue } from 'react-native-responsive-fontsize';
+import ScreenView from '../../../components/global/screenView';
 
 export default function NewThroughScrew({
 	route,
@@ -62,7 +63,7 @@ export default function NewThroughScrew({
 	}, []);
 
 	return (
-		<View style={{ height: '100%' }}>
+		<ScreenView hasFieldsInputs>
 			<PopUpOneButton
 				actionButton={() => {
 					setVisibleError(false);
@@ -83,7 +84,7 @@ export default function NewThroughScrew({
 				visible={visibleSuccess}
 			/>
 			<Header title="Novo pino" />
-			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="always">
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
 				<Container>
 					<TitleSection
 						title="Cadastro de parafuso passante"
@@ -164,6 +165,6 @@ export default function NewThroughScrew({
 					/>
 				}
 			</ContainerButton>
-		</View>
+		</ScreenView>
 	);
 }
