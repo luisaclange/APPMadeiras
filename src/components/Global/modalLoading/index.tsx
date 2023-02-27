@@ -1,18 +1,22 @@
-import React from 'react';
-import { ActivityIndicator, Modal } from 'react-native';
+import React, { Dispatch, SetStateAction } from 'react';
+import { ActivityIndicator } from 'react-native';
 import globalStyle from '../../../styles/globalStyle';
-import { Container } from './styles';
+import CustomModal from '../modal';
+import { RFValue } from 'react-native-responsive-fontsize';
 
-export default function ModalLoading() {
+interface IProps {
+	visible: boolean;
+	setVisible: Dispatch<SetStateAction<boolean>>;
+}
+
+export default function ModalLoading({ setVisible, visible }: IProps) {
 	return (
-		<Modal statusBarTranslucent visible={true} transparent>
-			<Container>
-				<ActivityIndicator
-					color={globalStyle.colors.secondary}
-					size="large"
-					style={{ marginTop: 200 }}
-				/>
-			</Container>
-		</Modal>
+		<CustomModal backdrop setVisible={setVisible} dismissOnPress={false} visible={visible}>
+			<ActivityIndicator
+				color={globalStyle.colors.primary}
+				size={80}
+				style={{ marginTop: RFValue(80, 700) }}
+			/>
+		</CustomModal>
 	);
 }

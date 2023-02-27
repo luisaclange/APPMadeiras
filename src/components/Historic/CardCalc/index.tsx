@@ -77,24 +77,30 @@ export default function CardCalc({ item, setRefresh }: IProps) {
 				nail_name = NailsDimensions.find(
 					nail => nail.id === item.pinSelected,
 				)?.name;
-				if (!nail_name)
-					nail_name = (await database.get<NailModel>('nails').find(item.pinSelected))?.name;
+				if (!nail_name) {
+					const nails = await database.get<NailModel>('nails').query().fetch();
+					nail_name = nails.find(nail => nail.id === item.pinSelected)?.name;
+				}
 				break;
 			case 'parafusoPassante':
 				pin_type = 'Parafuso';
 				nail_name = ThroughScrewsDimensions.find(
 					nail => nail.id === item.pinSelected,
 				)?.name;
-				if (!nail_name)
-					nail_name = (await database.get<ThroughScrewModel>('throughScrews').find(item.pinSelected))?.name;
+				if (!nail_name) {
+					const screws = await database.get<ThroughScrewModel>('throughScrews').query().fetch();
+					nail_name = screws.find(screw => screw.id === item.pinSelected)?.name;
+				}
 				break;
 			case 'parafusoSoberba':
 				pin_type = 'Parafuso';
 				nail_name = SuperbScrewsDimensions.find(
 					nail => nail.id === item.pinSelected,
 				)?.name;
-				if (!nail_name)
-					nail_name = (await database.get<SuperbScrewModel>('superbScrews').find(item.pinSelected))?.name;
+				if (!nail_name) {
+					const screws = await database.get<SuperbScrewModel>('superbScrews').query().fetch();
+					nail_name = screws.find(screw => screw.id === item.pinSelected)?.name;
+				}
 				break;
 			default:
 				nail_name = null;

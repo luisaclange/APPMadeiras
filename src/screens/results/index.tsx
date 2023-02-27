@@ -27,8 +27,8 @@ import globalStyle from '../../styles/globalStyle';
 import Draw from '../../calcs/draw/draw';
 import { CalcModel } from '../../database/models/calcModel';
 import { database } from '../../database';
-import ModalLoading from '../../components/global/modalLoading';
 import ScreenView from '../../components/global/screenView';
+import ModalLoading from '../../components/result/modalLoading';
 
 export default function Results({
 	route,
@@ -140,25 +140,25 @@ export default function Results({
 						<Space />
 
 						<View style={{ backgroundColor: result.FvRk === result.FvRk1 ? globalStyle.colors.yellow : 'transparent' }}>
-							<TextInfoDefault>F<SmallText>v,Rk1</SmallText> = {String(result.FvRk1.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
+							<TextInfoDefault>F<SmallText>v,Rk1</SmallText> = {String(result.FvRk1?.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
 						</View>
 						<View style={{ backgroundColor: result.FvRk === result.FvRk2 ? globalStyle.colors.yellow : 'transparent' }}>
-							<TextInfoDefault>F<SmallText>v,Rk2</SmallText> = {String(result.FvRk2.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
+							<TextInfoDefault>F<SmallText>v,Rk2</SmallText> = {String(result.FvRk2?.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
 						</View>
 						<View style={{ backgroundColor: result.FvRk === result.FvRk3 ? globalStyle.colors.yellow : 'transparent' }}>
-							<TextInfoDefault>F<SmallText>v,Rk3</SmallText> = {String(result.FvRk3.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
+							<TextInfoDefault>F<SmallText>v,Rk3</SmallText> = {String(result.FvRk3?.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
 						</View>
 						<View style={{ backgroundColor: result.FvRk === result.FvRk4 ? globalStyle.colors.yellow : 'transparent' }}>
-							<TextInfoDefault>F<SmallText>v,Rk4</SmallText> = {String(result.FvRk4.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
+							<TextInfoDefault>F<SmallText>v,Rk4</SmallText> = {String(result.FvRk4?.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
 						</View>
 						{
 							!result.FvRk5 ? null : <View style={{ backgroundColor: result.FvRk === result.FvRk5 ? globalStyle.colors.yellow : 'transparent' }}>
-								<TextInfoDefault>F<SmallText>v,Rk5</SmallText> = {String(result.FvRk5.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
+								<TextInfoDefault>F<SmallText>v,Rk5</SmallText> = {String(result.FvRk5?.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
 							</View>
 						}
 						{
 							!result.FvRk6 ? null : <View style={{ backgroundColor: result.FvRk === result.FvRk6 ? globalStyle.colors.yellow : 'transparent' }}>
-								<TextInfoDefault>F<SmallText>v,Rk6</SmallText> = {String(result.FvRk6.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
+								<TextInfoDefault>F<SmallText>v,Rk6</SmallText> = {String(result.FvRk6?.toFixed(2)).replace('.', ',')} KN</TextInfoDefault>
 							</View>
 						}
 

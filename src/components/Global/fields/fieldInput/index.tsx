@@ -22,13 +22,13 @@ interface IProps<
 	TFieldArrayName extends Path<TFieldValues>,
 > extends TextInputProps {
 	control: Control<TFieldValues>;
-	title: string;
+	title?: string;
 	dimension?: string;
 	name: TFieldArrayName;
 	error?: FieldError;
 	space?: boolean;
 	defaultValue?: PathValue<TFieldValues, TFieldArrayName>;
-	titleElement?: Element;
+	titleElement?: JSX.Element;
 }
 
 export default function FieldInput<

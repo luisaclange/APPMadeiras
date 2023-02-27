@@ -91,9 +91,11 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 
 	// Setar uri
 	const setURI = useCallback(() => {
-		ref?.current?.capture().then((uriViewShot: string) => {
-			setUri(uriViewShot);
-		});
+		setTimeout(() => {
+			ref?.current?.capture().then((uriViewShot: string) => {
+				setUri(uriViewShot);
+			});
+		}, 2000);
 	}, [setUri]);
 
 	// Abrir imagem
@@ -435,11 +437,11 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 					</>
 				)}
 			</ContainerDraw>
-			<Modal visible={visibleImage} transparent style={{ height: Dimensions.get('screen').height }} statusBarTranslucent>
+			<Modal visible={visibleImage} transparent style={{ height: Dimensions.get('screen').height, bottom: 0 }} statusBarTranslucent>
 				<ImageViewer
 					imageUrls={[{ url: uri }]}
 
-					style={{ flexGrow: 1 }}
+					style={{ flexGrow: 1, height: Dimensions.get('screen').height }}
 					renderFooter={() => {
 						return (
 							<View style={{ width: Dimensions.get('screen').width, padding: RFValue(16, 700), marginBottom: RFValue(16, 700) }}>

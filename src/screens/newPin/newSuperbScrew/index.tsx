@@ -108,7 +108,7 @@ export default function NewSuperbScrew({
 						error={errors.diametro}
 						dimension='mm'
 						keyboardType='numeric'
-						defaultValue={data ? String(data?.diameter).replace('.', ',') : null}
+						defaultValue={data ? String(data?.diameter).replace('.', ',') : undefined}
 						editable={edit}
 					/>
 
@@ -119,7 +119,7 @@ export default function NewSuperbScrew({
 						error={errors.comprimento}
 						dimension='mm'
 						keyboardType='numeric'
-						defaultValue={data ? String(data?.length).replace('.', ',') : null}
+						defaultValue={data ? String(data?.length).replace('.', ',') : undefined}
 						editable={edit}
 					/>
 				</Container>

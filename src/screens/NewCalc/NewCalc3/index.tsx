@@ -23,6 +23,7 @@ import { SelectionNail } from '../../../calcs/selectionNails/selectionNail';
 import { SelectionThroughScrew } from '../../../calcs/selectionNails/selectionThroughScrew';
 import { SelectionSuperbScrew } from '../../../calcs/selectionNails/selectionSuperbScrew';
 import ScreenView from '../../../components/global/screenView';
+import ModalLoading from '../../../components/global/modalLoading';
 
 export default function NewCalc3({
 	route,
@@ -43,6 +44,8 @@ export default function NewCalc3({
 	>({});
 	const [loadingPage, setLoadingPage] = useState(true);
 	const [dataNails, setDataNails] = useState<ISelect[]>([]);
+	const [loadingSave, setLoadingSave] = useState(false);
+	const [textError, setTextError] = useState('');
 
 	// Controle de formulário
 	const {
@@ -111,70 +114,79 @@ export default function NewCalc3({
 
 	// Guardar as informações
 	async function handleDataRegister(data: Data['stage3']) {
-		try {
-			const calcs = database.get<CalcModel>('calcs');
-			const date = Number(new Date()) - 10800000;
-			await database.write(async () => {
-				if (id_calc) {
-					await dataStage.update(item => {
-						// Parte 1
-						item.charging = stage1.charging;
-						item.description = stage1.description;
-						item.humidityClass = stage1.humidityClass;
-						item.woodType = stage1.woodType;
-						item.woodName = Number(stage1.woodName);
+		if (data?.tractiveForce || data?.numberPins)
+			try {
+				setLoadingSave(true);
+				const calcs = database.get<CalcModel>('calcs');
+				const date = Number(new Date()) - 10800000;
+				await database.write(async () => {
+					if (id_calc) {
+						await dataStage.update(item => {
+							// Parte 1
+							item.charging = stage1.charging;
+							item.description = stage1.description;
+							item.humidityClass = stage1.humidityClass;
+							item.woodType = stage1.woodType;
+							item.woodName = Number(stage1.woodName);
 
-						// Parte 2
-						item.calc = stage2.calc;
-						item.ligationType = stage2.ligationType;
-						item.pinType = stage2.pinType;
+							// Parte 2
+							item.calc = stage2.calc;
+							item.ligationType = stage2.ligationType;
+							item.pinType = stage2.pinType;
 
-						// Parte 3
-						item.espWood_1 = Number(data.espWood_1);
-						item.espWood_2 = Number(data.espWood_2);
-						item.pinSelected = data.pinSelected;
-						item.numberPins = Number(data.numberPins) || 0;
-						item.tractiveForce = Number(data.tractiveForce) || 0;
-						item.widthWood = Number(data.widthWood);
+							// Parte 3
+							item.espWood_1 = Number(data.espWood_1);
+							item.espWood_2 = Number(data.espWood_2);
+							item.pinSelected = data.pinSelected;
+							item.numberPins = Number(data.numberPins) || 0;
+							item.tractiveForce = Number(data.tractiveForce) || 0;
+							item.widthWood = Number(data.widthWood);
 
-						// Outros
-						item.updated_at = date;
-					});
-					setId(id_calc);
-				} else {
-					const calc = await calcs.create(newCalc => {
-						// Parte 1
-						newCalc.charging = stage1.charging;
-						newCalc.description = stage1.description;
-						newCalc.humidityClass = stage1.humidityClass;
-						newCalc.woodType = stage1.woodType;
-						newCalc.woodName = Number(stage1.woodName);
+							// Outros
+							item.updated_at = date;
+						});
+						setId(id_calc);
+					} else {
+						const calc = await calcs.create(newCalc => {
+							// Parte 1
+							newCalc.charging = stage1.charging;
+							newCalc.description = stage1.description;
+							newCalc.humidityClass = stage1.humidityClass;
+							newCalc.woodType = stage1.woodType;
+							newCalc.woodName = Number(stage1.woodName);
 
-						// Parte 2
-						newCalc.calc = stage2.calc;
-						newCalc.ligationType = stage2.ligationType;
-						newCalc.pinType = stage2.pinType;
+							// Parte 2
+							newCalc.calc = stage2.calc;
+							newCalc.ligationType = stage2.ligationType;
+							newCalc.pinType = stage2.pinType;
 
-						// Parte 3
-						newCalc.espWood_1 = Number(data.espWood_1);
-						newCalc.espWood_2 = Number(data.espWood_2);
-						newCalc.pinSelected = data.pinSelected;
-						newCalc.numberPins = Number(data.numberPins) || 0;
-						newCalc.tractiveForce = Number(data.tractiveForce) || 0;
-						newCalc.widthWood = Number(data.widthWood);
+							// Parte 3
+							newCalc.espWood_1 = Number(data.espWood_1);
+							newCalc.espWood_2 = Number(data.espWood_2);
+							newCalc.pinSelected = data.pinSelected;
+							newCalc.numberPins = Number(data.numberPins) || 0;
+							newCalc.tractiveForce = Number(data.tractiveForce) || 0;
+							newCalc.widthWood = Number(data.widthWood);
 
-						// Outros
-						newCalc.created_at = date;
-						newCalc.updated_at = date;
-						newCalc.visualized_at = 0;
-					});
+							// Outros
+							newCalc.created_at = date;
+							newCalc.updated_at = date;
+							newCalc.visualized_at = 0;
+						});
 
-					setId(calc?.id);
-				}
-			});
+						setId(calc?.id);
+					}
+				});
 
-			setVisibleSuccess(true);
-		} catch (error) {
+				setVisibleSuccess(true);
+			} catch (error) {
+				setTextError('Ops! Ocorreu um erro. Tente novamente mais tarde');
+				setVisibleError(true);
+			} finally {
+				setLoadingSave(false);
+			}
+		else {
+			setTextError('Você precisa informar um valor no último campo!');
 			setVisibleError(true);
 		}
 	}
@@ -200,7 +212,7 @@ export default function NewCalc3({
 				actionButton={() => {
 					setVisibleError(false);
 				}}
-				message="Ops! Ocorreu um erro. Tente novamente mais tarde"
+				message={textError}
 				setVisible={setVisibleError}
 				textButton="OK"
 				visible={visibleError}
@@ -317,6 +329,7 @@ export default function NewCalc3({
 				prevAction={() => navigation.goBack()}
 				nextAction={handleSubmit(handleDataRegister)}
 			/>
+			<ModalLoading visible={loadingSave} setVisible={setLoadingSave} />
 		</ScreenView>
 	);
 }

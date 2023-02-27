@@ -93,7 +93,7 @@ export default async function CalcResistence({
 		FvRk1 = CalcFk1_Double(fek, t1, d);
 		FvRk2 = CalcFk2_Double(fek, t2, d, B);
 		FvRk3 = CalcFk3_Double(fek, t1, d, B, MyRk);
-		FvRk3 = CalcFk4_Double(fek, d, B, MyRk);
+		FvRk4 = CalcFk4_Double(fek, d, B, MyRk);
 		FvRk = Math.min(FvRk1, FvRk2, FvRk3, FvRk4);
 	}
 

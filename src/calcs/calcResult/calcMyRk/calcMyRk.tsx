@@ -63,7 +63,30 @@ export async function CalcMyRk(pinType: string, pinSelected: string) {
 			} else if (name.includes('A490')) {
 				fuk = 1035;
 			} else {
-				fuk = 0;
+				const pin = await database.get<ThroughScrewModel>('throughScrews').find(pinSelected);
+				switch (pin.steelType) {
+					case 'ASTM A307':
+						fuk = 415;
+						break;
+					case 'ASTM A325':
+						fuk = 825;
+						break;
+					case 'ASTM A490':
+						fuk = 1035;
+						break;
+					case 'ISO 898-1 Classe 4.6':
+						fuk = 400;
+						break;
+					case 'ISO 898-1 Classe 8.8':
+						fuk = 800;
+						break;
+					case 'ISO 898-1 Classe 10.9':
+						fuk = 1000;
+						break;
+					default:
+						fuk = 0;
+						break;
+				}
 			}
 
 			break;

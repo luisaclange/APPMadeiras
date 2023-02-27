@@ -108,7 +108,7 @@ export default function NewNail({
 						error={errors.JP}
 						dimension='mm'
 						keyboardType='numeric'
-						defaultValue={data ? String(data?.JP).replace('.', ',') : null}
+						defaultValue={data ? String(data?.JP).replace('.', ',') : undefined}
 						editable={edit}
 					/>
 
@@ -119,7 +119,7 @@ export default function NewNail({
 						error={errors.LPP}
 						dimension='mm'
 						keyboardType='numeric'
-						defaultValue={data ? String(data?.LPP).replace('.', ',') : null}
+						defaultValue={data ? String(data?.LPP).replace('.', ',') : undefined}
 						editable={edit}
 					/>
 				</Container>

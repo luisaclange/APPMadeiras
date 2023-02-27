@@ -6,6 +6,6 @@ import { superbScrewsSchema } from './superbScrewSchema';
 import { throughScrewsSchema } from './throughScrewSchema';
 
 export const schemas = appSchema({
-	version: 14,
+	version: 15,
 	tables: [calcSchema, filterSchema, nailsSchema, superbScrewsSchema, throughScrewsSchema],
 });

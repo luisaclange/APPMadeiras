@@ -86,24 +86,30 @@ export default function MoreInfo({
 						(item: INail) => item.id === aux.pinSelected,
 					)?.name;
 
-					if (!pinSelected)
-						pinSelected = (await database.get<NailModel>('nails').find(aux.pinSelected))?.name;
+					if (!pinSelected) {
+						const nails = await database.get<NailModel>('nails').query().fetch();
+						pinSelected = nails.find(item => item.id === aux.pinSelected)?.name;
+					}
 					break;
 				case 'parafusoSoberba':
 					pinSelected = SuperbScrewsDimensions.find(
 						(item: ISuperbScrew) => item.id === aux.pinSelected,
 					)?.name;
 
-					if (!pinSelected)
-						pinSelected = (await database.get<SuperbScrewModel>('superbScrews').find(aux.pinSelected))?.name;
+					if (!pinSelected) {
+						const screws = await database.get<SuperbScrewModel>('superbScrews').query().fetch();
+						pinSelected = screws.find(item => item.id === aux.pinSelected)?.name;
+					}
 					break;
 				case 'parafusoPassante':
 					pinSelected = ThroughScrewsDimensions.find(
 						(item: IThroughScrew) => item.id === aux.pinSelected,
 					)?.name;
 
-					if (!pinSelected)
-						pinSelected = (await database.get<ThroughScrewModel>('throughScrews').find(aux.pinSelected))?.name;
+					if (!pinSelected) {
+						const screws = await database.get<ThroughScrewModel>('throughScrews').query().fetch();
+						pinSelected = screws.find(item => item.id === aux.pinSelected)?.name;
+					}
 					break;
 				default:
 					pinSelected = '';

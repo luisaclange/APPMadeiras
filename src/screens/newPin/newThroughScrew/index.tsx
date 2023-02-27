@@ -20,6 +20,8 @@ import { TRootStackParamList } from '../../../routes/App.routes';
 import ButtonDark from '../../../components/global/buttons/buttonDark';
 import { RFValue } from 'react-native-responsive-fontsize';
 import ScreenView from '../../../components/global/screenView';
+import FieldSelect from '../../../components/global/fields/fieldSelect';
+import { SteelType } from '../../../datas/SteelType';
 
 export default function NewThroughScrew({
 	route,
@@ -54,6 +56,7 @@ export default function NewThroughScrew({
 					item.roscaComp = Number(data.roscaComp.replace(',', '.'));
 					item.altura = Number(data.altura.replace(',', '.'));
 					item.name = data.name;
+					item.steelType = data.steelType;
 				});
 			});
 			setVisibleSuccess(true);
@@ -110,7 +113,7 @@ export default function NewThroughScrew({
 						error={errors.diametro}
 						dimension='mm'
 						keyboardType='numeric'
-						defaultValue={data ? String(data?.diameter).replace('.', ',') : null}
+						defaultValue={data ? String(data?.diameter).replace('.', ',') : undefined}
 						editable={edit}
 					/>
 
@@ -121,7 +124,7 @@ export default function NewThroughScrew({
 						error={errors.comprimento}
 						dimension='mm'
 						keyboardType='numeric'
-						defaultValue={data ? String(data?.length).replace('.', ',') : null}
+						defaultValue={data ? String(data?.length).replace('.', ',') : undefined}
 						editable={edit}
 					/>
 
@@ -132,7 +135,7 @@ export default function NewThroughScrew({
 						error={errors.roscaComp}
 						dimension='mm'
 						keyboardType='numeric'
-						defaultValue={data ? String(data?.rosLenght).replace('.', ',') : null}
+						defaultValue={data ? String(data?.rosLenght).replace('.', ',') : undefined}
 						editable={edit}
 					/>
 
@@ -143,8 +146,16 @@ export default function NewThroughScrew({
 						error={errors.altura}
 						dimension='mm'
 						keyboardType='numeric'
-						defaultValue={data ? String(data?.height).replace('.', ',') : null}
+						defaultValue={data ? String(data?.height).replace('.', ',') : undefined}
 						editable={edit}
+					/>
+
+					<FieldSelect
+						control={control}
+						data={SteelType}
+						name='steelType'
+						title='Classificação do aço'
+						error={errors.steelType}
 					/>
 				</Container>
 			</ScrollView>

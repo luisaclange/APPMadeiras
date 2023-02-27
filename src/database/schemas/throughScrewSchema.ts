@@ -23,5 +23,9 @@ export const throughScrewsSchema = tableSchema({
 			name: 'altura',
 			type: 'number',
 		},
+		{
+			name: 'steelType',
+			type: 'string',
+		},
 	],
 });

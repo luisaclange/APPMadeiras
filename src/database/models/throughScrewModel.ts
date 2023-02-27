@@ -18,4 +18,7 @@ export class ThroughScrewModel extends Model {
 
 	@field('altura')
 	altura!: number;
+
+	@field('steelType')
+	steelType!: string;
 }
