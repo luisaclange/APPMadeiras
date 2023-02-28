@@ -1,6 +1,6 @@
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Image } from './styles';
+import { ImageBackground } from 'react-native';
 
 interface IProps {
 	children: React.ReactNode;
@@ -8,10 +8,11 @@ interface IProps {
 
 export default function Background({ children }: IProps) {
 	return (
-		<Image
+		<ImageBackground
 			source={require('../../../assets/images/Background.png')}
-			imageStyle={{
-				height: '100%',
+			resizeMode='cover'
+			style={{
+				flexGrow: 1,
 			}}
 		>
 			<LinearGradient
@@ -26,6 +27,6 @@ export default function Background({ children }: IProps) {
 			>
 				{children}
 			</LinearGradient>
-		</Image>
+		</ImageBackground>
 	);
 }

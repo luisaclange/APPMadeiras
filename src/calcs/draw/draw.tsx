@@ -42,6 +42,7 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 
 	const [visibleImage, setVisibleImage] = useState(false);
 	const [visibleSuccess, setVisibleSuccess] = useState(false);
+	const [visibleError, setVisibleError] = useState(false);
 	const ref = useRef();
 
 	// Buscar dados
@@ -70,22 +71,24 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 
 	// Salvar na galeria
 	const onSave = useCallback(async () => {
-		let permissionCamera = await ImagePicker.getCameraPermissionsAsync();
-		if (!permissionCamera.granted) {
-			permissionCamera = await ImagePicker.requestCameraPermissionsAsync();
-		}
+		// let permissionCamera = await ImagePicker.getCameraPermissionsAsync();
+		// if (!permissionCamera.granted) {
+		// 	permissionCamera = await ImagePicker.requestCameraPermissionsAsync();
+		// }
 
 		let permissionLibrary = await ImagePicker.getMediaLibraryPermissionsAsync();
 		if (!permissionLibrary.granted) {
 			permissionLibrary = await ImagePicker.requestMediaLibraryPermissionsAsync();
 		}
 
-		if (permissionCamera.granted && permissionLibrary.granted) {
+		if (permissionLibrary.granted) {
 			CameraRoll.save(uri, { type: 'photo' }).then(() => {
 				setVisibleSuccess(true);
 			}).catch(error => {
 				console.error(JSON.stringify(error));
 			});
+		} else {
+			setVisibleError(true);
 		}
 	}, [uri]);
 
@@ -303,6 +306,15 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 				setVisible={setVisibleSuccess}
 				textButton='OK'
 				visible={visibleSuccess}
+			/>
+			<PopUpOneButton
+				actionButton={() => {
+					setVisibleError(false);
+				}}
+				message='Não é possível adicionar a foto na galeria. Verifique as permissões do aplicativo'
+				setVisible={setVisibleError}
+				textButton='OK'
+				visible={visibleError}
 			/>
 			<ContainerDraw onPress={openImage}>
 				{!loading && (

@@ -10,6 +10,7 @@ export const BoxAlert = styled.View`
 
 export const Container = styled.View`
 	position: relative;
+	height: 100%;
 `;
 
 export const FloatingButton = styled.View`

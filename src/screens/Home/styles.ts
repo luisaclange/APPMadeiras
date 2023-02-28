@@ -1,4 +1,3 @@
-import { Dimensions } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import globalStyle from '../../styles/globalStyle';
@@ -8,7 +7,7 @@ export const Background = styled.ImageBackground`
 `;
 
 export const Container = styled.View`
-	height: ${Dimensions.get('window').height}px;
+	height: 100%;
 	justify-content: space-between;
 `;
 
@@ -19,6 +18,7 @@ export const ContainerText = styled.View`
 
 export const ContainerButtons = styled.View`
 	align-items: center;
+	padding: ${RFValue(16, 700)}px;
 `;
 
 export const Description = styled.Text`
