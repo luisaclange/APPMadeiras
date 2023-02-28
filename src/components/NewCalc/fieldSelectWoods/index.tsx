@@ -164,7 +164,7 @@ export default function FieldSelectWoods<
 								multiline
 							/>
 							{
-								visible ? <ArrowUp /> : <ArrowDown />
+								visible ? <ArrowUp color={error ? globalStyle.colors.error : globalStyle.colors.primary} /> : <ArrowDown color={error ? globalStyle.colors.error : globalStyle.colors.primary} />
 							}
 						</InputContainer>
 						{error ? <Error>{error.message}</Error> : <Space />}

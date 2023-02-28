@@ -116,6 +116,7 @@ export default function NewCalc3({
 	async function handleDataRegister(data: Data['stage3']) {
 		if (data?.tractiveForce || data?.numberPins)
 			try {
+				console.log('entoru');
 				setLoadingSave(true);
 				const calcs = database.get<CalcModel>('calcs');
 				const date = Number(new Date()) - 10800000;

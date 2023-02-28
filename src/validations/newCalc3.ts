@@ -17,6 +17,6 @@ export const schemaNewCalc3 = yup.object().shape({
 		.test('bigger than 0', 'Tem que ser maior que 0', item => Number(item?.replace(',', '.')) > 0)
 		.required('Campo obrigatório'),
 	pinSelected: yup.string().required('Campo obrigatório'),
-	tractiveForce: yup.string().matches(/^\d+(\,\d{1,10})?$/, 'Formato errado').test('bigger than 0', 'Tem que ser maior que 0', item => Number(item?.replace(',', '.')) > 0),
-	numberPins: yup.string().matches(/^\d+(\,\d{1,10})?$/, 'Formato errado').test('bigger than 0', 'Tem que ser maior que 0', item => Number(item?.replace(',', '.')) > 0),
+	tractiveForce: yup.string().matches(/^\d+(\,\d{1,10})?$/, 'Formato errado').test('bigger than 0', 'Tem que ser maior que 0', item => !item || Number(item?.replace(',', '.')) > 0),
+	numberPins: yup.string().matches(/^\d+(\,\d{1,10})?$/, 'Formato errado').test('bigger than 0', 'Tem que ser maior que 0', item => !item || Number(item?.replace(',', '.')) > 0),
 });
