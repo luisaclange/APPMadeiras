@@ -78,7 +78,7 @@ export default async function calcDraw({ pins, data }: IProps) {
 	}
 
 	//Número de colunas
-	const nColumns = Math.ceil(pins / nPinsColumn) <= 1 && pins > 1 ? 2 : Math.ceil(pins / nPinsColumn);
+	const nColumns = Math.ceil(pins / nPinsColumn) <= 1 && pins > 2 ? 2 : Math.ceil(pins / nPinsColumn);
 
 	// Recalculando o número de pinos por coluna
 	nPinsColumn = Math.ceil(pins / nColumns);

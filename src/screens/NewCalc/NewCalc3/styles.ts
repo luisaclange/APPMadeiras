@@ -40,3 +40,21 @@ export const Title = styled.Text<IProps>`
 			color: ${globalStyle.colors.error};
 		`}
 `;
+
+export const ContainerModal = styled.View`
+	padding: ${RFValue(16, 700)}px;
+	min-height: ${RFValue(300, 700)}px;
+	max-height: ${Dimensions.get('window').height * 0.75}px;
+	max-width: ${RFValue(350, 700)}px;
+	width: ${Dimensions.get('screen').width - RFValue(32, 700)}px;
+	background-color: ${globalStyle.colors.secondary};
+	border-radius: ${RFValue(8, 700)}px;
+`;
+
+export const TextInfo = styled.Text`
+	font-size: ${RFValue(18, 700)}px;
+	font-family: ${globalStyle.fonts.semibold};
+	color: ${globalStyle.colors.primary};
+	text-align: justify;
+	margin-bottom: ${RFValue(8, 700)}px;
+`;

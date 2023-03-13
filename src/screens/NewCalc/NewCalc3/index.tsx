@@ -9,7 +9,7 @@ import FieldSelect, {
 } from '../../../components/global/fields/fieldSelect';
 import Header, { ProgressNewCalc } from '../../../components/newCalc/header';
 import { ButtonsPrevNext } from '../../../components/newCalc/buttonsPrevNext';
-import { ContainerFields, ImageCorte, SmallText, Title } from './styles';
+import { ContainerFields, ContainerModal, ImageCorte, SelectText, SmallText, TextInfo, Title } from './styles';
 import { TitleSection } from '../../../components/newCalc/titleSection';
 import { schemaNewCalc3 } from '../../../validations/newCalc3';
 import FieldInput from '../../../components/global/fields/fieldInput';
@@ -24,6 +24,10 @@ import { SelectionThroughScrew } from '../../../calcs/selectionNails/selectionTh
 import { SelectionSuperbScrew } from '../../../calcs/selectionNails/selectionSuperbScrew';
 import ScreenView from '../../../components/global/screenView';
 import ModalLoading from '../../../components/global/modalLoading';
+import DimensionsRange from '../../../interfaces/DimensionsRange';
+import CustomModal from '../../../components/global/modal';
+import ButtonDark from '../../../components/global/buttons/buttonDark';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export default function NewCalc3({
 	route,
@@ -46,14 +50,16 @@ export default function NewCalc3({
 	const [dataNails, setDataNails] = useState<ISelect[]>([]);
 	const [loadingSave, setLoadingSave] = useState(false);
 	const [textError, setTextError] = useState('');
+	const [range, setRange] = useState<DimensionsRange | Record<string, never>>({});
+	const [visibleInfoRange, setVisibleInfoRange] = useState(false);
 
 	// Controle de formulário
 	const {
 		control,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors, dirtyFields },
 		watch,
-		setValue
+		setValue,
 	} = useForm<Data['stage3']>({ resolver: yupResolver(schemaNewCalc3) });
 
 	// Buscar dimensões de pinos
@@ -65,6 +71,7 @@ export default function NewCalc3({
 					esp1: Number(watch('espWood_1')?.replace(',', '.')),
 					esp2: Number(watch('espWood_2')?.replace(',', '.')),
 					ligationType: stage2.ligationType,
+					setRange,
 				});
 				break;
 			case 'parafusoPassante':
@@ -73,6 +80,7 @@ export default function NewCalc3({
 					esp1: Number(watch('espWood_1')?.replace(',', '.')),
 					esp2: Number(watch('espWood_2')?.replace(',', '.')),
 					ligationType: stage2.ligationType,
+					setRange,
 				});
 				break;
 			case 'parafusoSoberba':
@@ -81,6 +89,7 @@ export default function NewCalc3({
 					esp1: Number(watch('espWood_1')?.replace(',', '.')),
 					esp2: Number(watch('espWood_2')?.replace(',', '.')),
 					ligationType: stage2.ligationType,
+					setRange,
 				});
 				break;
 			default:
@@ -99,7 +108,7 @@ export default function NewCalc3({
 				setDataStage(calc);
 				setValue('espWood_1', String(calc.espWood_1).replace('.', ','));
 				setValue('espWood_2', String(calc.espWood_2).replace('.', ','));
-				GetNails();
+				await GetNails();
 			}
 		} catch (error) {
 			Alert.alert('Ops, ocorreu um erro!', error.message);
@@ -116,7 +125,6 @@ export default function NewCalc3({
 	async function handleDataRegister(data: Data['stage3']) {
 		if (data?.tractiveForce || data?.numberPins)
 			try {
-				console.log('entoru');
 				setLoadingSave(true);
 				const calcs = database.get<CalcModel>('calcs');
 				const date = Number(new Date()) - 10800000;
@@ -192,8 +200,77 @@ export default function NewCalc3({
 		}
 	}
 
+	//Resetar texto quando mudam as dimensões
+	useEffect(() => {
+		if (dirtyFields.espWood_1 || dirtyFields.espWood_2 || dirtyFields.widthWood) setValue('pinSelected', '');
+	});
+
+	function Message() {
+		switch (stage2.pinType) {
+			case 'prego':
+				return (
+					<ContainerModal>
+						<ScrollView style={{ flexGrow: 1 }}>
+							<TextInfo>O prego escolhido deve respeitar as dimensões mínimas e máximas, as quais são determinadas por meio dos valores informados para as peças de madeira.</TextInfo>
+							<TextInfo>Então, o prego deve atender:</TextInfo>
+							<TextInfo>   d<SmallText>min</SmallText>: {String(range?.dMin?.toFixed(2)).replace('.', ',')}mm</TextInfo>
+							<TextInfo style={range?.dMax < range?.dMin ? { color: 'red' } : undefined}>   d<SmallText style={range?.dMax < range?.dMin ? { color: 'red' } : undefined}>max</SmallText>: {String(range?.dMax?.toFixed(2)).replace('.', ',')}mm</TextInfo>
+							<TextInfo>   comp<SmallText>min</SmallText>: {String(range?.compMin?.toFixed(2)).replace('.', ',')}mm</TextInfo>
+							<TextInfo>   comp<SmallText>max</SmallText>: {String(range?.compMax?.toFixed(2)).replace('.', ',')}mm</TextInfo>
+							{
+								range?.dMax < range?.dMin && <TextInfo>Como o diâmetro máximo é menor do que o diâmetro mínimo, e esse valor depende de t<SmallText>1</SmallText>, aumente o valor deste último</TextInfo>
+							}
+							<TextInfo>Lembrando que a penetração mínima do pino na última peça deve ser superior a 12d.</TextInfo>
+						</ScrollView>
+						<ButtonDark onPress={() => {
+							setVisibleInfoRange(false);
+						}} text="Fechar" style={{ marginTop: RFValue(16, 700) }} />
+					</ContainerModal>
+				);
+			case 'parafusoSoberba':
+				return (
+					<ContainerModal>
+						<ScrollView style={{ flexGrow: 1 }}>
+							<TextInfo>O parafuso escolhido deve respeitar as dimensões mínimas e máximas, as quais são determinadas por meio dos valores informados para as peças de madeira.</TextInfo>
+							<TextInfo>Então, o parafuso deve atender:</TextInfo>
+							<TextInfo>   d<SmallText>min</SmallText>: {String(range?.dMin?.toFixed(2)).replace('.', ',')}mm</TextInfo>
+							<TextInfo style={range?.dMax < range?.dMin ? { color: 'red' } : undefined}>   d<SmallText style={range?.dMax < range?.dMin ? { color: 'red' } : undefined}>max</SmallText>: {String(range?.dMax?.toFixed(2)).replace('.', ',')}mm</TextInfo>
+							<TextInfo>   comp<SmallText>min</SmallText>: {String(range?.compMin?.toFixed(2)).replace('.', ',')}mm</TextInfo>
+							<TextInfo>   comp<SmallText>max</SmallText>: {String(range?.compMax?.toFixed(2)).replace('.', ',')}mm</TextInfo>
+							{
+								range?.dMax < range?.dMin && <TextInfo>Como o diâmetro máximo é menor do que o diâmetro mínimo, e esse valor depende de t<SmallText>1</SmallText>, aumente o valor deste último</TextInfo>
+							}
+							<TextInfo>Lembrando que a penetração mínima do pino na última peça deve ser superior a 6d.</TextInfo>
+						</ScrollView>
+						<ButtonDark onPress={() => {
+							setVisibleInfoRange(false);
+						}} text="Fechar" style={{ marginTop: RFValue(16, 700) }} />
+					</ContainerModal >
+				);
+			default:
+				return (
+					<ContainerModal>
+						<ScrollView style={{ flexGrow: 1 }}>
+							<TextInfo>O parafuso escolhido deve respeitar as dimensões mínimas e máximas, as quais são determinadas por meio dos valores informados para as peças de madeira.</TextInfo>
+							<TextInfo>Então, o parafuso deve atender:</TextInfo>
+							<TextInfo>   d<SmallText>min</SmallText>: {String(range?.dMin?.toFixed(2)).replace('.', ',')}mm</TextInfo>
+							<TextInfo>   d<SmallText>max</SmallText>: {String(range?.dMax?.toFixed(2)).replace('.', ',')}mm</TextInfo>
+							<TextInfo style={{ textAlign: 'left' }}>   comp<SmallText>min</SmallText>: {String(range?.compMin?.toFixed(2)).replace('.', ',')}mm + altura da porca</TextInfo>
+							<TextInfo style={{ textAlign: 'left' }}>   comp<SmallText>max</SmallText>: comprimento não rosqueável do parafuso</TextInfo>
+						</ScrollView>
+						<ButtonDark onPress={() => {
+							setVisibleInfoRange(false);
+						}} text="Fechar" style={{ marginTop: RFValue(16, 700) }} />
+					</ContainerModal>
+				);
+		}
+	}
+
 	return (
 		<ScreenView>
+			<CustomModal backdrop dismissOnPress setVisible={setVisibleInfoRange} visible={visibleInfoRange}>
+				<Message />
+			</CustomModal>
 			<PopUpOneButton
 				actionButton={() => {
 					setVisibleSuccess(false);
@@ -256,7 +333,7 @@ export default function NewCalc3({
 								defaultValue={
 									dataStage?.espWood_2
 										? String(dataStage.espWood_2)
-										: null
+										: undefined
 								}
 								keyboardType='numeric'
 							/>
@@ -269,7 +346,7 @@ export default function NewCalc3({
 								defaultValue={
 									dataStage?.widthWood
 										? String(dataStage.widthWood)
-										: null
+										: undefined
 								}
 								keyboardType='numeric'
 							/>
@@ -278,7 +355,7 @@ export default function NewCalc3({
 								control={control}
 								name="pinSelected"
 								title="Pino utilizado"
-								defaultValue={dataStage.pinSelected}
+								defaultValue={dataNails.find(item => item.id === dataStage.pinSelected)?.id}
 								onPress={() => {
 									if (watch('espWood_1') && watch('espWood_2')) GetNails();
 									else setDataNails([]);
@@ -289,6 +366,8 @@ export default function NewCalc3({
 									GetNails();
 								}}
 								navigationScreen={stage2.pinType === 'prego' ? 'NewNail' : stage2.pinType === 'parafusoSoberba' ? 'NewSuperbScrew' : 'NewThroughScrew'}
+								ListEmptyComponent="Infelizmente não foram encontrados pinos com dimensões compatíveis com os valores das peças de madeira informados"
+								setInfo={setVisibleInfoRange}
 							/>
 							{stage2.calc === 'pinQtde' &&
 								(dataStage.calc ? dataStage.calc === 'pinQtde' : true) ? (
@@ -301,7 +380,7 @@ export default function NewCalc3({
 									defaultValue={
 										dataStage?.tractiveForce
 											? String(dataStage.tractiveForce)
-											: null
+											: undefined
 									}
 									keyboardType='numeric'
 								/>
@@ -315,7 +394,7 @@ export default function NewCalc3({
 									defaultValue={
 										dataStage?.numberPins
 											? String(dataStage.numberPins)
-											: null
+											: undefined
 									}
 									keyboardType='numeric'
 								/>

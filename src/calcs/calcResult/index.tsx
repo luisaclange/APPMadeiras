@@ -81,26 +81,6 @@ export default async function CalcResult(id: string): Promise<IResult> {
 		pinSelected
 	});
 
-	console.log({
-		kmod,
-		kmod1,
-		kmod2,
-		MyRk,
-		fuk,
-		fek,
-		density,
-		pk,
-		FvRk,
-		FvRk1,
-		FvRk2,
-		FvRk3,
-		FvRk4,
-		FvRk5,
-		FvRk6,
-		Rd,
-		nPins,
-	});
-
 	return {
 		kmod,
 		kmod1,

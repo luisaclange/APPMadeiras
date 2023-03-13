@@ -26,4 +26,5 @@ export const TextButton = styled.Text`
 	font-family: ${globalStyle.fonts.semibold};
 	color: ${globalStyle.colors.secondary};
 	font-size: ${RFValue(20, 700)}px;
+	text-align: center;
 `;

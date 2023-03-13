@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import {
 	Control,
 	Controller,
@@ -37,6 +37,7 @@ import PopUpOneButton from '../../popUps/popUpOneButton';
 import ButtonDark from '../../buttons/buttonDark';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import PopUpTwoButtons from '../../popUps/popUpTwoButtons';
+import Help from '../../../../assets/svgs/help.svg';
 
 export interface ISelect {
 	value: string;
@@ -59,6 +60,8 @@ interface IProps<
 	tableName?: string;
 	refresh?: () => void;
 	navigationScreen?: string;
+	ListEmptyComponent?: string;
+	setInfo?: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function FieldSelect<
@@ -75,7 +78,9 @@ export default function FieldSelect<
 	tableName,
 	navigationScreen,
 	refresh,
-	onPress
+	onPress,
+	ListEmptyComponent,
+	setInfo
 }: IProps<TFieldValues, TFieldArrayName>) {
 	const [visible, setVisible] = useState(false);
 	const [visibleError, setVisibleError] = useState(false);
@@ -132,7 +137,10 @@ export default function FieldSelect<
 							positionVertical="bottom"
 						>
 							<Modal>
-								<SelectText>Selecione:</SelectText>
+								<View style={setInfo ? { justifyContent: 'space-between', flexDirection: 'row' } : null}>
+									<SelectText>Selecione:</SelectText>
+									{setInfo ? <Help onPress={() => { setInfo(true); }} /> : null}
+								</View>
 								<FlatList
 									data={data}
 									contentContainerStyle={{
@@ -140,6 +148,13 @@ export default function FieldSelect<
 										borderColor: globalStyle.colors.primary,
 										borderStyle: 'dashed',
 									}}
+									ListEmptyComponent={
+										<SelectText
+											style={{ textAlign: 'center', marginTop: RFValue(16, 700) }}
+										>
+											{ListEmptyComponent}
+										</SelectText>
+									}
 									renderItem={item => {
 										return (
 											<TouchableOpacity

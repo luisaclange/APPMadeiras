@@ -24,6 +24,7 @@ export default function CalcPinQtde({ tractiveForce, ligationType, d, kmod, pinT
 	let nPins = Math.ceil(
 		Rk / (FvRk * nCuts),
 	);
+	if (nPins <= 1) nPins = 2;
 
 	// Verificação do número de colunas
 	let pinsPerColumn: number; // Pinos por coluna

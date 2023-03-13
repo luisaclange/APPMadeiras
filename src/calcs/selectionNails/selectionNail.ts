@@ -4,18 +4,28 @@ import NailsDimensions from '../../archive/PinsDimensions/Nails.json';
 import { INail } from '../../interfaces/Nail';
 import { database } from '../../database';
 import { NailModel } from '../../database/models/nailModel';
+import DimensionsRange from '../../interfaces/DimensionsRange';
 
 interface IProps {
 	setData: Dispatch<SetStateAction<ISelect[]>>;
 	esp1: number;
 	esp2: number;
 	ligationType: string;
+	setRange: Dispatch<SetStateAction<DimensionsRange>>;
 }
 
-export async function SelectionNail({ setData, esp1, esp2, ligationType }: IProps) {
+export async function SelectionNail({ setData, esp1, esp2, ligationType, setRange }: IProps) {
 	const dataPins = await database.get<NailModel>('nails').query().fetch();
+	const tm = Math.min(esp1, esp2);
+	const dMin = 3;
+	const dMax = 0.2 * tm;
+	let compMin: number;
+	if (ligationType === 'corteSimples') compMin = tm * 2;
+	else compMin = esp1 + esp2 + tm;
+	let compMax: number;
+	if (ligationType === 'corteSimples') compMax = esp1 + esp2;
+	else compMax = esp1 * 2 + esp2;
 	const aux1 = dataPins.filter(nail => {
-		const tm = Math.min(esp1, esp2);
 		const tp = Math.max(12 * nail.JP, tm);
 		let verification = true;
 
@@ -37,7 +47,6 @@ export async function SelectionNail({ setData, esp1, esp2, ligationType }: IProp
 		};
 	});
 	const aux2 = NailsDimensions.filter((nail: INail) => {
-		const tm = Math.min(esp1, esp2);
 		const tp = Math.max(12 * nail.JP, tm);
 		let verification = true;
 
@@ -63,4 +72,10 @@ export async function SelectionNail({ setData, esp1, esp2, ligationType }: IProp
 
 
 	setData(aux3);
+	setRange({
+		dMin,
+		dMax,
+		compMin,
+		compMax,
+	});
 }
