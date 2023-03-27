@@ -203,7 +203,7 @@ export default function NewCalc3({
 	//Resetar texto quando mudam as dimensões
 	useEffect(() => {
 		if (dirtyFields.espWood_1 || dirtyFields.espWood_2 || dirtyFields.widthWood) setValue('pinSelected', '');
-	});
+	}, [dirtyFields.espWood_1, dirtyFields.espWood_2, dirtyFields.widthWood, setValue, watch('espWood_1'), watch('espWood_2'), watch('widthWood')]);
 
 	function Message() {
 		switch (stage2.pinType) {

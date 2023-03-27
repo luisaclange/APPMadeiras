@@ -10,5 +10,5 @@ export default function CalcFk3_Double(
 		2 * B * (1 + B) +
 		(4 * B * (2 + B) * MyRk) / (fek * d * Math.pow(t1, 2));
 	const Fk3 = aux1 * (Math.sqrt(aux2) - B);
-	return Fk3 / 100;
+	return Fk3 / 1000;
 }

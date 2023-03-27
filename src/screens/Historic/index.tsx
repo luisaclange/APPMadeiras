@@ -48,7 +48,7 @@ export default function Historic() {
 		if (filter?.woodName)
 			aux = aux.filter(item => item.woodName === filter?.woodName);
 
-		setData(aux.sort((a, b) => a.created_at - b.created_at));
+		setData(aux.sort((a, b) => b.created_at - a.created_at));
 		setRefresh(false);
 		setIsLoading(false);
 	}, []);

@@ -39,11 +39,21 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 		passThrough: 0
 	});
 	const [loading, setLoading] = useState(true);
-
 	const [visibleImage, setVisibleImage] = useState(false);
 	const [visibleSuccess, setVisibleSuccess] = useState(false);
 	const [visibleError, setVisibleError] = useState(false);
 	const ref = useRef();
+
+	// Função de conversão number to string
+	function convertNumberToString(n: number) {
+		let s = n.toFixed(2).replace('.', ',').trim();
+
+		if (s.endsWith('0')) {
+			s = s.slice(0, s.length - 1);
+			if (s.endsWith('0')) s = s.slice(0, s.length - 2);
+		}
+		return s;
+	}
 
 	// Buscar dados
 	const GetData = useCallback(async () => {
@@ -71,10 +81,6 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 
 	// Salvar na galeria
 	const onSave = useCallback(async () => {
-		// let permissionCamera = await ImagePicker.getCameraPermissionsAsync();
-		// if (!permissionCamera.granted) {
-		// 	permissionCamera = await ImagePicker.requestCameraPermissionsAsync();
-		// }
 
 		let permissionLibrary = await ImagePicker.getMediaLibraryPermissionsAsync();
 		if (!permissionLibrary.granted) {
@@ -109,7 +115,7 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 	// Estilo
 	const ContainerCapture = styled.View`
 		align-items: center;
-		width: ${calc.passThrough + 90}px;
+		width: ${calc.passThrough + 150}px;
 		height: 100%;
 		justify-content: center;
 		backgroundColor: #FFFFFF;
@@ -178,18 +184,19 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 		margin-left: ${calc.bfHorizontal}px;
 		border-left-width: ${1}px;
 		flex-direction: row;
+		margin-top: ${30}px;
 	`;
 
 	const CotaLeft = styled.View`
 		margin-right: ${2}px;
 		border-bottom-width: ${1}px;
-		margin-left: ${16}px;
+		margin-left: ${30}px;
 	`;
 
 	const CotaRight = styled.View`
 		margin-left: ${2}px;
 		border-bottom-width: ${1}px;
-		margin-right: ${16}px;
+		margin-right: ${30}px;
 	`;
 
 	const CotaBottom = styled.View`
@@ -332,13 +339,13 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 											].map((item, index) => {
 												return (
 													<CotaItemHorizontal key={`cotaSpaceHorizontal${index}`}>
-														<CotaTextHorizontal>{calc.spaceColumns}</CotaTextHorizontal>
+														<CotaTextHorizontal>{convertNumberToString(calc.spaceColumns)}</CotaTextHorizontal>
 														<CotaSpaceHorizontal />
 													</CotaItemHorizontal>
 												);
 											})}
 											<CotaItemHorizontal>
-												<CotaTextHorizontal>{calc.bfHorizontal}</CotaTextHorizontal>
+												<CotaTextHorizontal>{convertNumberToString(calc.bfHorizontal)}</CotaTextHorizontal>
 												<CotaMarginHorizontal />
 											</CotaItemHorizontal>
 										</CotaTop>
@@ -347,21 +354,21 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 											{/* Cota esquerda */}
 											<CotaLeft>
 												<CotaItemVertical>
-													<CotaTextVerticalLeft>{calc.bfVerticalSpecial}</CotaTextVerticalLeft>
+													<CotaTextVerticalLeft>{convertNumberToString(calc.bfVerticalSpecial)}</CotaTextVerticalLeft>
 													<CotaBorderFreeSpecial />
 												</CotaItemVertical>
 												{[...Array(calc.nPinsSpecialColumn - 1)].map(
 													(item, index) => {
 														return (
 															<CotaItemVertical key={`cotaSpaceLeft${index}`}>
-																<CotaTextVerticalLeft>{calc.spaceSpecialColumnPins}</CotaTextVerticalLeft>
+																<CotaTextVerticalLeft>{convertNumberToString(calc.spaceSpecialColumnPins)}</CotaTextVerticalLeft>
 																<CotaSpaceVerticalSpecial />
 															</CotaItemVertical>
 														);
 													},
 												)}
 												<CotaItemVertical>
-													<CotaTextVerticalLeft>{calc.bfVerticalSpecial}</CotaTextVerticalLeft>
+													<CotaTextVerticalLeft>{convertNumberToString(calc.bfVerticalSpecial)}</CotaTextVerticalLeft>
 													<CotaBorderFreeSpecial />
 												</CotaItemVertical>
 											</CotaLeft>
@@ -415,21 +422,21 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 
 											<CotaRight>
 												<CotaItemVertical>
-													<CotaTextVerticalRight>{calc.bfVertical}</CotaTextVerticalRight>
+													<CotaTextVerticalRight>{convertNumberToString(calc.bfVertical)}</CotaTextVerticalRight>
 													<CotaBorderFreeNormal />
 												</CotaItemVertical>
 												{[...Array(calc.nPinsColumn - 1)].map(
 													(item, index) => {
 														return (
 															<CotaItemVertical key={`cotaSpaceRight${index}`}>
-																<CotaTextVerticalRight>{calc.spaceNormalColumnPins}</CotaTextVerticalRight>
+																<CotaTextVerticalRight>{convertNumberToString(calc.spaceNormalColumnPins)}</CotaTextVerticalRight>
 																<CotaSpaceVerticalNormal />
 															</CotaItemVertical>
 														);
 													},
 												)}
 												<CotaItemVertical>
-													<CotaTextVerticalRight>{calc.bfVertical}</CotaTextVerticalRight>
+													<CotaTextVerticalRight>{convertNumberToString(calc.bfVertical)}</CotaTextVerticalRight>
 													<CotaBorderFreeNormal />
 												</CotaItemVertical>
 											</CotaRight>
@@ -437,7 +444,7 @@ export default function Draw({ data, pins, setUri, uri }: IProps) {
 
 										<CotaBottom>
 											<CotaItemHorizontal>
-												<CotaTextBottom>{calc.passThrough}</CotaTextBottom>
+												<CotaTextBottom>{convertNumberToString(calc.passThrough)}</CotaTextBottom>
 												<CotaMarginBottom />
 											</CotaItemHorizontal>
 										</CotaBottom>
