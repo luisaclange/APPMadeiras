@@ -49,9 +49,13 @@ export default async function calcDraw({ pins, data }: IProps) {
 	//Borda livre horizontal
 	let bfHorizontal: number;
 	if (data.pinType === 'prego') {
-		bfHorizontal = Math.ceil((d * 12) / 5) * 5;
+		if (data.tractiveForce && data.tractiveForce < 0)
+			bfHorizontal = Math.ceil((d * 7) / 5) * 5;
+		else bfHorizontal = Math.ceil((d * 12) / 5) * 5;
 	} else {
-		bfHorizontal = Math.ceil((Math.max(d * 7, 80 - d / 2)) / 5) * 5;
+		if (data.tractiveForce && data.tractiveForce < 0)
+			bfHorizontal = Math.ceil((d * 4) / 5) * 5;
+		else bfHorizontal = Math.ceil((Math.max(d * 7, 80 - d / 2)) / 5) * 5;
 	}
 
 	//Borda livre vertical
