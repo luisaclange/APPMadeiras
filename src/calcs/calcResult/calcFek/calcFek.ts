@@ -63,10 +63,7 @@ export default async function CalcFek(
 	const pk = density / 1.2;
 
 	// Determinação da resistencia ao embutimento da madeira
-	let fek: number;
-	if (diameter < 8 && nailType === 'prego')
-		fek = 0.082 * (1 - 0.01 * diameter) * pk;
-	else fek = (0.082 * (1 - 0.01 * diameter) * pk) / (0.9 + 0.015 * diameter);
+	const fek = 0.082 * (1 - 0.01 * diameter) * pk;
 
 	return { fek, density, pk };
 }
