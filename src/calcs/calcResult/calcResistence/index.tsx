@@ -80,7 +80,7 @@ export default async function CalcResistence({
 	let FvRk: number;
 
 	// Cálculo para caso de corte simples
-	if (ligationType === 'corteSimples') {
+	if (ligationType === 'corteSimples' || pinType === 'parafusoSoberba') {
 		FvRk1 = CalcFk1_Simple(fek, t1, d);
 		FvRk2 = CalcFk2_Simple(fek, t2, d, B);
 		FvRk3 = CalcFk3_Simple(fek, t1, t2, d, B);
